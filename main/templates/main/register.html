@@ -10,7 +10,8 @@
       </div>
       <div class="row clearfix">
         <div class="">
-          <form>
+          <form method="POST">
+            {% csrf_token %}
             <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope"></i></span>
               <input type="email" name="email" placeholder="Email" required />
             </div>
@@ -18,17 +19,17 @@
               <input type="password" name="password" placeholder="Contraseña" required />
             </div>
             <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
-              <input type="password" name="password" placeholder="Repita la contraseña" required />
+              <input type="password" name="repeat_password" placeholder="Repita la contraseña" required />
             </div>
             <div class="row clearfix">
               <div class="col_half">
                 <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-                  <input type="text" name="name" placeholder="Nombres" />
+                  <input type="text" name="username" placeholder="Nombres" />
                 </div>
               </div>
               <div class="col_half">
                 <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-                  <input type="text" name="name" placeholder="Apellidos" required />
+                  <input type="text" name="apellidos" placeholder="Apellidos" required />
                 </div>
               </div>
             </div>
@@ -39,13 +40,13 @@
                 <label for="rd2">Female</label>
                 </div> -->
                 <div class="input_field select_option">
-                  <select>
+                  <select name = 'universidades'>
                     <option>Seleccione una universidad</option>
                     <option>Universidad Militar Nueva Granada</option>
-                    <option>Universidad Militar Nueva Granada</option>
-                    <option>Universidad Militar Nueva Granada</option>
-                    <option>Universidad Militar Nueva Granada</option>
-                    <option>Universidad Militar Nueva Granada</option>
+                    <option>Universidad Militar Nueva Granada2</option>
+                    <option>Universidad Militar Nueva Granada3</option>
+                    <option>Universidad Militar Nueva Granada4</option>
+                    <option>Universidad Militar Nueva Granada5</option>
                   </select>
                   <div class="select_arrow"></div>
                 </div>
