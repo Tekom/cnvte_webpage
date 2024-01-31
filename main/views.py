@@ -1,32 +1,33 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from custom_user.models import userData
 
 # Create your views here.
-def home(request):
-    return render(request, 'main/index.html')
+def dashboard(request):
+    return render(request, 'main/dashboard.html')
 
 def loginPage(request):
 	context = {}
 	if request.method == 'POST':
-		username = request.POST.get('username').lower()
+		email = request.POST.get('email').lower()
 		password = request.POST.get('password')
 
 		try:
-			user = User.objects.get(username=username)
+			User = get_user_model
+			user = User.objects.get(email=email)
 		except:
 			pass
 
-		user = authenticate(request, username=username, password=password)
+		user = authenticate(request, email = email, password = password)
 
 		if user is not None:
 			login(request, user)
-			return redirect('home')
+			return redirect('dashboard')
 			
 		else:
 			pass
 
-	return render(request, 'main/login_register.html', context)
+	return render(request, 'main/index.html', context)
 
 def register(request):
     if request.method == 'POST':
@@ -49,7 +50,7 @@ def register(request):
         
         new_user.save()
 
-        return render(request, 'main/index.html')
+        return redirect('login')
 
     return render(request, 'main/register.html')
     

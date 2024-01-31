@@ -31,7 +31,8 @@
 					<img src="{% static 'images/img-01.png' %}" alt="IMG">
 				</div>
 
-				<form class="login100-form validate-form">
+				<form class="login100-form validate-form" method="POST">
+					{% csrf_token %}
 					<span class="login100-form-title">
 						Iniciar Sesion
 					</span>
@@ -45,7 +46,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "No puede dejar este espacio en blanco">
-						<input class="input100" type="password" name="pass" placeholder="Contraseña">
+						<input class="input100" type="password" name="password" placeholder="Contraseña">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -53,7 +54,7 @@
 					</div>
 
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
+						<button class="login100-form-btn" type="submit">
 							Login
 						</button>
 					</div>
