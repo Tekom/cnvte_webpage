@@ -69,7 +69,7 @@
 }
 
 .card-red::after {
-    background: #ff5370
+    background: #263544
 }
 
 .card-red .ct-line {
@@ -81,7 +81,7 @@
 }
 
 .card-blue::after {
-    background: #4099ff
+    background: #263544
 }
 
 .card-blue .ct-line {
@@ -93,7 +93,7 @@
 }
 
 .card-green::after {
-    background: #2ed8b6
+    background: #263544
 }
 
 .card-green .ct-line {
@@ -105,7 +105,7 @@
 }
 
 .card-yellow::after {
-    background: #ffb64d
+    background: #263544
 }
 
 .card-yellow .ct-line {

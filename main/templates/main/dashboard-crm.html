@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from demo.dashboardpack.com/admindek-html/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 31 Jan 2024 20:45:21 GMT -->
+<!-- Mirrored from demo.dashboardpack.com/admindek-html/default/dashboard-crm.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 31 Jan 2024 20:46:00 GMT -->
 
 <head>
     <title>Admindek | Admin Template</title>
@@ -41,8 +41,6 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'files/assets/css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'files/assets/css/widget.css' %}">
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -58,7 +56,7 @@
             <nav class="navbar header-navbar pcoded-header">
                 <div class="navbar-wrapper">
                     <div class="navbar-logo">
-                        <a href="index-2.html">
+                        <a href="../index-2.html">
                             <img class="img-fluid" src="{% static 'files/assets/images/logo.png' %}" alt="Theme-Logo" />
                         </a>
                         <a class="mobile-menu" id="mobile-collapse" href="#!">
@@ -90,7 +88,7 @@
                             </li>
                         </ul>
                         <ul class="nav-right">
-                            <!-- <li class="header-notification">
+                            <li class="header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="feather icon-bell"></i>
@@ -108,10 +106,10 @@
                                                     src="{% static 'files/assets/images/avatar-4.png' %}"
                                                     alt="Generic placeholder image">
                                                 <div class="media-body">
-                                                    <h5 class="notification-user">Felipe Aponte Cardenas</h5>
+                                                    <h5 class="notification-user">John Doe</h5>
                                                     <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
                                                         elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
+                                                    
                                                 </div>
                                             </div>
                                         </li>
@@ -124,14 +122,14 @@
                                                     <h5 class="notification-user">Joseph William</h5>
                                                     <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
                                                         elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
+                                                    
                                                 </div>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="media">
                                                 <img class="img-radius"
-                                                    src="{% static 'files/assets/images/avatar-4.png' %}"
+                                                    src="{% static 'files/assets/images/avatar-4.jpg' %}"
                                                     alt="Generic placeholder image">
                                                 <div class="media-body">
                                                     <h5 class="notification-user">Sara Soudein</h5>
@@ -151,7 +149,7 @@
                                         <span class="badge bg-c-green">3</span>
                                     </div>
                                 </div>
-                            </li> -->
+                            </li>
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
@@ -167,26 +165,26 @@
                                                 <i class="feather icon-settings"></i> Settings
                                             </a>
                                         </li>
-                                        <!-- <li>
+                                        <li>
                                             <a href="#">
                                                 <i class="feather icon-user"></i> Profile
                                             </a>
-                                        </li> -->
+                                        </li>
                                         <!-- <li>
                                             <a href="email-inbox.html">
                                                 <i class="feather icon-mail"></i> My Messages
                                             </a>
-                                        </li> -->
-                                        <!-- <li>
+                                        </li>
+                                        <li>
                                             <a href="auth-lock-screen.html">
                                                 <i class="feather icon-lock"></i> Lock Screen
                                             </a>
-                                        </li> -->
+                                        </li>
                                         <li>
-                                            <a href="/logout/">
+                                            <a href="auth-sign-in-social.html">
                                                 <i class="feather icon-log-out"></i> Logout
                                             </a>
-                                        </li>
+                                        </li> -->
                                     </ul>
                                 </div>
                             </li>
@@ -243,7 +241,7 @@
                                     data-status="online" data-username="Alice">
                                     <a class="media-left" href="#!">
                                         <img class="media-object img-radius"
-                                            src="{% static 'files/assets/images/avatar-4.png' %}"
+                                            src="{% static 'files/assets/images/avatar-4.jpg' %}"
                                             alt="Generic placeholder image">
                                         <div class="live-status bg-success"></div>
                                     </a>
@@ -352,19 +350,18 @@
                                             <span class="pcoded-mtext">Dashboard</span>
                                         </a>
                                         <ul class="pcoded-submenu">
-                                            <li class="active">
-                                                <a href="index-2.html" class="waves-effect waves-dark">
+                                            <li class>
+                                                <a href="/dashboard/" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Default</span>
                                                 </a>
                                             </li>
-                                            <li class>
-                                                <a href="/team_page/" class="waves-effect waves-dark">
-                                                    <span class="pcoded-mtext">CRM</span>
+                                            <li class="active">
+                                                <a class="waves-effect waves-dark">
+                                                    <span class="pcoded-mtext">Mi Equipo</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/dashboard-analytics.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="dashboard-analytics.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Analytics</span>
                                                     <span class="pcoded-badge label label-info ">NEW</span>
                                                 </a>
@@ -384,26 +381,23 @@
                                                 </a>
                                                 <ul class="pcoded-submenu">
                                                     <li class>
-                                                        <a href="default/menu-static.html"
-                                                            class="waves-effect waves-dark">
+                                                        <a href="menu-static.html" class="waves-effect waves-dark">
                                                             <span class="pcoded-mtext">Static Layout</span>
                                                         </a>
                                                     </li>
                                                     <li class>
-                                                        <a href="default/menu-header-fixed.html"
+                                                        <a href="menu-header-fixed.html"
                                                             class="waves-effect waves-dark">
                                                             <span class="pcoded-mtext">Header Fixed</span>
                                                         </a>
                                                     </li>
                                                     <li class>
-                                                        <a href="default/menu-compact.html"
-                                                            class="waves-effect waves-dark">
+                                                        <a href="menu-compact.html" class="waves-effect waves-dark">
                                                             <span class="pcoded-mtext">Compact</span>
                                                         </a>
                                                     </li>
                                                     <li class>
-                                                        <a href="default/menu-sidebar.html"
-                                                            class="waves-effect waves-dark">
+                                                        <a href="menu-sidebar.html" class="waves-effect waves-dark">
                                                             <span class="pcoded-mtext">Sidebar Fixed</span>
                                                         </a>
                                                     </li>
@@ -415,40 +409,40 @@
                                                 </a>
                                                 <ul class="pcoded-submenu">
                                                     <li class>
-                                                        <a href="default/menu-horizontal-static.html" target="_blank"
+                                                        <a href="menu-horizontal-static.html" target="_blank"
                                                             class="waves-effect waves-dark">
                                                             <span class="pcoded-mtext">Static Layout</span>
                                                         </a>
                                                     </li>
                                                     <li class>
-                                                        <a href="default/menu-horizontal-fixed.html" target="_blank"
+                                                        <a href="menu-horizontal-fixed.html" target="_blank"
                                                             class="waves-effect waves-dark">
                                                             <span class="pcoded-mtext">Fixed layout</span>
                                                         </a>
                                                     </li>
                                                     <li class>
-                                                        <a href="default/menu-horizontal-icon.html" target="_blank"
+                                                        <a href="menu-horizontal-icon.html" target="_blank"
                                                             class="waves-effect waves-dark">
                                                             <span class="pcoded-mtext">Static With Icon</span>
                                                         </a>
                                                     </li>
                                                     <li class>
-                                                        <a href="default/menu-horizontal-icon-fixed.html"
-                                                            target="_blank" class="waves-effect waves-dark">
+                                                        <a href="menu-horizontal-icon-fixed.html" target="_blank"
+                                                            class="waves-effect waves-dark">
                                                             <span class="pcoded-mtext">Fixed With Icon</span>
                                                         </a>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li class>
-                                                <a href="default/menu-bottom.html" class="waves-effect waves-dark">
+                                                <a href="menu-bottom.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Bottom Menu</span>
                                                 </a>
                                             </li>
                                         </ul>
                                     </li>
                                     <li class>
-                                        <a href="default/navbar-light.html" class="waves-effect waves-dark">
+                                        <a href="navbar-light.html" class="waves-effect waves-dark">
                                             <span class="pcoded-micon">
                                                 <i class="feather icon-menu"></i>
                                             </span>
@@ -465,24 +459,24 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class>
-                                                <a href="default/widget-statistic.html" class="waves-effect waves-dark">
+                                                <a href="widget-statistic.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Statistic</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/widget-data.html" class="waves-effect waves-dark">
+                                                <a href="widget-data.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Data</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/widget-chart.html" class="waves-effect waves-dark">
+                                                <a href="widget-chart.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Chart Widget</span>
                                                 </a>
                                             </li>
                                         </ul>
-                                    </li>
+                                    </li> -->
                                 </ul>
-                                <div class="pcoded-navigation-label">UI Element</div>
+                                <!-- <div class="pcoded-navigation-label">UI Element</div>
                                 <ul class="pcoded-item pcoded-left-item">
                                     <li class="pcoded-hasmenu">
                                         <a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -493,72 +487,72 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class>
-                                                <a href="default/alert.html" class="waves-effect waves-dark">
+                                                <a href="alert.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Alert</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/breadcrumb.html" class="waves-effect waves-dark">
+                                                <a href="breadcrumb.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Breadcrumbs</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/button.html" class="waves-effect waves-dark">
+                                                <a href="button.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Button</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/box-shadow.html" class="waves-effect waves-dark">
+                                                <a href="box-shadow.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Box-Shadow</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/accordion.html" class="waves-effect waves-dark">
+                                                <a href="accordion.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Accordion</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/generic-class.html" class="waves-effect waves-dark">
+                                                <a href="generic-class.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Generic Class</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/tabs.html" class="waves-effect waves-dark">
+                                                <a href="tabs.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Tabs</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/color.html" class="waves-effect waves-dark">
+                                                <a href="color.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Color</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/label-badge.html" class="waves-effect waves-dark">
+                                                <a href="label-badge.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Label Badge</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/progress-bar.html" class="waves-effect waves-dark">
+                                                <a href="progress-bar.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Progress Bar</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/list.html" class="waves-effect waves-dark">
+                                                <a href="list.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">List</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/tooltip.html" class="waves-effect waves-dark">
+                                                <a href="tooltip.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Tooltip And Popover</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/typography.html" class="waves-effect waves-dark">
+                                                <a href="typography.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Typography</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/other.html" class="waves-effect waves-dark">
+                                                <a href="other.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Other</span>
                                                 </a>
                                             </li>
@@ -573,58 +567,58 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class=" ">
-                                                <a href="default/draggable.html" class="waves-effect waves-dark">
+                                                <a href="draggable.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Draggable</span>
                                                 </a>
                                             </li>
                                     </li>
                                     <li class=" ">
-                                        <a href="default/modal.html" class="waves-effect waves-dark">
+                                        <a href="modal.html" class="waves-effect waves-dark">
                                             <span class="pcoded-mtext">Modal</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="default/notification.html" class="waves-effect waves-dark">
+                                        <a href="notification.html" class="waves-effect waves-dark">
                                             <span class="pcoded-mtext">Notifications</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="default/rating.html" class="waves-effect waves-dark">
+                                        <a href="rating.html" class="waves-effect waves-dark">
                                             <span class="pcoded-mtext">Rating</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="default/range-slider.html" class="waves-effect waves-dark">
+                                        <a href="range-slider.html" class="waves-effect waves-dark">
                                             <span class="pcoded-mtext">Range Slider</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="default/slider.html" class="waves-effect waves-dark">
+                                        <a href="slider.html" class="waves-effect waves-dark">
                                             <span class="pcoded-mtext">Slider</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="default/syntax-highlighter.html" class="waves-effect waves-dark">
+                                        <a href="syntax-highlighter.html" class="waves-effect waves-dark">
                                             <span class="pcoded-mtext">Syntax Highlighter</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="default/tour.html" class="waves-effect waves-dark">
+                                        <a href="tour.html" class="waves-effect waves-dark">
                                             <span class="pcoded-mtext">Tour</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="default/treeview.html" class="waves-effect waves-dark">
+                                        <a href="treeview.html" class="waves-effect waves-dark">
                                             <span class="pcoded-mtext">Tree View</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="default/nestable.html" class="waves-effect waves-dark">
+                                        <a href="nestable.html" class="waves-effect waves-dark">
                                             <span class="pcoded-mtext">Nestable</span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="default/toolbar.html" class="waves-effect waves-dark">
+                                        <a href="toolbar.html" class="waves-effect waves-dark">
                                             <span class="pcoded-mtext">Toolbar</span>
                                         </a>
                                     </li>
@@ -639,24 +633,24 @@
                                     </a>
                                     <ul class="pcoded-submenu">
                                         <li class=" ">
-                                            <a href="default/session-timeout.html" class="waves-effect waves-dark">
+                                            <a href="session-timeout.html" class="waves-effect waves-dark">
                                                 <span class="pcoded-mtext">Session Timeout</span>
                                             </a>
                                         </li>
                                         <li class=" ">
-                                            <a href="default/session-idle-timeout.html" class="waves-effect waves-dark">
+                                            <a href="session-idle-timeout.html" class="waves-effect waves-dark">
                                                 <span class="pcoded-mtext">Session Idle Timeout</span>
                                             </a>
                                         </li>
                                         <li class=" ">
-                                            <a href="default/offline.html" class="waves-effect waves-dark">
+                                            <a href="offline.html" class="waves-effect waves-dark">
                                                 <span class="pcoded-mtext">Offline</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li class=" ">
-                                    <a href="default/animation.html" class="waves-effect waves-dark">
+                                    <a href="animation.html" class="waves-effect waves-dark">
                                         <span class="pcoded-micon">
                                             <i class="feather icon-aperture rotate-refresh"></i>
                                         </span>
@@ -672,17 +666,17 @@
                                     </a>
                                     <ul class="pcoded-submenu">
                                         <li class=" ">
-                                            <a href="default/icon-font-awesome.html" class="waves-effect waves-dark">
+                                            <a href="icon-font-awesome.html" class="waves-effect waves-dark">
                                                 <span class="pcoded-mtext">Font Awesome</span>
                                             </a>
                                         </li>
                                         <li class=" ">
-                                            <a href="default/icon-themify.html" class="waves-effect waves-dark">
+                                            <a href="icon-themify.html" class="waves-effect waves-dark">
                                                 <span class="pcoded-mtext">Themify</span>
                                             </a>
                                         </li>
                                         <li class=" ">
-                                            <a href="default/icon-simple-line.html" class="waves-effect waves-dark">
+                                            <a href="icon-simple-line.html" class="waves-effect waves-dark">
                                                 <span class="pcoded-mtext">Simple Line Icon</span>
                                             </a>
                                         </li>
@@ -700,32 +694,29 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class=" ">
-                                                <a href="default/form-elements-component.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="form-elements-component.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Components</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/form-elements-add-on.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="form-elements-add-on.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Add-On</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/form-elements-advance.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="form-elements-advance.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Advance</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/form-validation.html" class="waves-effect waves-dark">
+                                                <a href="form-validation.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Validation</span>
                                                 </a>
                                             </li>
                                         </ul>
                                     </li>
                                     <li class=" ">
-                                        <a href="default/form-picker.html" class="waves-effect waves-dark">
+                                        <a href="form-picker.html" class="waves-effect waves-dark">
                                             <span class="pcoded-micon">
                                                 <i class="feather icon-edit-1"></i>
                                             </span>
@@ -734,7 +725,7 @@
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="default/form-select.html" class="waves-effect waves-dark">
+                                        <a href="form-select.html" class="waves-effect waves-dark">
                                             <span class="pcoded-micon">
                                                 <i class="feather icon-feather"></i>
                                             </span>
@@ -742,7 +733,7 @@
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="default/form-masking.html" class="waves-effect waves-dark">
+                                        <a href="form-masking.html" class="waves-effect waves-dark">
                                             <span class="pcoded-micon">
                                                 <i class="feather icon-shield"></i>
                                             </span>
@@ -750,7 +741,7 @@
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="default/form-wizard.html" class="waves-effect waves-dark">
+                                        <a href="form-wizard.html" class="waves-effect waves-dark">
                                             <span class="pcoded-micon">
                                                 <i class="feather icon-tv"></i>
                                             </span>
@@ -769,22 +760,22 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class=" ">
-                                                <a href="default/bs-basic-table.html" class="waves-effect waves-dark">
+                                                <a href="bs-basic-table.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Basic Table</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/bs-table-sizing.html" class="waves-effect waves-dark">
+                                                <a href="bs-table-sizing.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Sizing Table</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/bs-table-border.html" class="waves-effect waves-dark">
+                                                <a href="bs-table-border.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Border Table</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/bs-table-styling.html" class="waves-effect waves-dark">
+                                                <a href="bs-table-styling.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Styling Table</span>
                                                 </a>
                                             </li>
@@ -799,42 +790,42 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class=" ">
-                                                <a href="default/dt-basic.html" class="waves-effect waves-dark">
+                                                <a href="dt-basic.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Basic Initialization</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/dt-advance.html" class="waves-effect waves-dark">
+                                                <a href="dt-advance.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Advance Initialization</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/dt-styling.html" class="waves-effect waves-dark">
+                                                <a href="dt-styling.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Styling</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/dt-api.html" class="waves-effect waves-dark">
+                                                <a href="dt-api.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">API</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/dt-ajax.html" class="waves-effect waves-dark">
+                                                <a href="dt-ajax.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Ajax</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/dt-server-side.html" class="waves-effect waves-dark">
+                                                <a href="dt-server-side.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Server Side</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/dt-plugin.html" class="waves-effect waves-dark">
+                                                <a href="dt-plugin.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Plug-In</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/dt-data-sources.html" class="waves-effect waves-dark">
+                                                <a href="dt-data-sources.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Data Sources</span>
                                                 </a>
                                             </li>
@@ -849,7 +840,7 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class=" ">
-                                                <a href="default/dt-ext-autofill.html" class="waves-effect waves-dark">
+                                                <a href="dt-ext-autofill.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">AutoFill</span>
                                                 </a>
                                             </li>
@@ -859,13 +850,13 @@
                                                 </a>
                                                 <ul class="pcoded-submenu">
                                                     <li class=" ">
-                                                        <a href="default/dt-ext-basic-buttons.html"
+                                                        <a href="dt-ext-basic-buttons.html"
                                                             class="waves-effect waves-dark">
                                                             <span class="pcoded-mtext">Basic Button</span>
                                                         </a>
                                                     </li>
                                                     <li class=" ">
-                                                        <a href="default/dt-ext-buttons-html-5-data-export.html"
+                                                        <a href="dt-ext-buttons-html-5-data-export.html"
                                                             class="waves-effect waves-dark">
                                                             <span class="pcoded-mtext">Data Export</span>
                                                         </a>
@@ -873,54 +864,49 @@
                                                 </ul>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/dt-ext-col-reorder.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="dt-ext-col-reorder.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Col Reorder</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/dt-ext-fixed-columns.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="dt-ext-fixed-columns.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Fixed Columns</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/dt-ext-fixed-header.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="dt-ext-fixed-header.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Fixed Header</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/dt-ext-key-table.html" class="waves-effect waves-dark">
+                                                <a href="dt-ext-key-table.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Key Table</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/dt-ext-responsive.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="dt-ext-responsive.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Responsive</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/dt-ext-row-reorder.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="dt-ext-row-reorder.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Row Reorder</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/dt-ext-scroller.html" class="waves-effect waves-dark">
+                                                <a href="dt-ext-scroller.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Scroller</span>
                                                 </a>
                                             </li>
                                             <li class=" ">
-                                                <a href="default/dt-ext-select.html" class="waves-effect waves-dark">
+                                                <a href="dt-ext-select.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Select Table</span>
                                                 </a>
                                             </li>
                                         </ul>
                                     </li>
                                     <li class=" ">
-                                        <a href="default/foo-table.html" class="waves-effect waves-dark">
+                                        <a href="foo-table.html" class="waves-effect waves-dark">
                                             <span class="pcoded-micon">
                                                 <i class="feather icon-hash"></i>
                                             </span>
@@ -936,63 +922,54 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class>
-                                                <a href="default/handson-appearance.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="handson-appearance.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Appearance</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/handson-data-operation.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="handson-data-operation.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Data Operation</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/handson-rows-cols.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="handson-rows-cols.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Rows Columns</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/handson-columns-only.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="handson-columns-only.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Columns Only</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/handson-cell-features.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="handson-cell-features.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Cell Features</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/handson-cell-types.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="handson-cell-types.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Cell Types</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/handson-integrations.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="handson-integrations.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Integrations</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/handson-rows-only.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="handson-rows-only.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Rows Only</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/handson-utilities.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="handson-utilities.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Utilities</span>
                                                 </a>
                                             </li>
                                         </ul>
                                     </li>
                                     <li class>
-                                        <a href="default/editable-table.html" class="waves-effect waves-dark">
+                                        <a href="editable-table.html" class="waves-effect waves-dark">
                                             <span class="pcoded-micon">
                                                 <i class="feather icon-edit"></i>
                                             </span>
@@ -1011,62 +988,62 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class>
-                                                <a href="default/chart-google.html" class="waves-effect waves-dark">
+                                                <a href="chart-google.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Google Chart</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/chart-chartjs.html" class="waves-effect waves-dark">
+                                                <a href="chart-chartjs.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">ChartJs</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/chart-list.html" class="waves-effect waves-dark">
+                                                <a href="chart-list.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">List Chart</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/chart-float.html" class="waves-effect waves-dark">
+                                                <a href="chart-float.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Float Chart</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/chart-knob.html" class="waves-effect waves-dark">
+                                                <a href="chart-knob.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Knob chart</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/chart-morris.html" class="waves-effect waves-dark">
+                                                <a href="chart-morris.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Morris Chart</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/chart-nvd3.html" class="waves-effect waves-dark">
+                                                <a href="chart-nvd3.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Nvd3 Chart</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/chart-peity.html" class="waves-effect waves-dark">
+                                                <a href="chart-peity.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Peity Chart</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/chart-radial.html" class="waves-effect waves-dark">
+                                                <a href="chart-radial.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Radial Chart</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/chart-rickshaw.html" class="waves-effect waves-dark">
+                                                <a href="chart-rickshaw.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Rickshaw Chart</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/chart-sparkline.html" class="waves-effect waves-dark">
+                                                <a href="chart-sparkline.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Sparkline Chart</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/chart-c3.html" class="waves-effect waves-dark">
+                                                <a href="chart-c3.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">C3 Chart</span>
                                                 </a>
                                             </li>
@@ -1081,22 +1058,22 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class>
-                                                <a href="default/map-google.html" class="waves-effect waves-dark">
+                                                <a href="map-google.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Google Maps</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/map-vector.html" class="waves-effect waves-dark">
+                                                <a href="map-vector.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Vector Maps</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/map-api.html" class="waves-effect waves-dark">
+                                                <a href="map-api.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Google Map Search API</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/location.html" class="waves-effect waves-dark">
+                                                <a href="location.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Location</span>
                                                 </a>
                                             </li>
@@ -1114,25 +1091,23 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class>
-                                                <a href="default/auth-sign-in-social.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="auth-sign-in-social.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Login</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/auth-sign-up-social.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="auth-sign-up-social.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Registration</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/auth-reset-password.html" target="_blank"
+                                                <a href="auth-reset-password.html" target="_blank"
                                                     class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Forgot Password</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/auth-lock-screen.html" target="_blank"
+                                                <a href="auth-lock-screen.html" target="_blank"
                                                     class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Lock Screen</span>
                                                 </a>
@@ -1148,17 +1123,17 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class>
-                                                <a href="default/error.html" class="waves-effect waves-dark">
+                                                <a href="error.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Error</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/comming-soon.html" class="waves-effect waves-dark">
+                                                <a href="comming-soon.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Comming Soon</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/offline-ui.html" class="waves-effect waves-dark">
+                                                <a href="offline-ui.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Offline UI</span>
                                                 </a>
                                             </li>
@@ -1173,17 +1148,17 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class>
-                                                <a href="default/email-compose.html" class="waves-effect waves-dark">
+                                                <a href="email-compose.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Compose Email</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/email-inbox.html" class="waves-effect waves-dark">
+                                                <a href="email-inbox.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Inbox</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/email-read.html" class="waves-effect waves-dark">
+                                                <a href="email-read.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Read Mail</span>
                                                 </a>
                                             </li>
@@ -1193,7 +1168,7 @@
                                 <div class="pcoded-navigation-label">App</div>
                                 <ul class="pcoded-item pcoded-left-item">
                                     <li class>
-                                        <a href="default/todo.html" class="waves-effect waves-dark">
+                                        <a href="todo.html" class="waves-effect waves-dark">
                                             <span class="pcoded-micon">
                                                 <i class="feather icon-bookmark"></i>
                                             </span>
@@ -1212,12 +1187,12 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class>
-                                                <a href="default/ck-editor.html" class="waves-effect waves-dark">
+                                                <a href="ck-editor.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">CK-Editor</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/wysiwyg-editor.html" class="waves-effect waves-dark">
+                                                <a href="wysiwyg-editor.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">WYSIWYG Editor</span>
                                                 </a>
                                             </li>
@@ -1232,13 +1207,12 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class>
-                                                <a href="default/event-full-calender.html"
-                                                    class="waves-effect waves-dark">
+                                                <a href="event-full-calender.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Full Calendar</span>
                                                 </a>
                                             </li>
                                             <li class>
-                                                <a href="default/event-clndr.html" class="waves-effect waves-dark">
+                                                <a href="event-clndr.html" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">CLNDER</span>
                                                     <span class="pcoded-badge label label-info">NEW</span>
                                                 </a>
@@ -1246,7 +1220,7 @@
                                         </ul>
                                     </li>
                                     <li class>
-                                        <a href="default/image-crop.html" class="waves-effect waves-dark">
+                                        <a href="image-crop.html" class="waves-effect waves-dark">
                                             <span class="pcoded-micon">
                                                 <i class="feather icon-scissors"></i>
                                                 <b>IC</b>
@@ -1255,7 +1229,7 @@
                                         </a>
                                     </li>
                                     <li class>
-                                        <a href="default/file-upload.html" class="waves-effect waves-dark">
+                                        <a href="file-upload.html" class="waves-effect waves-dark">
                                             <span class="pcoded-micon">
                                                 <i class="feather icon-upload-cloud"></i>
                                             </span>
@@ -1263,7 +1237,7 @@
                                         </a>
                                     </li>
                                     <li class>
-                                        <a href="default/change-loges.html" class="waves-effect waves-dark">
+                                        <a href="change-loges.html" class="waves-effect waves-dark">
                                             <span class="pcoded-micon">
                                                 <i class="feather icon-briefcase"></i>
                                             </span>
@@ -1316,7 +1290,7 @@
                                         </a>
                                     </li>
                                     <li class>
-                                        <a href="default/sample-page.html" class="waves-effect waves-dark">
+                                        <a href="sample-page.html" class="waves-effect waves-dark">
                                             <span class="pcoded-micon">
                                                 <i class="feather icon-watch"></i>
                                             </span>
@@ -1324,8 +1298,8 @@
                                         </a>
                                     </li>
                                 </ul>
+                            </div> -->
                             </div>
-                        </div> -->
                     </nav>
 
                     <div class="pcoded-content">
@@ -1336,8 +1310,8 @@
                                     <div class="page-header-title">
                                         <i class="feather icon-home bg-c-blue"></i>
                                         <div class="d-inline">
-                                            <h5>Dashboard</h5>
-                                            <span>Realtime Data</span>
+                                            <h5>Mi Equipo </h5>
+                                            <!-- <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> -->
                                         </div>
                                     </div>
                                 </div>
@@ -1345,9 +1319,9 @@
                                     <div class="page-header-breadcrumb">
                                         <ul class=" breadcrumb breadcrumb-title">
                                             <li class="breadcrumb-item">
-                                                <a href="index-2.html"><i class="feather icon-home"></i></a>
+                                                <a href="../index-2.html"><i class="feather icon-home"></i></a>
                                             </li>
-                                            <li class="breadcrumb-item"><a href="#!">Dashboard</a> </li>
+                                            <li class="breadcrumb-item"><a href="#!">Mi Equipo</a> </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -1361,122 +1335,84 @@
 
                                         <div class="row">
 
-                                            <div class="col-md-12 col-xl-8">
-                                                <div class="card sale-card" style="width: 150%;">
-                                                    <div class="card-header">
-                                                        <h5>Datos</h5>
-                                                    </div>
-                                                    <!-- <div class="card-block">
-                                                        <div id="sales-analytics" class="chart-shadow"
-                                                            style="height:380px"></div>
-                                                    </div> -->
-                                                    <div>
-                                                        <div style="width: 50%; float:left">
-                                                            <div>
-                                                                <canvas id="myChart" height="500"></canvas>
-                                                            </div>
-    
-                                                            <div>
-                                                                <canvas id="velocity" height="500"></canvas>
-                                                            </div>
-    
-                                                            <div>
-                                                                <canvas id="voltage" height="500"></canvas>
-                                                            </div>
-                                                        </div>
-    
-                                                        <div style="width: 50%; float:right">
-                                                            <div>
-                                                                <canvas id="current" height="500" width="500"></canvas>
-                                                            </div>
-    
-                                                            <div>
-                                                                <canvas id="imu" height="500"></canvas>
-                                                            </div>
-    
-                                                            <div>
-                                                                <canvas id="pwm" height="500"></canvas>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <script src="{% static 'js/graph.js' %}"></script>
-
-                                            <div class="col-xl-12">
-                                                <div class="card proj-progress-card">
-                                                    <div class="card-block">
-                                                        <div class="row">
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <h6>Published Project</h6>
-                                                                <h5 class="m-b-30 f-w-700">532<span
-                                                                        class="text-c-green m-l-10">+1.69%</span></h5>
-                                                                <div class="progress">
-                                                                    <div class="progress-bar bg-c-red"
-                                                                        style="width:25%"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <h6>Completed Task</h6>
-                                                                <h5 class="m-b-30 f-w-700">4,569<span
-                                                                        class="text-c-red m-l-10">-0.5%</span></h5>
-                                                                <div class="progress">
-                                                                    <div class="progress-bar bg-c-blue"
-                                                                        style="width:65%"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <h6>Successfull Task</h6>
-                                                                <h5 class="m-b-30 f-w-700">89%<span
-                                                                        class="text-c-green m-l-10">+0.99%</span></h5>
-                                                                <div class="progress">
-                                                                    <div class="progress-bar bg-c-green"
-                                                                        style="width:85%"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <h6>Ongoing Project</h6>
-                                                                <h5 class="m-b-30 f-w-700">365<span
-                                                                        class="text-c-green m-l-10">+0.35%</span></h5>
-                                                                <div class="progress">
-                                                                    <div class="progress-bar bg-c-yellow"
-                                                                        style="width:45%"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-md-12 col-xl-4">
-                                                <div class="card card-blue text-white">
-                                                    <div class="card-block p-b-0">
-                                                        <div class="row m-b-50">
+                                            <div class="col-xl-3 col-md-6">
+                                                <div class="card prod-p-card card-red">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center m-b-30">
                                                             <div class="col">
-                                                                <h6 class="m-b-5">Average Data</h6>
-                                                                <!-- <h5 class="m-b-0 f-w-700">$2665.00</h5> -->
+                                                                <h6 class="m-b-5 text-white">Universidad</h6>
+                                                                <h3 class="m-b-0 f-w-700 text-white">Universidad Militar Nueva Granada</h3>
                                                             </div>
-                                                            <!-- <div class="col-auto text-center">
-                                                                <p class="m-b-5">Direct Sale</p>
-                                                                <h6 class="m-b-0">$1768</h6>
-                                                            </div>
-                                                            <div class="col-auto text-center">
-                                                                <p class="m-b-5">Referal</p>
-                                                                <h6 class="m-b-0">$897</h6>
+                                                            <!-- <div class="col-auto">
+                                                                <i class="fas fa-money-bill-alt text-c-red f-18"></i>
                                                             </div> -->
                                                         </div>
-                                                        <div id="sec-ecommerce-chart-line" class style="height:60px">
-                                                        </div>
-                                                        <div id="sec-ecommerce-chart-bar" style="height:195px"></div>
+                                                        <!-- <p class="m-b-0 text-white"><span
+                                                                class="label label-danger m-r-10">+11%</span>From
+                                                            Previous Month</p> -->
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-4 col-md-6">
-                                                <div class="card latest-update-card">
+                                            <div class="col-xl-3 col-md-6">
+                                                <div class="card prod-p-card card-blue">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center m-b-30">
+                                                            <div class="col">
+                                                                <h6 class="m-b-5 text-white">Nombre Del Equipo</h6>
+                                                                <h3 class="m-b-0 f-w-700 text-white">HamiltonEV</h3>
+                                                            </div>
+                                                            <!-- <div class="col-auto">
+                                                                <i class="fas fa-database text-c-blue f-18"></i>
+                                                            </div> -->
+                                                        </div>
+                                                        <!-- <p class="m-b-0 text-white"><span
+                                                                class="label label-primary m-r-10">+12%</span>From
+                                                            Previous Month</p> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-md-6">
+                                                <div class="card prod-p-card card-green">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center m-b-30">
+                                                            <div class="col">
+                                                                <h6 class="m-b-5 text-white">Numero De Integrantes</h6>
+                                                                <h3 class="m-b-0 f-w-700 text-white">8</h3>
+                                                            </div>
+                                                            <!-- <div class="col-auto">
+                                                                <i class="fas fa-dollar-sign text-c-green f-18"></i>
+                                                            </div> -->
+                                                        </div>
+                                                        <!-- <p class="m-b-0 text-white"><span
+                                                                class="label label-success m-r-10">+52%</span>From
+                                                            Previous Month</p> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-md-6">
+                                                <div class="card prod-p-card card-yellow">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center m-b-30">
+                                                            <div class="col">
+                                                                <h6 class="m-b-5 text-white">Lider Actual</h6>
+                                                                <h3 class="m-b-0 f-w-700 text-white">Felipe Aponte Cardenas</h3>
+                                                            </div>
+                                                            <!-- <div class="col-auto">
+                                                                <i class="fas fa-tags text-c-yellow f-18"></i>
+                                                            </div> -->
+                                                        </div>
+                                                        <!-- <p class="m-b-0 text-white"><span
+                                                                class="label label-warning m-r-10">+52%</span>From
+                                                            Previous Month</p> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-xl-6 col-md-12">
+                                                <div class="card new-cust-card">
                                                     <div class="card-header">
-                                                        <h5>Scoreboard</h5>
+                                                        <h5>Lideres</h5>
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
                                                                 <li class="first-opt"><i
@@ -1495,95 +1431,62 @@
                                                         </div>
                                                     </div>
                                                     <div class="card-block">
-                                                        <div class="scroll-widget">
-                                                            <div class="latest-update-box">
-                                                                <div class="row p-t-20 p-b-30">
-                                                                    <div class="col-auto text-right update-meta p-r-0">
-                                                                        <i class="b-primary update-icon ring"></i>
-                                                                    </div>
-                                                                    <div class="col p-l-5">
-                                                                        <a href="#!">
-                                                                            <h6>Universidad Militar Nueva Granada</h6>
-                                                                        </a>
-                                                                        <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
-                                                                            <!-- sit amet, <a href="#!" class="text-c-blue"> -->
-                                                                                <!-- More</a></p> -->
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row p-b-30">
-                                                                    <div class="col-auto text-right update-meta p-r-0">
-                                                                        <i class="b-primary update-icon ring"></i>
-                                                                    </div>
-                                                                    <div class="col p-l-5">
-                                                                        <a href="#!">
-                                                                            <h6>Universidad Militar Nueva Granada</h6>
-                                                                        </a>
-                                                                        <!-- <p class="text-muted m-b-0">Lorem dolor sit -->
-                                                                            <!-- amet, <a href="#!" class="text-c-blue"> -->
-                                                                                <!-- More</a></p> -->
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row p-b-30">
-                                                                    <div class="col-auto text-right update-meta p-r-0">
-                                                                        <i class="b-success update-icon ring"></i>
-                                                                    </div>
-                                                                    <div class="col p-l-5">
-                                                                        <a href="#!">
-                                                                            <h6>Universidad Militar Nueva Granada</h6>
-                                                                        </a>
-                                                                        <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
-                                                                            <!-- sit ipsum amet, <a href="#!" -->
-                                                                                <!-- class="text-c-green"> More</a></p> -->
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row p-b-30">
-                                                                    <div class="col-auto text-right update-meta p-r-0">
-                                                                        <i class="b-danger update-icon ring"></i>
-                                                                    </div>
-                                                                    <div class="col p-l-5">
-                                                                        <a href="#!">
-                                                                            <h6>Universidad Militar Nueva Granada</h6>
-                                                                        </a>
-                                                                        <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
-                                                                            <!-- sit amet, <a href="#!" class="text-c-red"> -->
-                                                                                <!-- More</a></p> -->
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row p-b-30">
-                                                                    <div class="col-auto text-right update-meta p-r-0">
-                                                                        <i class="b-primary update-icon ring"></i>
-                                                                    </div>
-                                                                    <div class="col p-l-5">
-                                                                        <a href="#!">
-                                                                            <h6>Universidad Militar Nueva Granada</h6>
-                                                                        </a>
-                                                                        <!-- <p class="text-muted m-b-0">Lorem dolor sit -->
-                                                                            <!-- amet, <a href="#!" class="text-c-blue"> -->
-                                                                                <!-- More</a></p> -->
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-auto text-right update-meta p-r-0">
-                                                                        <i class="b-success update-icon ring"></i>
-                                                                    </div>
-                                                                    <div class="col p-l-5">
-                                                                        <a href="#!">
-                                                                            <h6>Universidad Militar Nueva Granada</h6>
-                                                                        </a>
-                                                                        <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
-                                                                            <!-- sit ipsum amet, <a href="#!" -->
-                                                                                <!-- class="text-c-green"> More</a></p> -->
-                                                                    </div>
-                                                                </div>
+                                                        <div class="align-middle m-b-35">
+                                                            <img src="{% static 'files/assets/images/avatar-4.png' %}"
+                                                                alt="user image"
+                                                                class="img-radius img-40 align-top m-r-15">
+                                                            <div class="d-inline-block">
+                                                                <a href="#!">
+                                                                    <h6>Felipe Aponte Cardenas</h6>
+                                                                </a>
+                                                                <p class="text-muted m-b-0">Lider equipo</p>
+                                                                <span class="status active"></span>
                                                             </div>
                                                         </div>
+                                                        <div class="align-middle m-b-35">
+                                                            <img src="{% static 'files/assets/images/avatar-4.png' %}"
+                                                                alt="user image"
+                                                                class="img-radius img-40 align-top m-r-15">
+                                                            <div class="d-inline-block">
+                                                                <a href="#!">
+                                                                    <h6>Felipe Aponte Cardenas</h6>
+                                                                </a>
+                                                                <p class="text-muted m-b-0">Profesor
+                                                                </p>
+                                                                <span class="status active"></span>
+                                                            </div>
+                                                        </div>
+                                                        <!-- <div class="align-middle m-b-35">
+                                                            <img src="{% static 'files/assets/images/avatar-3.jpg' %}"
+                                                                alt="user image"
+                                                                class="img-radius img-40 align-top m-r-15">
+                                                            <div class="d-inline-block">
+                                                                <a href="#!">
+                                                                    <h6>Felipe Aponte Cardenas</h6>
+                                                                </a>
+                                                                <p class="text-muted m-b-0">Cheers!</p>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="align-middle m-b-0">
+                                                            <img src="{% static 'files/assets/images/avatar-2.jpg' %}"
+                                                                alt="user image"
+                                                                class="img-radius img-40 align-top m-r-15">
+                                                            <div class="d-inline-block">
+                                                                <a href="#!">
+                                                                    <h6>Alex Thompson</h6>
+                                                                </a>
+                                                                <p class="text-muted m-b-0">Cheers!</p>
+                                                                <span class="status active"></span>
+                                                            </div>
+                                                        </div> -->
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-4 col-md-6">
-                                                <div class="card latest-update-card">
+                                            <div class="col-xl-6 col-md-12">
+                                                <div class="card new-cust-card">
                                                     <div class="card-header">
-                                                        <h5>Global Scoreboard</h5>
+                                                        <h5>Miembros</h5>
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
                                                                 <li class="first-opt"><i
@@ -1602,86 +1505,53 @@
                                                         </div>
                                                     </div>
                                                     <div class="card-block">
-                                                        <div class="scroll-widget">
-                                                            <div class="latest-update-box">
-                                                                <div class="row p-t-20 p-b-30">
-                                                                    <div class="col-auto text-right update-meta p-r-0">
-                                                                        <i class="b-primary update-icon ring"></i>
-                                                                    </div>
-                                                                    <div class="col p-l-5">
-                                                                        <a href="#!">
-                                                                            <h6>Universidad Militar Nueva Granada</h6>
-                                                                        </a>
-                                                                        <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
-                                                                            <!-- sit amet, <a href="#!" class="text-c-blue"> -->
-                                                                                <!-- More</a></p> -->
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row p-b-30">
-                                                                    <div class="col-auto text-right update-meta p-r-0">
-                                                                        <i class="b-primary update-icon ring"></i>
-                                                                    </div>
-                                                                    <div class="col p-l-5">
-                                                                        <a href="#!">
-                                                                            <h6>Universidad Militar Nueva Granada</h6>
-                                                                        </a>
-                                                                        <!-- <p class="text-muted m-b-0">Lorem dolor sit -->
-                                                                            <!-- amet, <a href="#!" class="text-c-blue"> -->
-                                                                                <!-- More</a></p> -->
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row p-b-30">
-                                                                    <div class="col-auto text-right update-meta p-r-0">
-                                                                        <i class="b-success update-icon ring"></i>
-                                                                    </div>
-                                                                    <div class="col p-l-5">
-                                                                        <a href="#!">
-                                                                            <h6>Universidad Militar Nueva Granada</h6>
-                                                                        </a>
-                                                                        <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
-                                                                            <!-- sit ipsum amet, <a href="#!" -->
-                                                                                <!-- class="text-c-green"> More</a></p> -->
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row p-b-30">
-                                                                    <div class="col-auto text-right update-meta p-r-0">
-                                                                        <i class="b-danger update-icon ring"></i>
-                                                                    </div>
-                                                                    <div class="col p-l-5">
-                                                                        <a href="#!">
-                                                                            <h6>Universidad Militar Nueva Granada</h6>
-                                                                        </a>
-                                                                        <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
-                                                                            <!-- sit amet, <a href="#!" class="text-c-red"> -->
-                                                                                <!-- More</a></p> -->
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row p-b-30">
-                                                                    <div class="col-auto text-right update-meta p-r-0">
-                                                                        <i class="b-primary update-icon ring"></i>
-                                                                    </div>
-                                                                    <div class="col p-l-5">
-                                                                        <a href="#!">
-                                                                            <h6>Universidad Militar Nueva Granada</h6>
-                                                                        </a>
-                                                                        <!-- <p class="text-muted m-b-0">Lorem dolor sit -->
-                                                                            <!-- amet, <a href="#!" class="text-c-blue"> -->
-                                                                                <!-- More</a></p> -->
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-auto text-right update-meta p-r-0">
-                                                                        <i class="b-success update-icon ring"></i>
-                                                                    </div>
-                                                                    <div class="col p-l-5">
-                                                                        <a href="#!">
-                                                                            <h6>Universidad Militar Nueva Granada</h6>
-                                                                        </a>
-                                                                        <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
-                                                                            <!-- sit ipsum amet, <a href="#!" -->
-                                                                                <!-- class="text-c-green"> More</a></p> -->
-                                                                    </div>
-                                                                </div>
+                                                        <div class="align-middle m-b-35">
+                                                            <img src="{% static 'files/assets/images/avatar-4.png' %}"
+                                                                alt="user image"
+                                                                class="img-radius img-40 align-top m-r-15">
+                                                            <div class="d-inline-block">
+                                                                <a href="#!">
+                                                                    <h6>Felipe Aponte Cardenas</h6>
+                                                                </a>
+                                                                <p class="text-muted m-b-0">Miembro</p>
+                                                                <span class="status active"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="align-middle m-b-35">
+                                                            <img src="{% static 'files/assets/images/avatar-4.png' %}"
+                                                                alt="user image"
+                                                                class="img-radius img-40 align-top m-r-15">
+                                                            <div class="d-inline-block">
+                                                                <a href="#!">
+                                                                    <h6>Felipe Aponte Cardenas</h6>
+                                                                </a>
+                                                                <p class="text-muted m-b-0">Miembro
+                                                                </p>
+                                                                <span class="status active"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="align-middle m-b-35">
+                                                            <img src="{% static 'files/assets/images/avatar-4.png' %}"
+                                                                alt="user image"
+                                                                class="img-radius img-40 align-top m-r-15">
+                                                            <div class="d-inline-block">
+                                                                <a href="#!">
+                                                                    <h6>Felipe Aponte Cardenas</h6>
+                                                                </a>
+                                                                <p class="text-muted m-b-0">Miembro</p>
+                                                                <span class="status active"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="align-middle m-b-0">
+                                                            <img src="{% static 'files/assets/images/avatar-4.png' %}"
+                                                                alt="user image"
+                                                                class="img-radius img-40 align-top m-r-15">
+                                                            <div class="d-inline-block">
+                                                                <a href="#!">
+                                                                    <h6>Felipe Aponte Cardenas</h6>
+                                                                </a>
+                                                                <p class="text-muted m-b-0">Miembro</p>
+                                                                <span class="status active"></span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1689,10 +1559,134 @@
                                             </div>
 
 
-                                            <!-- <div class="col-md-12">
-                                                <div class="card table-card">
+                                            <!-- <div class="col-xl-4 col-md-12">
+                                                <div class="card comp-card">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col">
+                                                                <h6 class="m-b-25">Impressions</h6>
+                                                                <h3 class="f-w-700 text-c-blue">1,563</h3>
+                                                                <p class="m-b-0">May 23 - June 01 (2017)</p>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <i class="fas fa-eye bg-c-blue"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-md-6">
+                                                <div class="card comp-card">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col">
+                                                                <h6 class="m-b-25">Goal</h6>
+                                                                <h3 class="f-w-700 text-c-green">30,564</h3>
+                                                                <p class="m-b-0">May 23 - June 01 (2017)</p>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <i class="fas fa-bullseye bg-c-green"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-md-6">
+                                                <div class="card comp-card">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col">
+                                                                <h6 class="m-b-25">Impact</h6>
+                                                                <h3 class="f-w-700 text-c-yellow">42.6%</h3>
+                                                                <p class="m-b-0">May 23 - June 01 (2017)</p>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <i class="fas fa-hand-paper bg-c-yellow"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-xl-4 col-md-6">
+                                                <div class="card o-hidden">
                                                     <div class="card-header">
-                                                        <h5>New Products</h5>
+                                                        <h5>Total Leads</h5>
+                                                    </div>
+                                                    <div class="card-block">
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <p class="text-muted m-b-5">Overall</p>
+                                                                <h6>68.52%</h6>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p class="text-muted m-b-5">Monthly</p>
+                                                                <h6>28.90%</h6>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p class="text-muted m-b-5">Day</p>
+                                                                <h6>13.50%</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="sal-income" style="height:100px"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-md-6">
+                                                <div class="card o-hidden">
+                                                    <div class="card-header">
+                                                        <h5>Total Vendors</h5>
+                                                    </div>
+                                                    <div class="card-block">
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <p class="text-muted m-b-5">Overall</p>
+                                                                <h6>68.52%</h6>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p class="text-muted m-b-5">Monthly</p>
+                                                                <h6>28.90%</h6>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p class="text-muted m-b-5">Day</p>
+                                                                <h6>13.50%</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="rent-income" style="height:100px"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-md-12">
+                                                <div class="card o-hidden">
+                                                    <div class="card-header">
+                                                        <h5>Invoice Generate</h5>
+                                                    </div>
+                                                    <div class="card-block">
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <p class="text-muted m-b-5">Overall</p>
+                                                                <h6>68.52%</h6>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p class="text-muted m-b-5">Monthly</p>
+                                                                <h6>28.90%</h6>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <p class="text-muted m-b-5">Day</p>
+                                                                <h6>13.50%</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="income-analysis" style="height:100px"></div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-xl-8 col-md-12">
+                                                <div class="card latest-update-card">
+                                                    <div class="card-header">
+                                                        <h5>Latest Activity</h5>
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
                                                                 <li class="first-opt"><i
@@ -1710,159 +1704,166 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="card-block p-b-0">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-hover m-b-0">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Name</th>
-                                                                        <th>Product Code</th>
-                                                                        <th>Customer</th>
-                                                                        <th>Status</th>
-                                                                        <th>Rating</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>Sofa</td>
-                                                                        <td>#PHD001</td>
-                                                                        <td><a href="https://demo.dashboardpack.com/cdn-cgi/l/email-protection"
-                                                                                class="__cf_email__"
-                                                                                data-cfemail="68090a0b280f05090104460b0705">[email&#160;protected]</a>
-                                                                        </td>
-                                                                        <td><label class="label label-danger">Out
-                                                                                Stock</label></td>
-                                                                        <td>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-default"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-default"></i></a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Computer</td>
-                                                                        <td>#PHD002</td>
-                                                                        <td><a href="https://demo.dashboardpack.com/cdn-cgi/l/email-protection"
-                                                                                class="__cf_email__"
-                                                                                data-cfemail="97f4f3f4d7f0faf6fefbb9f4f8fa">[email&#160;protected]</a>
-                                                                        </td>
-                                                                        <td><label class="label label-success">In
-                                                                                Stock</label></td>
-                                                                        <td>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-default"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-default"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-default"></i></a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Mobile</td>
-                                                                        <td>#PHD003</td>
-                                                                        <td><a href="https://demo.dashboardpack.com/cdn-cgi/l/email-protection"
-                                                                                class="__cf_email__"
-                                                                                data-cfemail="5121202311363c30383d7f323e3c">[email&#160;protected]</a>
-                                                                        </td>
-                                                                        <td><label class="label label-danger">Out
-                                                                                Stock</label></td>
-                                                                        <td>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-default"></i></a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Coat</td>
-                                                                        <td>#PHD004</td>
-                                                                        <td><a href="https://demo.dashboardpack.com/cdn-cgi/l/email-protection"
-                                                                                class="__cf_email__"
-                                                                                data-cfemail="9ffdfcecdff8f2fef6f3b1fcf0f2">[email&#160;protected]</a>
-                                                                        </td>
-                                                                        <td><label class="label label-success">In
-                                                                                Stock</label></td>
-                                                                        <td>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-default"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-default"></i></a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Watch</td>
-                                                                        <td>#PHD005</td>
-                                                                        <td><a href="https://demo.dashboardpack.com/cdn-cgi/l/email-protection"
-                                                                                class="__cf_email__"
-                                                                                data-cfemail="3c5f585f7c5b515d5550125f5351">[email&#160;protected]</a>
-                                                                        </td>
-                                                                        <td><label class="label label-success">In
-                                                                                Stock</label></td>
-                                                                        <td>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-default"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-default"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-default"></i></a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Shoes</td>
-                                                                        <td>#PHD006</td>
-                                                                        <td><a href="https://demo.dashboardpack.com/cdn-cgi/l/email-protection"
-                                                                                class="__cf_email__"
-                                                                                data-cfemail="a4d4d5d6e4c3c9c5cdc88ac7cbc9">[email&#160;protected]</a>
-                                                                        </td>
-                                                                        <td><label class="label label-danger">Out
-                                                                                Stock</label></td>
-                                                                        <td>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-c-yellow"></i></a>
-                                                                            <a href="#!"><i
-                                                                                    class="fa fa-star f-12 text-default"></i></a>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
+                                                    <div class="card-block">
+                                                        <div class="latest-update-box">
+                                                            <div class="row p-t-20 p-b-30">
+                                                                <div class="col-auto text-right update-meta">
+                                                                    <i
+                                                                        class="feather icon-sunrise bg-c-blue update-icon"></i>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <h6>John Deo</h6>
+                                                                    <p class="text-muted m-b-15">The trip was an amazing
+                                                                        and a life changing experience!!</p>
+                                                                    <img src="{% static 'files/assets/images/mega-menu/01.jpg' %}"
+                                                                        alt class="img-fluid img-100 m-r-15 m-b-10">
+                                                                    <img src="{% static 'files/assets/images/mega-menu/03.jpg' %}"
+                                                                        alt class="img-fluid img-100 m-r-15 m-b-10">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row p-b-30">
+                                                                <div class="col-auto text-right update-meta">
+                                                                    <i
+                                                                        class="feather icon-file-text bg-c-blue update-icon"></i>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <h6>Administrator</h6>
+                                                                    <p class="text-muted m-b-0">Free courses for all our
+                                                                        customers at A1 Conference Room - 9:00 am
+                                                                        tomorrow!</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row p-b-30">
+                                                                <div class="col-auto text-right update-meta">
+                                                                    <i
+                                                                        class="feather icon-map-pin bg-c-blue update-icon"></i>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <h6>Jeny William</h6>
+                                                                    <p class="text-muted m-b-15">Happy Hour! Free drinks
+                                                                        at <span> <a href="#!"
+                                                                                class="text-c-blue">Cafe-Bar all </a>
+                                                                        </span>day long!</p>
+                                                                    <div id="markers-map"
+                                                                        style="height:245px;width:100%"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-right">
+                                                            <a href="#!" class=" b-b-primary text-primary">View all
+                                                                Activity</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-md-12">
+                                                <div class="card chat-card">
+                                                    <div class="card-header">
+                                                        <h5>Chat history</h5>
+                                                        <div class="card-header-right">
+                                                            <ul class="list-unstyled card-option">
+                                                                <li class="first-opt"><i
+                                                                        class="feather icon-chevron-left open-card-option"></i>
+                                                                </li>
+                                                                <li><i class="feather icon-maximize full-card"></i></li>
+                                                                <li><i class="feather icon-minus minimize-card"></i>
+                                                                </li>
+                                                                <li><i class="feather icon-refresh-cw reload-card"></i>
+                                                                </li>
+                                                                <li><i class="feather icon-trash close-card"></i></li>
+                                                                <li><i
+                                                                        class="feather icon-chevron-left open-card-option"></i>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-block">
+                                                        <div class="row m-b-20 received-chat">
+                                                            <div class="col-auto p-r-0">
+                                                                <img src="{% static 'files/assets/images/avatar-2.jpg' %}"
+                                                                    alt="user image" class="img-radius img-40">
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="msg">
+                                                                    <p class="m-b-0">Nice to meet you!</p>
+                                                                </div>
+                                                                <p class="text-muted m-b-0"><i
+                                                                        class="fa fa-clock-o m-r-10"></i>10:20am</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row m-b-20 send-chat">
+                                                            <div class="col">
+                                                                <div class="msg">
+                                                                    <p class="m-b-0">Nice to meet you!</p>
+                                                                </div>
+                                                                <p class="text-muted m-b-0"><i
+                                                                        class="fa fa-clock-o m-r-10"></i>10:20am</p>
+                                                            </div>
+                                                            <div class="col-auto p-l-0">
+                                                                <img src="{% static 'files/assets/images/avatar-3.jpg' %}"
+                                                                    alt="user image" class="img-radius img-40">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row m-b-20 received-chat">
+                                                            <div class="col-auto p-r-0">
+                                                                <img src="{% static 'files/assets/images/avatar-2.jpg' %}"
+                                                                    alt="user image" class="img-radius img-40">
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="msg">
+                                                                    <p class="m-b-0">Nice to meet you!</p>
+                                                                    <img src="{% static 'files/assets/images/mega-menu/01.jpg' %}"
+                                                                        alt>
+                                                                    <img src="{% static 'files/assets/images/mega-menu/03.jpg' %}"
+                                                                        alt>
+                                                                </div>
+                                                                <p class="text-muted m-b-0"><i
+                                                                        class="fa fa-clock-o m-r-10"></i>10:20am</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row m-b-20 send-chat">
+                                                            <div class="col">
+                                                                <div class="msg">
+                                                                    <p class="m-b-0">Come now to meet you!</p>
+                                                                </div>
+                                                                <p class="text-muted m-b-0"><i
+                                                                        class="fa fa-clock-o m-r-10"></i>10:20am</p>
+                                                            </div>
+                                                            <div class="col-auto p-l-0">
+                                                                <img src="{% static 'files/assets/images/avatar-3.jpg' %}"
+                                                                    alt="user image" class="img-radius img-40">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row m-b-20 received-chat">
+                                                            <div class="col-auto p-r-0">
+                                                                <img src="{% static 'files/assets/images/avatar-2.jpg' %}"
+                                                                    alt="user image" class="img-radius img-40">
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="msg">
+                                                                    <p class="m-b-0">Nice to meet you!</p>
+                                                                    <img src="{% static 'files/assets/images/mega-menu/03.jpg' %}"
+                                                                        alt>
+                                                                </div>
+                                                                <p class="text-muted m-b-0"><i
+                                                                        class="fa fa-clock-o m-r-10"></i>10:20am</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="right-icon-control">
+                                                            <div class="input-group input-group-button">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Send message">
+                                                                <div class="input-group-append">
+                                                                    <button
+                                                                        class="btn btn-primary waves-effect waves-light"
+                                                                        type="button"><i
+                                                                            class="feather icon-message-circle"></i></button>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div> -->
-
-
 
                                         </div>
 
@@ -1891,31 +1892,31 @@
             <ul class="iew-download">
                 <li>
                     <a href="http://www.google.com/chrome/">
-                        <img src="./{% static 'files/assets/images/browser/chrome.png' %}" alt="Chrome">
+                        <img src="{% static 'files/assets/images/browser/chrome.png' %}" alt="Chrome">
                         <div>Chrome</div>
                     </a>
                 </li>
                 <li>
                     <a href="https://www.mozilla.org/en-US/firefox/new/">
-                        <img src="./{% static 'files/assets/images/browser/firefox.png' %}" alt="Firefox">
+                        <img src="{% static 'files/assets/images/browser/firefox.png' %}" alt="Firefox">
                         <div>Firefox</div>
                     </a>
                 </li>
                 <li>
                     <a href="http://www.opera.com">
-                        <img src="./{% static 'files/assets/images/browser/opera.png' %}" alt="Opera">
+                        <img src="{% static 'files/assets/images/browser/opera.png' %}" alt="Opera">
                         <div>Opera</div>
                     </a>
                 </li>
                 <li>
                     <a href="https://www.apple.com/safari/">
-                        <img src="./{% static 'files/assets/images/browser/safari.png' %}" alt="Safari">
+                        <img src="{% static 'files/assets/images/browser/safari.png' %}" alt="Safari">
                         <div>Safari</div>
                     </a>
                 </li>
                 <li>
                     <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                        <img src="./{% static 'files/assets/images/browser/ie.png' %}" alt="">
+                        <img src="{% static 'files/assets/images/browser/ie.png' %}" alt="">
                         <div>IE (9 & above)</div>
                     </a>
                 </li>
@@ -1926,7 +1927,6 @@
 <![endif]-->
 
 
-    <script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'files/bower_components/jquery/js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'files/bower_components/jquery-ui/js/jquery-ui.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'files/bower_components/popper.js' %}/js/popper.min.js' %}"></script>
@@ -1942,18 +1942,21 @@
     <script src="{% static 'files/assets/pages/chart/float/curvedLines.js' %}"></script>
     <script src="{% static 'files/assets/pages/chart/float/jquery.flot.tooltip.min.js' %}"></script>
 
-    <script src="{% static 'files/bower_components/chartist/js/chartist.js' %}"></script>
-
     <script src="{% static 'files/assets/pages/widget/amchart/amcharts.js' %}"></script>
     <script src="{% static 'files/assets/pages/widget/amchart/serial.js' %}"></script>
     <script src="{% static 'files/assets/pages/widget/amchart/light.js' %}"></script>
 
+    <script
+        src="../../../developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js' %}"></script>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="{% static 'files/assets/pages/google-maps/gmaps.js' %}"></script>
+
     <script src="{% static 'files/assets/js/pcoded.min.js' %}"></script>
     <script src="{% static 'files/assets/js/vertical/vertical-layout.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'files/assets/pages/dashboard/custom-dashboard.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'files/assets/pages/dashboard/crm-dashboard.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'files/assets/js/script.min.js' %}"></script>
 </body>
 
-<!-- Mirrored from demo.dashboardpack.com/admindek-html/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 31 Jan 2024 20:45:54 GMT -->
+<!-- Mirrored from demo.dashboardpack.com/admindek-html/default/dashboard-crm.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 31 Jan 2024 20:46:02 GMT -->
 
 </html>

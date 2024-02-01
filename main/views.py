@@ -11,6 +11,9 @@ def dashboard(request):
     print(request.user)
     return render(request, 'main/dashboard.html')
 
+def teamPage(request):
+	return render(request, 'main/dashboard-crm.html')
+
 def loginPage(request):
 	context = {}
 	if request.method == 'POST':
