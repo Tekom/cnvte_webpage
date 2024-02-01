@@ -6,6 +6,15 @@ from django.contrib.auth import get_user_model
 class User(BaseUser):
     objects = BaseUserManager()
 
+class University(models.Model):
+    user_model = get_user_model()
+
+    university_name = models.CharField(max_length=100, blank=True)
+    user = models.ManyToManyField(user_model)
+
+    def __str__(self):
+        return self.university_name.capitalize()
+
 class userData(models.Model):
     user_model = get_user_model()
 

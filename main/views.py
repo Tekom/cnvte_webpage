@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from custom_user.models import userData
 
 # Create your views here.
+
+
+@login_required
 def dashboard(request):
+    print(request.user)
     return render(request, 'main/dashboard.html')
 
 def loginPage(request):
@@ -28,6 +33,10 @@ def loginPage(request):
 			pass
 
 	return render(request, 'main/index.html', context)
+
+def logoutUser(request):
+	logout(request)
+	return redirect('login')
 
 def register(request):
     if request.method == 'POST':
