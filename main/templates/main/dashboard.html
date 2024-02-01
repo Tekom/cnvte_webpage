@@ -41,6 +41,8 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'files/assets/css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'files/assets/css/widget.css' %}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -88,7 +90,7 @@
                             </li>
                         </ul>
                         <ul class="nav-right">
-                            <li class="header-notification">
+                            <!-- <li class="header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="feather icon-bell"></i>
@@ -103,10 +105,10 @@
                                         <li>
                                             <div class="media">
                                                 <img class="img-radius"
-                                                    src="{% static 'files/assets/images/avatar-4.jpg' %}"
+                                                    src="{% static 'files/assets/images/avatar-4.png' %}"
                                                     alt="Generic placeholder image">
                                                 <div class="media-body">
-                                                    <h5 class="notification-user">John Doe</h5>
+                                                    <h5 class="notification-user">Felipe Aponte Cardenas</h5>
                                                     <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
                                                         elit.</p>
                                                     <span class="notification-time">30 minutes ago</span>
@@ -129,7 +131,7 @@
                                         <li>
                                             <div class="media">
                                                 <img class="img-radius"
-                                                    src="{% static 'files/assets/images/avatar-4.jpg' %}"
+                                                    src="{% static 'files/assets/images/avatar-4.png' %}"
                                                     alt="Generic placeholder image">
                                                 <div class="media-body">
                                                     <h5 class="notification-user">Sara Soudein</h5>
@@ -149,13 +151,13 @@
                                         <span class="badge bg-c-green">3</span>
                                     </div>
                                 </div>
-                            </li>
+                            </li> -->
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <img src="{% static 'files/assets/images/avatar-4.jpg' %}" class="img-radius"
+                                        <img src="{% static 'files/assets/images/avatar-4.png' %}" class="img-radius"
                                             alt="User-Profile-Image">
-                                        <span>John Doe</span>
+                                        <span>Felipe Aponte Cardenas</span>
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu"
@@ -165,21 +167,21 @@
                                                 <i class="feather icon-settings"></i> Settings
                                             </a>
                                         </li>
-                                        <li>
+                                        <!-- <li>
                                             <a href="#">
                                                 <i class="feather icon-user"></i> Profile
                                             </a>
-                                        </li>
-                                        <li>
+                                        </li> -->
+                                        <!-- <li>
                                             <a href="email-inbox.html">
                                                 <i class="feather icon-mail"></i> My Messages
                                             </a>
-                                        </li>
-                                        <li>
+                                        </li> -->
+                                        <!-- <li>
                                             <a href="auth-lock-screen.html">
                                                 <i class="feather icon-lock"></i> Lock Screen
                                             </a>
-                                        </li>
+                                        </li> -->
                                         <li>
                                             <a href="auth-sign-in-social.html">
                                                 <i class="feather icon-log-out"></i> Logout
@@ -241,7 +243,7 @@
                                     data-status="online" data-username="Alice">
                                     <a class="media-left" href="#!">
                                         <img class="media-object img-radius"
-                                            src="{% static 'files/assets/images/avatar-4.jpg' %}"
+                                            src="{% static 'files/assets/images/avatar-4.png' %}"
                                             alt="Generic placeholder image">
                                         <div class="live-status bg-success"></div>
                                     </a>
@@ -369,7 +371,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="pcoded-hasmenu">
+                                    <!-- <li class="pcoded-hasmenu">
                                         <a href="javascript:void(0)" class="waves-effect waves-dark">
                                             <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span>
                                             <span class="pcoded-mtext">Page layouts</span>
@@ -1323,7 +1325,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
                     </nav>
 
                     <div class="pcoded-content">
@@ -1335,7 +1337,7 @@
                                         <i class="feather icon-home bg-c-blue"></i>
                                         <div class="d-inline">
                                             <h5>Dashboard</h5>
-                                            <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+                                            <span>Realtime Data</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1360,61 +1362,47 @@
                                         <div class="row">
 
                                             <div class="col-md-12 col-xl-8">
-                                                <div class="card sale-card">
+                                                <div class="card sale-card" style="width: 150%;">
                                                     <div class="card-header">
-                                                        <h5>Deals Analytics</h5>
+                                                        <h5>Datos</h5>
                                                     </div>
-                                                    <div class="card-block">
+                                                    <!-- <div class="card-block">
                                                         <div id="sales-analytics" class="chart-shadow"
                                                             style="height:380px"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 col-xl-4">
-                                                <div class="card comp-card">
-                                                    <div class="card-body">
-                                                        <div class="row align-items-center">
-                                                            <div class="col">
-                                                                <h6 class="m-b-25">.jpg' %}' %}ssions</h6>
-                                                                <h3 class="f-w-700 text-c-blue">1,563</h3>
-                                                                <p class="m-b-0">May 23 - June 01 (2017)</p>
+                                                    </div> -->
+                                                    <div>
+                                                        <div style="width: 50%; float:left">
+                                                            <div>
+                                                                <canvas id="myChart" height="500"></canvas>
                                                             </div>
-                                                            <div class="col-auto">
-                                                                <i class="fas fa-eye bg-c-blue"></i>
+    
+                                                            <div>
+                                                                <canvas id="velocity" height="500"></canvas>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card comp-card">
-                                                    <div class="card-body">
-                                                        <div class="row align-items-center">
-                                                            <div class="col">
-                                                                <h6 class="m-b-25">Goal</h6>
-                                                                <h3 class="f-w-700 text-c-green">30,564</h3>
-                                                                <p class="m-b-0">May 23 - June 01 (2017)</p>
-                                                            </div>
-                                                            <div class="col-auto">
-                                                                <i class="fas fa-bullseye bg-c-green"></i>
+    
+                                                            <div>
+                                                                <canvas id="voltage" height="500"></canvas>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card comp-card">
-                                                    <div class="card-body">
-                                                        <div class="row align-items-center">
-                                                            <div class="col">
-                                                                <h6 class="m-b-25">Impact</h6>
-                                                                <h3 class="f-w-700 text-c-yellow">42.6%</h3>
-                                                                <p class="m-b-0">May 23 - June 01 (2017)</p>
+    
+                                                        <div style="width: 50%; float:right">
+                                                            <div>
+                                                                <canvas id="current" height="500" width="500"></canvas>
                                                             </div>
-                                                            <div class="col-auto">
-                                                                <i class="fas fa-hand-paper bg-c-yellow"></i>
+    
+                                                            <div>
+                                                                <canvas id="imu" height="500"></canvas>
+                                                            </div>
+    
+                                                            <div>
+                                                                <canvas id="pwm" height="500"></canvas>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
+                                            <script src="{% static 'js/graph.js' %}"></script>
 
                                             <div class="col-xl-12">
                                                 <div class="card proj-progress-card">
@@ -1467,17 +1455,17 @@
                                                     <div class="card-block p-b-0">
                                                         <div class="row m-b-50">
                                                             <div class="col">
-                                                                <h6 class="m-b-5">Sales In July</h6>
-                                                                <h5 class="m-b-0 f-w-700">$2665.00</h5>
+                                                                <h6 class="m-b-5">Average Data</h6>
+                                                                <!-- <h5 class="m-b-0 f-w-700">$2665.00</h5> -->
                                                             </div>
-                                                            <div class="col-auto text-center">
+                                                            <!-- <div class="col-auto text-center">
                                                                 <p class="m-b-5">Direct Sale</p>
                                                                 <h6 class="m-b-0">$1768</h6>
                                                             </div>
                                                             <div class="col-auto text-center">
                                                                 <p class="m-b-5">Referal</p>
                                                                 <h6 class="m-b-0">$897</h6>
-                                                            </div>
+                                                            </div> -->
                                                         </div>
                                                         <div id="sec-ecommerce-chart-line" class style="height:60px">
                                                         </div>
@@ -1485,10 +1473,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-4 col-md-12">
+                                            <div class="col-xl-4 col-md-6">
                                                 <div class="card latest-update-card">
                                                     <div class="card-header">
-                                                        <h5>What’s New</h5>
+                                                        <h5>Scoreboard</h5>
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
                                                                 <li class="first-opt"><i
@@ -1511,76 +1499,80 @@
                                                             <div class="latest-update-box">
                                                                 <div class="row p-t-20 p-b-30">
                                                                     <div class="col-auto text-right update-meta p-r-0">
-                                                                        <img src="{% static 'files/assets/images/avatar-4.jpg' %}"
-                                                                            alt="user image"
-                                                                            class="img-radius img-40 align-top m-r-15 update-icon">
+                                                                        <i class="b-primary update-icon ring"></i>
                                                                     </div>
                                                                     <div class="col p-l-5">
                                                                         <a href="#!">
-                                                                            <h6>Your Manager Posted.</h6>
+                                                                            <h6>Universidad Militar Nueva Granada</h6>
                                                                         </a>
-                                                                        <p class="text-muted m-b-0">Jonny michel</p>
+                                                                        <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
+                                                                            <!-- sit amet, <a href="#!" class="text-c-blue"> -->
+                                                                                <!-- More</a></p> -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="row p-b-30">
                                                                     <div class="col-auto text-right update-meta p-r-0">
-                                                                        <i
-                                                                            class="feather icon-briefcase bg-c-red update-icon"></i>
+                                                                        <i class="b-primary update-icon ring"></i>
                                                                     </div>
                                                                     <div class="col p-l-5">
                                                                         <a href="#!">
-                                                                            <h6>You have 3 pending Task.</h6>
+                                                                            <h6>Universidad Militar Nueva Granada</h6>
                                                                         </a>
-                                                                        <p class="text-muted m-b-0">Hemilton</p>
+                                                                        <!-- <p class="text-muted m-b-0">Lorem dolor sit -->
+                                                                            <!-- amet, <a href="#!" class="text-c-blue"> -->
+                                                                                <!-- More</a></p> -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="row p-b-30">
                                                                     <div class="col-auto text-right update-meta p-r-0">
-                                                                        <i
-                                                                            class="feather icon-check f-w-600 bg-c-green update-icon"></i>
+                                                                        <i class="b-success update-icon ring"></i>
                                                                     </div>
                                                                     <div class="col p-l-5">
                                                                         <a href="#!">
-                                                                            <h6>New Order Received.</h6>
+                                                                            <h6>Universidad Militar Nueva Granada</h6>
                                                                         </a>
-                                                                        <p class="text-muted m-b-0">Hemilton</p>
+                                                                        <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
+                                                                            <!-- sit ipsum amet, <a href="#!" -->
+                                                                                <!-- class="text-c-green"> More</a></p> -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="row p-b-30">
                                                                     <div class="col-auto text-right update-meta p-r-0">
-                                                                        <img src="{% static 'files/assets/images/avatar-4.jpg' %}"
-                                                                            alt="user image"
-                                                                            class="img-radius img-40 align-top m-r-15 update-icon">
+                                                                        <i class="b-danger update-icon ring"></i>
                                                                     </div>
                                                                     <div class="col p-l-5">
                                                                         <a href="#!">
-                                                                            <h6>Your Manager Posted.</h6>
+                                                                            <h6>Universidad Militar Nueva Granada</h6>
                                                                         </a>
-                                                                        <p class="text-muted m-b-0">Jonny michel</p>
+                                                                        <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
+                                                                            <!-- sit amet, <a href="#!" class="text-c-red"> -->
+                                                                                <!-- More</a></p> -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="row p-b-30">
                                                                     <div class="col-auto text-right update-meta p-r-0">
-                                                                        <i
-                                                                            class="feather icon-briefcase bg-c-red update-icon"></i>
+                                                                        <i class="b-primary update-icon ring"></i>
                                                                     </div>
                                                                     <div class="col p-l-5">
                                                                         <a href="#!">
-                                                                            <h6>You have 3 pending Task.</h6>
+                                                                            <h6>Universidad Militar Nueva Granada</h6>
                                                                         </a>
-                                                                        <p class="text-muted m-b-0">Hemilton</p>
+                                                                        <!-- <p class="text-muted m-b-0">Lorem dolor sit -->
+                                                                            <!-- amet, <a href="#!" class="text-c-blue"> -->
+                                                                                <!-- More</a></p> -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-auto text-right update-meta p-r-0">
-                                                                        <i
-                                                                            class="feather icon-check f-w-600 bg-c-green update-icon"></i>
+                                                                        <i class="b-success update-icon ring"></i>
                                                                     </div>
                                                                     <div class="col p-l-5">
                                                                         <a href="#!">
-                                                                            <h6>New Order Received.</h6>
+                                                                            <h6>Universidad Militar Nueva Granada</h6>
                                                                         </a>
-                                                                        <p class="text-muted m-b-0">Hemilton</p>
+                                                                        <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
+                                                                            <!-- sit ipsum amet, <a href="#!" -->
+                                                                                <!-- class="text-c-green"> More</a></p> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1591,7 +1583,7 @@
                                             <div class="col-xl-4 col-md-6">
                                                 <div class="card latest-update-card">
                                                     <div class="card-header">
-                                                        <h5>Latest Activity</h5>
+                                                        <h5>Global Scoreboard</h5>
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
                                                                 <li class="first-opt"><i
@@ -1618,11 +1610,11 @@
                                                                     </div>
                                                                     <div class="col p-l-5">
                                                                         <a href="#!">
-                                                                            <h6>Devlopment & Update</h6>
+                                                                            <h6>Universidad Militar Nueva Granada</h6>
                                                                         </a>
-                                                                        <p class="text-muted m-b-0">Lorem ipsum dolor
-                                                                            sit amet, <a href="#!" class="text-c-blue">
-                                                                                More</a></p>
+                                                                        <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
+                                                                            <!-- sit amet, <a href="#!" class="text-c-blue"> -->
+                                                                                <!-- More</a></p> -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="row p-b-30">
@@ -1631,11 +1623,11 @@
                                                                     </div>
                                                                     <div class="col p-l-5">
                                                                         <a href="#!">
-                                                                            <h6>Showcases</h6>
+                                                                            <h6>Universidad Militar Nueva Granada</h6>
                                                                         </a>
-                                                                        <p class="text-muted m-b-0">Lorem dolor sit
-                                                                            amet, <a href="#!" class="text-c-blue">
-                                                                                More</a></p>
+                                                                        <!-- <p class="text-muted m-b-0">Lorem dolor sit -->
+                                                                            <!-- amet, <a href="#!" class="text-c-blue"> -->
+                                                                                <!-- More</a></p> -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="row p-b-30">
@@ -1644,11 +1636,11 @@
                                                                     </div>
                                                                     <div class="col p-l-5">
                                                                         <a href="#!">
-                                                                            <h6>Miscellaneous</h6>
+                                                                            <h6>Universidad Militar Nueva Granada</h6>
                                                                         </a>
-                                                                        <p class="text-muted m-b-0">Lorem ipsum dolor
-                                                                            sit ipsum amet, <a href="#!"
-                                                                                class="text-c-green"> More</a></p>
+                                                                        <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
+                                                                            <!-- sit ipsum amet, <a href="#!" -->
+                                                                                <!-- class="text-c-green"> More</a></p> -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="row p-b-30">
@@ -1657,11 +1649,11 @@
                                                                     </div>
                                                                     <div class="col p-l-5">
                                                                         <a href="#!">
-                                                                            <h6>Your Manager Posted.</h6>
+                                                                            <h6>Universidad Militar Nueva Granada</h6>
                                                                         </a>
-                                                                        <p class="text-muted m-b-0">Lorem ipsum dolor
-                                                                            sit amet, <a href="#!" class="text-c-red">
-                                                                                More</a></p>
+                                                                        <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
+                                                                            <!-- sit amet, <a href="#!" class="text-c-red"> -->
+                                                                                <!-- More</a></p> -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="row p-b-30">
@@ -1670,11 +1662,11 @@
                                                                     </div>
                                                                     <div class="col p-l-5">
                                                                         <a href="#!">
-                                                                            <h6>Showcases</h6>
+                                                                            <h6>Universidad Militar Nueva Granada</h6>
                                                                         </a>
-                                                                        <p class="text-muted m-b-0">Lorem dolor sit
-                                                                            amet, <a href="#!" class="text-c-blue">
-                                                                                More</a></p>
+                                                                        <!-- <p class="text-muted m-b-0">Lorem dolor sit -->
+                                                                            <!-- amet, <a href="#!" class="text-c-blue"> -->
+                                                                                <!-- More</a></p> -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
@@ -1683,11 +1675,11 @@
                                                                     </div>
                                                                     <div class="col p-l-5">
                                                                         <a href="#!">
-                                                                            <h6>Miscellaneous</h6>
+                                                                            <h6>Universidad Militar Nueva Granada</h6>
                                                                         </a>
-                                                                        <p class="text-muted m-b-0">Lorem ipsum dolor
-                                                                            sit ipsum amet, <a href="#!"
-                                                                                class="text-c-green"> More</a></p>
+                                                                        <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
+                                                                            <!-- sit ipsum amet, <a href="#!" -->
+                                                                                <!-- class="text-c-green"> More</a></p> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1697,7 +1689,7 @@
                                             </div>
 
 
-                                            <div class="col-md-12">
+                                            <!-- <div class="col-md-12">
                                                 <div class="card table-card">
                                                     <div class="card-header">
                                                         <h5>New Products</h5>
@@ -1868,7 +1860,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
 
 
