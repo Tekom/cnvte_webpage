@@ -9,8 +9,9 @@ class User(BaseUser):
 class University(models.Model):
     user_model = get_user_model()
 
+    leader = models.ForeignKey(user_model, on_delete=models.SET_DEFAULT, default=None, related_name='leader')
     university_name = models.CharField(max_length=100, blank=True)
-    user = models.ManyToManyField(user_model)
+    members = models.ManyToManyField(user_model, related_name='team_members')
 
     def __str__(self):
         return self.university_name.capitalize()
