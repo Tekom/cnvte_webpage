@@ -23,9 +23,13 @@ class userData(models.Model):
     user_firstname = models.CharField(max_length=200, blank=True)
     user_lastname = models.CharField(max_length=200, blank=True)
     university = models.CharField(max_length=200, blank=True)
+    team = models.CharField(max_length=200, blank = True)
     email = models.EmailField()
 
     def __str__(self):
         return self.user_firstname.capitalize() + ' ' + self.user_lastname.capitalize()
+    
+    def Serialize(self):
+        return {'member_name':self.user_firstname.capitalize() + ' ' + self.user_lastname.capitalize()}
     
 

@@ -88,7 +88,7 @@
                             </li>
                         </ul>
                         <ul class="nav-right">
-                            <li class="header-notification">
+                            <!-- <li class="header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="feather icon-bell"></i>
@@ -141,21 +141,21 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </li>
-                            <li class="header-notification">
+                            </li> -->
+                            <!-- <li class="header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="displayChatbox dropdown-toggle" data-toggle="dropdown">
                                         <i class="feather icon-message-square"></i>
                                         <span class="badge bg-c-green">3</span>
                                     </div>
                                 </div>
-                            </li>
+                            </li> -->
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
                                     <div class="dropdown-toggle" data-toggle="dropdown">
                                         <img src="{% static 'files/assets/images/avatar-4.png' %}" class="img-radius"
                                             alt="User-Profile-Image">
-                                        <span>Felipe Aponte Cardenas</span>
+                                        <span>{{member_name}}</span>
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu"
@@ -1341,7 +1341,7 @@
                                                         <div class="row align-items-center m-b-30">
                                                             <div class="col">
                                                                 <h6 class="m-b-5 text-white">Universidad</h6>
-                                                                <h3 class="m-b-0 f-w-700 text-white">Universidad Militar Nueva Granada</h3>
+                                                                <h3 class="m-b-0 f-w-700 text-white">{{university}}</h3>
                                                             </div>
                                                             <!-- <div class="col-auto">
                                                                 <i class="fas fa-money-bill-alt text-c-red f-18"></i>
@@ -1359,7 +1359,7 @@
                                                         <div class="row align-items-center m-b-30">
                                                             <div class="col">
                                                                 <h6 class="m-b-5 text-white">Nombre Del Equipo</h6>
-                                                                <h3 class="m-b-0 f-w-700 text-white">HamiltonEV</h3>
+                                                                <h3 class="m-b-0 f-w-700 text-white">{{team_name}}</h3>
                                                             </div>
                                                             <!-- <div class="col-auto">
                                                                 <i class="fas fa-database text-c-blue f-18"></i>
@@ -1377,7 +1377,7 @@
                                                         <div class="row align-items-center m-b-30">
                                                             <div class="col">
                                                                 <h6 class="m-b-5 text-white">Numero De Integrantes</h6>
-                                                                <h3 class="m-b-0 f-w-700 text-white">8</h3>
+                                                                <h3 class="m-b-0 f-w-700 text-white">{{members_count}}</h3>
                                                             </div>
                                                             <!-- <div class="col-auto">
                                                                 <i class="fas fa-dollar-sign text-c-green f-18"></i>
@@ -1395,7 +1395,7 @@
                                                         <div class="row align-items-center m-b-30">
                                                             <div class="col">
                                                                 <h6 class="m-b-5 text-white">Lider Actual</h6>
-                                                                <h3 class="m-b-0 f-w-700 text-white">Felipe Aponte Cardenas</h3>
+                                                                <h3 class="m-b-0 f-w-700 text-white">{{leader}}</h3>
                                                             </div>
                                                             <!-- <div class="col-auto">
                                                                 <i class="fas fa-tags text-c-yellow f-18"></i>
@@ -1437,13 +1437,13 @@
                                                                 class="img-radius img-40 align-top m-r-15">
                                                             <div class="d-inline-block">
                                                                 <a href="#!">
-                                                                    <h6>Felipe Aponte Cardenas</h6>
+                                                                    <h6>{{leader}}</h6>
                                                                 </a>
                                                                 <p class="text-muted m-b-0">Lider equipo</p>
                                                                 <span class="status active"></span>
                                                             </div>
                                                         </div>
-                                                        <div class="align-middle m-b-35">
+                                                        <!-- <div class="align-middle m-b-35">
                                                             <img src="{% static 'files/assets/images/avatar-4.png' %}"
                                                                 alt="user image"
                                                                 class="img-radius img-40 align-top m-r-15">
@@ -1455,7 +1455,7 @@
                                                                 </p>
                                                                 <span class="status active"></span>
                                                             </div>
-                                                        </div>
+                                                        </div> -->
                                                         <!-- <div class="align-middle m-b-35">
                                                             <img src="{% static 'files/assets/images/avatar-3.jpg' %}"
                                                                 alt="user image"
@@ -1505,19 +1505,21 @@
                                                         </div>
                                                     </div>
                                                     <div class="card-block">
-                                                        <div class="align-middle m-b-35">
-                                                            <img src="{% static 'files/assets/images/avatar-4.png' %}"
-                                                                alt="user image"
-                                                                class="img-radius img-40 align-top m-r-15">
-                                                            <div class="d-inline-block">
-                                                                <a href="#!">
-                                                                    <h6>Felipe Aponte Cardenas</h6>
-                                                                </a>
-                                                                <p class="text-muted m-b-0">Miembro</p>
-                                                                <span class="status active"></span>
+                                                        {% for member in team_members %}
+                                                            <div class="align-middle m-b-35">
+                                                                <img src="{% static 'files/assets/images/avatar-4.png' %}"
+                                                                    alt="user image"
+                                                                    class="img-radius img-40 align-top m-r-15">
+                                                                <div class="d-inline-block">
+                                                                    <a href="#!">
+                                                                        <h6>{{member}}</h6>
+                                                                    </a>
+                                                                    <p class="text-muted m-b-0">Miembro</p>
+                                                                    <span class="status active"></span>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="align-middle m-b-35">
+                                                        {% endfor %}
+                                                        <!-- <div class="align-middle m-b-35">
                                                             <img src="{% static 'files/assets/images/avatar-4.png' %}"
                                                                 alt="user image"
                                                                 class="img-radius img-40 align-top m-r-15">
@@ -1553,7 +1555,7 @@
                                                                 <p class="text-muted m-b-0">Miembro</p>
                                                                 <span class="status active"></span>
                                                             </div>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                 </div>
                                             </div>

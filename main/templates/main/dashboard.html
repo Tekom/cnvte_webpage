@@ -108,7 +108,7 @@
                                                     src="{% static 'files/assets/images/avatar-4.png' %}"
                                                     alt="Generic placeholder image">
                                                 <div class="media-body">
-                                                    <h5 class="notification-user">Felipe Aponte Cardenas</h5>
+                                                    <h5 class="notification-user">{{member_name}}</h5>
                                                     <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
                                                         elit.</p>
                                                     <span class="notification-time">30 minutes ago</span>
@@ -157,7 +157,7 @@
                                     <div class="dropdown-toggle" data-toggle="dropdown">
                                         <img src="{% static 'files/assets/images/avatar-4.png' %}" class="img-radius"
                                             alt="User-Profile-Image">
-                                        <span>Felipe Aponte Cardenas</span>
+                                        <span>{{member_name}}</span>
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu"
@@ -353,13 +353,13 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class="active">
-                                                <a href="index-2.html" class="waves-effect waves-dark">
+                                                <a href="/dashboard/" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Default</span>
                                                 </a>
                                             </li>
                                             <li class>
                                                 <a href="/team_page/" class="waves-effect waves-dark">
-                                                    <span class="pcoded-mtext">CRM</span>
+                                                    <span class="pcoded-mtext">Mi Equipo</span>
                                                 </a>
                                             </li>
                                             <li class>
