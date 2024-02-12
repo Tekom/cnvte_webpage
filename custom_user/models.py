@@ -14,7 +14,7 @@ class University(models.Model):
     members = models.ManyToManyField(user_model, related_name='team_members')
 
     def __str__(self):
-        return self.university_name.capitalize()
+        return self.university_name.title()
 
 class userData(models.Model):
     user_model = get_user_model()

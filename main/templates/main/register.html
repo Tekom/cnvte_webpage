@@ -49,10 +49,11 @@
                   <select name = 'universidades'>
                     <option>Seleccione una universidad</option>
                     <option>Universidad Militar Nueva Granada</option>
-                    <option>Universidad Militar Nueva Granada2</option>
-                    <option>Universidad Militar Nueva Granada3</option>
-                    <option>Universidad Militar Nueva Granada4</option>
-                    <option>Universidad Militar Nueva Granada5</option>
+                    <option>Universidad De Los Andes</option>
+                    <option>Universidad Autonoma De Occidente</option>
+                    <option>Universidad Nacional (Bogotá)</option>
+                    <option>Universidad Pontificia Bolivariana</option>
+                    <option>Institucion Universitaria Pascual Bravo</option>
                   </select>
                   <div class="select_arrow"></div>
                 </div>
@@ -60,6 +61,16 @@
                   <input type="checkbox" id="cb1">
                   <label for="cb1">He leido el reglamento de la competencia</label>
               </div>
+
+              {% if code == 'False' %}
+                <script>
+                    window.alert('Su universidad aun no ha registrado un lider, por favor ingrese codigo de lider e intentelo de nuevo.')
+                </script>
+              {% elif code == 'True' %}
+                <script>
+                  window.alert('SU universidad ya tiene un lider, por favor haga el registro sin ingresar el codigo de lider.')
+                </script>
+              {% endif %}
               <!-- <div class="input_field checkbox_option">
                   <input type="checkbox" id="cb2">
                   <label for="cb2">I want to receive the newsletter</label>

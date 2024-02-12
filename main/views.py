@@ -29,9 +29,7 @@ def teamPage(request):
 	context['members_count'] = len(context['team_members']) + 1
 	context['university'] = university
 	context['member_name'] = userData.objects.get(user = request.user)
-	context['team_name'] = userData.objects.get(user = request.user).team
-
-	print(context)
+	context['team_name'] = userData.objects.get(user = request.user).team.title()
 
 	return render(request, 'main/dashboard-crm.html', context)
 
@@ -66,11 +64,14 @@ def logoutUser(request):
 
 
 def register(request):
-	codigos = {'Universidad Militar Nueva Granada': 'gkmlhf',
-			   'Universidad Militar Nueva Granada': 'gkmlhf', }
+	university_codes = {'Universidad Militar Nueva Granada': 'gkmlhf',
+						'Universidad De Los Andes':'asdsad',
+						'Universidad Nacional (Bogotá)':'szkjfhsa',
+						'Universidad Pontificia Bolivariana':'ksjajdfsadjk',
+						'Universidad Autonoma De Occidente':'sakdjnsakjd',
+						'Institucion Universitaria Pascual Bravo':'86sdf78'}
 
 	if request.method == 'POST':
-		# print('asd')
 		firstname = request.POST.get('username').lower()
 		lastname = request.POST.get('apellidos').lower()
 		email = request.POST.get('email')
@@ -79,12 +80,12 @@ def register(request):
 		codigo_universidad = request.POST.get('access_code')
 		team_name = request.POST.get('team_name')
 
-		if codigo_universidad == codigos[universidad]:
-			try:
-				#Check if there is alredy a university instance
-				print(University.objects.filter(university_name = universidad))[0]
+		if codigo_universidad == university_codes[universidad]:
+			if University.objects.filter(university_name = universidad).exists():
 
-			except:
+				return render(request, 'main/register.html', {'code':'True'})
+					
+			else:
 				#Create leader model
 				User = get_user_model()
 				user = User.objects.create_user(email=email,
@@ -96,7 +97,7 @@ def register(request):
 									user_lastname=lastname,
 									university=universidad,
 									email=email,
-									team_name = team_name )
+									team = team_name.lower() )
 
 				new_user.save()
 
@@ -109,26 +110,34 @@ def register(request):
 				#new_university.members.add(user)
 				new_university.save()
 
+				return redirect('login')
+
 		else:
-			#Create member instance
-			User = get_user_model()
-			user = User.objects.create_user(email=email,
-											password=password)
+			if not University.objects.filter(university_name = universidad).exists():
+				return render(request, 'main/register.html', {'code':'False'})
+				
+			else:
 
-			new_user = userData(user=user,
-								user_firstname=firstname,
-								user_lastname=lastname,
-								university=universidad,
-								email=email, )
+				#Create member instance
+				User = get_user_model()
+				user = User.objects.create_user(email=email,
+												password=password)
 
-			new_user.save()
+				new_user = userData(user=user,
+									user_firstname=firstname,
+									user_lastname=lastname,
+									university=universidad,
+									email=email, 
+									team = team_name.lower() )
 
-			#Add member to university team
-			member_university = University.objects.filter(university_name = universidad)[0]
-			member_university.members.add(user)
+				new_user.save()
 
-			member_university.save()
+				#Add member to university team
+				member_university = University.objects.filter(university_name = universidad)[0]
+				member_university.members.add(user)
 
-		return redirect('login')
+				member_university.save()
+
+				return redirect('login')
 
 	return render(request, 'main/register.html')
