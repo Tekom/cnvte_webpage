@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model, authenticate, login, logout
+from django.http import StreamingHttpResponse, HttpResponse
+import time
 from custom_user.models import *
 
 # Create your views here.
@@ -11,10 +13,40 @@ def dashboard(request):
 	context = {}
 
 	user_logged = userData.objects.get(user = request.user)
-	
 	context = user_logged.Serialize()
 
 	return render(request, 'main/dashboard.html', context)
+
+# @login_required
+# def sse(request):
+# 	def event_stream():
+# 		while True:
+
+# 			last_db_item = dict(database.child('datos_vehiculo').order_by_key().limit_to_last(1).get().val()) #obtener ultimo dato en la base de datos
+# 			last_car_data = last_db_item[list(last_db_item.keys())[0]]
+		   
+# 			#Generar datos para enviar al cliente
+# 			data = {'engine_velocity':last_car_data['engine_velocity']['value_x'],
+# 					'car_velocity':last_car_data['car_velocity']['value_x'],
+# 					'voltage':last_car_data['voltage']['value_x'],
+# 					'current':last_car_data['current']['value_x'],
+# 					'pwm':last_car_data['pwm']['value_x'],
+# 					'imu':{
+# 							'x':last_car_data['imu']['x']['value_x'],
+# 							'y':last_car_data['imu']['y']['value_x'],
+# 							'z':last_car_data['imu']['z']['value_x']
+# 					},
+# 					'tiempo':last_car_data['tiempo']
+# 			}
+			
+# 			#Formato SSE: envía un evento "message" con los datos
+# 			event = f"data:{json.dumps(data)}\n\n"
+			
+# 			yield event
+# 			time.sleep(1)
+
+# 	response = StreamingHttpResponse(event_stream(), content_type='text/event-stream')
+# 	return response
 
 
 @login_required(login_url='/login/')
@@ -22,16 +54,21 @@ def teamPage(request):
 	context = {}
 
 	#Get user university
-	university = University.objects.get(university_name = userData.objects.get(user = request.user).university)
+	university = Team.objects.get(team = userData.objects.get(user = request.user).team) #University.objects.get(university_name = userData.objects.get(user = request.user).university)
 	
-	context['team_members'] = userData.objects.filter(user__in = university.members.all()) #Get all users data from university team
+	#Modificar-----
+	context['team_members'] = userData.objects.filter(user__in = university.members_team.all()) #Get all users data from university team
 	context['leader'] = userData.objects.get(user = university.leader)
 	context['members_count'] = len(context['team_members']) + 1
-	context['university'] = university
+	context['university'] = University.objects.get(university_name = userData.objects.get(user = request.user).university)
 	context['member_name'] = userData.objects.get(user = request.user)
 	context['team_name'] = userData.objects.get(user = request.user).team.title()
+	#------------------
 
 	return render(request, 'main/dashboard-crm.html', context)
+
+def Scoreboard(request):
+	return render(request, 'main/scoreboard.html')
 
 
 def loginPage(request):
@@ -67,9 +104,26 @@ def register(request):
 	university_codes = {'Universidad Militar Nueva Granada': 'gkmlhf',
 						'Universidad De Los Andes':'asdsad',
 						'Universidad Nacional (Bogotá)':'szkjfhsa',
+						'Universidad Nacional (Medellin)':'szkjfhsjhba',
 						'Universidad Pontificia Bolivariana':'ksjajdfsadjk',
 						'Universidad Autonoma De Occidente':'sakdjnsakjd',
-						'Institucion Universitaria Pascual Bravo':'86sdf78'}
+						'Institucion Universitaria Pascual Bravo':'86sdf78',
+						'EAFIT':'sajkcfnsajkc',
+						'Institucion Universitaria Pascual Bravo':'86sdf78',
+						'ITP':'86sdf78',
+						'Escuela de ingenieros':'86sdf78',
+						'UDEA':'86sdfdfg78'}
+	
+	university_teams = {'Universidad Militar Nueva Granada': 2,
+						'Universidad De Los Andes': 1,
+						'Universidad Nacional (Bogotá)': 1,
+						'Universidad Pontificia Bolivariana': 1,
+						'Universidad Autonoma De Occidente': 1,
+						'Institucion Universitaria Pascual Bravo': 2,
+						'EAFIT':1,
+						'ITP':1,
+						'Escuela de ingenieros':1,
+						'UDEA':1}
 
 	if request.method == 'POST':
 		firstname = request.POST.get('username').lower()
@@ -81,8 +135,7 @@ def register(request):
 		team_name = request.POST.get('team_name')
 
 		if codigo_universidad == university_codes[universidad]:
-			if University.objects.filter(university_name = universidad).exists():
-
+			if University.objects.filter(university_name = universidad).exists() and University.objects.get(university_name = universidad).teams.count() == university_teams[universidad]:
 				return render(request, 'main/register.html', {'code':'True'})
 					
 			else:
@@ -102,13 +155,34 @@ def register(request):
 				new_user.save()
 
 				#Create university instance
-				new_university = University(leader = user,
-											university_name = universidad,
 
-				)
+				if University.objects.filter(university_name = universidad).exists():
+					new_team = Team(leader = user,
+									team = team_name.lower())
+				
+					new_team.save()
+					new_team.members_team.add(user)
+					#new_university.teams.add(new_team)
 
-				#new_university.members.add(user)
-				new_university.save()
+					university = University.objects.get(university_name = universidad)
+					university.teams.add(new_team)
+					university.members.add(user)
+	
+					university.save()
+					
+				else:
+					new_team = Team(leader = user,
+									team = team_name.lower())
+					
+					new_team.save()
+					new_team.members_team.add(user)
+					
+					new_university = University(university_name = universidad)
+					new_university.save()
+					
+					new_university.members.add(user)
+					new_university.teams.add(new_team)
+				
 
 				return redirect('login')
 
@@ -137,6 +211,10 @@ def register(request):
 				member_university.members.add(user)
 
 				member_university.save()
+
+				member_team = Team.objects.get(team = team_name.lower())
+				member_team.members_team.add(user)
+				member_university.teams.add(member_team)
 
 				return redirect('login')
 

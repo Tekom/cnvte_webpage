@@ -6,3 +6,4 @@ from .models import *
 admin.site.register(User, BaseUserAdmin)
 admin.site.register(userData)
 admin.site.register(University)
+admin.site.register(Team)

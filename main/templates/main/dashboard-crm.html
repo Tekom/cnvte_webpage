@@ -6,7 +6,7 @@
 <!-- Mirrored from demo.dashboardpack.com/admindek-html/default/dashboard-crm.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 31 Jan 2024 20:46:00 GMT -->
 
 <head>
-    <title>Admindek | Admin Template</title>
+    <title>CNVTE</title>
 
 
     <!--[if lt IE 10]>
@@ -52,12 +52,11 @@
     <div id="pcoded" class="pcoded">
         <div class="pcoded-overlay-box"></div>
         <div class="pcoded-container navbar-wrapper">
-
             <nav class="navbar header-navbar pcoded-header">
                 <div class="navbar-wrapper">
                     <div class="navbar-logo">
                         <a href="../index-2.html">
-                            <img class="img-fluid" src="{% static 'files/assets/images/logo.png' %}" alt="Theme-Logo" />
+                            <img class="img-fluid" style = 'position: relative; top: -30px; width: 45%; height:45%;' src="{% static 'files/assets/images/logo.png' %}" alt="Theme-Logo" />
                         </a>
                         <a class="mobile-menu" id="mobile-collapse" href="#!">
                             <i class="feather icon-menu icon-toggle-right"></i>
@@ -351,7 +350,7 @@
                                         </a>
                                         <ul class="pcoded-submenu">
                                             <li class>
-                                                <a href="/dashboard/" class="waves-effect waves-dark">
+                                                <a href="/dashboard" class="waves-effect waves-dark">
                                                     <span class="pcoded-mtext">Default</span>
                                                 </a>
                                             </li>
@@ -1506,18 +1505,20 @@
                                                     </div>
                                                     <div class="card-block">
                                                         {% for member in team_members %}
+                                                            {% if member != leader %}
                                                             <div class="align-middle m-b-35">
                                                                 <img src="{% static 'files/assets/images/avatar-4.png' %}"
                                                                     alt="user image"
                                                                     class="img-radius img-40 align-top m-r-15">
                                                                 <div class="d-inline-block">
                                                                     <a href="#!">
-                                                                        <h6>{{member}}</h6>
+                                                                            <h6>{{member}}</h6>
+                                                                            <p class="text-muted m-b-0">Miembro</p>
+                                                                            <span class="status active"></span>
                                                                     </a>
-                                                                    <p class="text-muted m-b-0">Miembro</p>
-                                                                    <span class="status active"></span>
                                                                 </div>
                                                             </div>
+                                                            {% endif %}
                                                         {% endfor %}
                                                         <!-- <div class="align-middle m-b-35">
                                                             <img src="{% static 'files/assets/images/avatar-4.png' %}"

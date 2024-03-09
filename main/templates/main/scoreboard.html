@@ -1,0 +1,64 @@
+<!-- scoreboard.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcador en Tiempo Real</title>
+    <style>
+        .score-item {
+            margin-bottom: 10px;
+            transition: transform 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <h1>Marcador en Tiempo Real</h1>
+    <div id="scoreContainer"></div>
+
+    <script>
+        const scoreContainer = document.getElementById('scoreContainer');
+
+        // Simular la actualización del marcador cada segundo para 10 jugadores
+        const simulateRealtimeUpdate = () => {
+            const scores = [];
+
+            // Generar datos simulados para 10 jugadores
+            for (let i = 1; i <= 10; i++) {
+                const player = i;
+                const score = Math.floor(Math.random() * 100); // Puntuación aleatoria para simular cambios
+                scores.push({ player, score });
+            }
+
+            // Ordenar el array de scores de mayor a menor
+            scores.sort((a, b) => b.score - a.score);
+
+            // Agregar los elementos ordenados al DOM
+            scores.forEach((item) => {
+                const scoreItem = document.createElement('div');
+                scoreItem.className = 'score-item';
+                scoreItem.textContent = `Jugador ${item.player}: ${item.score}`;
+                scoreContainer.appendChild(scoreItem);
+
+                // Aplicar animación de subida al añadir un nuevo puntaje
+                setTimeout(() => {
+                    scoreItem.style.transform = 'translateY(0)';
+                }, 0);
+            });
+
+            // Eliminar elementos viejos para mantener la lista de 10 jugadores
+            while (scoreContainer.children.length > 10) {
+                scoreContainer.removeChild(scoreContainer.children[0]);
+            }
+        };
+
+        // Actualizar el marcador cada segundo
+        setInterval(() => {
+            // Limpiar el contenedor antes de la actualización simulada
+            scoreContainer.innerHTML = '';
+            simulateRealtimeUpdate();
+        }, 1000);
+    </script>
+</body>
+</html>
