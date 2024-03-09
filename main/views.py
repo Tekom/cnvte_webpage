@@ -117,7 +117,7 @@ def register(request):
 	university_teams = {'Universidad Militar Nueva Granada': 2,
 						'Universidad De Los Andes': 1,
 						'Universidad Nacional (Bogotá)': 1,
-						'Universidad Pontificia Bolivariana': 1,
+						'Universidad Pontificia Bolivariana': 2,
 						'Universidad Autonoma De Occidente': 1,
 						'Institucion Universitaria Pascual Bravo': 2,
 						'EAFIT':1,
