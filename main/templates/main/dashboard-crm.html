@@ -356,7 +356,7 @@
                                         <ul class="pcoded-submenu">
                                             <li class>
                                                 <a href="/dashboard" class="waves-effect waves-dark">
-                                                    <span class="pcoded-mtext">Default</span>
+                                                    <span class="pcoded-mtext">Real Time Data</span>
                                                 </a>
                                             </li>
                                             <li class="active">
@@ -1425,9 +1425,9 @@
                                                                 <li><i class="feather icon-maximize full-card"></i></li>
                                                                 <li><i class="feather icon-minus minimize-card"></i>
                                                                 </li>
-                                                                <li><i class="feather icon-refresh-cw reload-card"></i>
-                                                                </li>
-                                                                <li><i class="feather icon-trash close-card"></i></li>
+                                                                <!-- <li><i class="feather icon-refresh-cw reload-card"></i>
+                                                                </li> -->
+                                                                <!-- <li><i class="feather icon-trash close-card"></i></li> -->
                                                                 <li><i
                                                                         class="feather icon-chevron-left open-card-option"></i>
                                                                 </li>
@@ -1499,9 +1499,9 @@
                                                                 <li><i class="feather icon-maximize full-card"></i></li>
                                                                 <li><i class="feather icon-minus minimize-card"></i>
                                                                 </li>
-                                                                <li><i class="feather icon-refresh-cw reload-card"></i>
+                                                                <!-- <li><i class="feather icon-refresh-cw reload-card"></i>
                                                                 </li>
-                                                                <li><i class="feather icon-trash close-card"></i></li>
+                                                                <li><i class="feather icon-trash close-card"></i></li> -->
                                                                 <li><i
                                                                         class="feather icon-chevron-left open-card-option"></i>
                                                                 </li>
@@ -1518,9 +1518,17 @@
                                                                 <div class="d-inline-block">
                                                                     <a href="#!">
                                                                             {% if is_leader %}
-                                                                                <h6>{{member}} <a href="" style="position: relative; left: 330%">Eliminar</a></h6>
+                                                                                <h6>{{member}}</h6>
                                                                                 <p class="text-muted m-b-0">Miembro</p>
-                                                                                <!-- <span class="status active"></span> -->
+                                                                                <a onclick= "addUserSongs('{{member.id}}')">Eliminar</a>
+                                                                                <span class="status active"></span>
+
+                                                                                <style>
+                                                                                    a:hover {
+                                                                                        cursor: pointer;
+                                                                                        /* color: aqua; */
+                                                                                    }
+                                                                                </style>
 
                                                                             {% else %}
                                                                                 <h6>{{member}}</h6>
@@ -1573,6 +1581,25 @@
                                                 </div>
                                             </div>
 
+                                            <script>
+                                                var addUserSongs = (user) => {
+                                                    fetch('/deleteUser/', {
+                                                        method: 'POST',
+                                                        headers: {
+                                                          'Accept': 'application/json',
+                                                          'Content-Type': 'application/json',
+                                                          'X-CSRFToken': '{{ csrf_token }}'
+                                                        },
+                                                        body: JSON.stringify({'user':user}),
+                                                    })
+                                                    .then(response => response.json())
+                                                    .then(resp => {
+                                                        location.reload()
+                                                    });
+                                                }
+                                            </script>
+
+                                            
 
                                             <!-- <div class="col-xl-4 col-md-12">
                                                 <div class="card comp-card">

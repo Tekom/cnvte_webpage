@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.http import StreamingHttpResponse, HttpResponse
 import time
+import json
 from custom_user.models import *
 
 # Create your views here.
@@ -76,6 +77,16 @@ def teamPage(request):
 def Scoreboard(request):
 	return render(request, 'main/scoreboard.html')
 
+def deleteUser(request):
+	data = json.loads(request.body)
+	user_id = int(data['user'])
+
+	User_model = get_user_model()
+	user_email = userData.objects.get(id = user_id).email
+
+	User_model.objects.get(email = user_email).delete()
+
+	return render(request, 'main/dashboard-crm.html')
 
 def loginPage(request):
 	context = {}
@@ -84,7 +95,7 @@ def loginPage(request):
 		password = request.POST.get('password')
 
 		try:
-			User = get_user_model
+			User = get_user_model()
 			user = User.objects.get(email=email)
 		except:
 			pass
