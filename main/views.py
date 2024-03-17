@@ -59,12 +59,18 @@ def teamPage(request):
 	#Modificar-----
 	context['team_members'] = userData.objects.filter(user__in = university.members_team.all()) #Get all users data from university team
 	context['leader'] = userData.objects.get(user = university.leader)
-	context['members_count'] = len(context['team_members']) + 1
+	context['members_count'] = len(context['team_members']) 
 	context['university'] = University.objects.get(university_name = userData.objects.get(user = request.user).university)
 	context['member_name'] = userData.objects.get(user = request.user)
 	context['team_name'] = userData.objects.get(user = request.user).team.title()
-	#------------------
 
+	if request.user == university.leader:
+		context['is_leader'] = True
+
+	else:
+		context['is_leader'] = False
+
+	#------------------
 	return render(request, 'main/dashboard-crm.html', context)
 
 def Scoreboard(request):
@@ -128,7 +134,7 @@ def register(request):
 	if request.method == 'POST':
 		firstname = request.POST.get('username').lower()
 		lastname = request.POST.get('apellidos').lower()
-		email = request.POST.get('email')
+		email = request.POST.get('email').lower()
 		universidad = request.POST.get('universidades')
 		password = request.POST.get('password')
 		codigo_universidad = request.POST.get('access_code')

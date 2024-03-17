@@ -67,6 +67,11 @@
                     </div>
                     <div class="navbar-container container-fluid">
                         <ul class="nav-left">
+                            <li>
+                                <a href="#!" onclick="javascript:toggleFullScreen()" class="waves-effect waves-light">
+                                    <i class="full-screen feather icon-maximize"></i>
+                                </a>
+                            </li>
                             <li class="header-search">
                                 <div class="main-search morphsearch-search">
                                     <div class="input-group">
@@ -74,17 +79,17 @@
                                             <i class="feather icon-x input-group-text"></i>
                                         </span>
                                         <input type="text" class="form-control" placeholder="Enter Keyword">
-                                        <span class="input-group-append search-btn">
+                                        <!-- <span class="input-group-append search-btn">
                                             <i class="feather icon-search input-group-text"></i>
-                                        </span>
+                                        </span> -->
                                     </div>
                                 </div>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="#!" onclick="javascript:toggleFullScreen()" class="waves-effect waves-light">
                                     <i class="full-screen feather icon-maximize"></i>
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                         <ul class="nav-right">
                             <!-- <li class="header-notification">
@@ -1512,9 +1517,16 @@
                                                                     class="img-radius img-40 align-top m-r-15">
                                                                 <div class="d-inline-block">
                                                                     <a href="#!">
-                                                                            <h6>{{member}}</h6>
-                                                                            <p class="text-muted m-b-0">Miembro</p>
-                                                                            <span class="status active"></span>
+                                                                            {% if is_leader %}
+                                                                                <h6>{{member}} <a href="" style="position: relative; left: 330%">Eliminar</a></h6>
+                                                                                <p class="text-muted m-b-0">Miembro</p>
+                                                                                <!-- <span class="status active"></span> -->
+
+                                                                            {% else %}
+                                                                                <h6>{{member}}</h6>
+                                                                                <p class="text-muted m-b-0">Miembro</p>
+                                                                                <span class="status active"></span>
+                                                                            {% endif %}
                                                                     </a>
                                                                 </div>
                                                             </div>
