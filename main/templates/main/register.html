@@ -2,6 +2,7 @@
 
 <link rel="stylesheet" href="{% static 'css/register_style.css' %}">
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <div class="form_wrapper">
     <div class="form_container">
@@ -10,16 +11,18 @@
       </div>
       <div class="row clearfix">
         <div class="">
-          <form method="POST">
+          <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope"></i></span>
               <input type="email" name="email" placeholder="Email" required />
             </div>
-            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
-              <input type="password" name="password" placeholder="Contraseña" required />
+            <div class="input_field"> 
+              <input type="password" name="password" id = password placeholder="Contraseña" required />
+              <span class="password-toggle-icon"><i class="fas fa-eye"></i></span>
             </div>
-            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
-              <input type="password" name="repeat_password" placeholder="Repita la contraseña" required />
+            <div class="input_field">
+              <span><i aria-hidden="true" class="fa fa-lock"></i></span>
+              <input type="password" name="repeat_password"  id = password_repeat placeholder="Repita la contraseña" required />
             </div>
             <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
               <input type="text" name="team_name" placeholder="Nombre del equipo" required />
@@ -54,6 +57,7 @@
                     <option>Universidad Nacional (Bogotá)</option>
                     <option>Universidad Pontificia Bolivariana</option>
                     <option>Institucion Universitaria Pascual Bravo</option>
+                    <option>Universidad Nacional (Medellin)</option>
                     <option>EAFIT</option>
                     <option>ITP</option>
                     <option>Escuela de ingenieros</option>
@@ -61,11 +65,17 @@
                   </select>
                   <div class="select_arrow"></div>
                 </div>
+
+                
+                <div style="position: relative; top: -10px;">
+                  <!-- <label for="myFile">Carta de aceptacion:</label> -->
+                  <input type="file" name="filename"> 
+                </div> 
+
               <div class="input_field checkbox_option">
                   <input type="checkbox" id="cb1">
                   <label for="cb1">He leido el reglamento de la competencia</label>
               </div>
-
               {% if code == 'False' %}
                 <script>
                     window.alert('Su universidad aun no ha registrado un lider, por favor ingrese codigo de lider e intentelo de nuevo.')
@@ -78,11 +88,46 @@
               <!-- <div class="input_field checkbox_option">
                   <input type="checkbox" id="cb2">
                   <label for="cb2">I want to receive the newsletter</label>
-              </div> -->
-            <input class="button" type="submit" value="Registrarse" />
+                </div> -->
+
+                <input class="button" type="submit" value="Registrarse" />
           </form>
         </div>
       </div>
     </div>
   </div>
+
   
+<script>
+  const passwordField = document.getElementById("password");
+  const togglePassword = document.querySelector(".password-toggle-icon i");
+
+  togglePassword.addEventListener("click", function () {
+    if (passwordField.type === "password") {
+      passwordField.type = "text";
+      togglePassword.classList.remove("fa-eye");
+      togglePassword.classList.add("fa-eye-slash");
+    } else {
+      passwordField.type = "password";
+      togglePassword.classList.remove("fa-eye-slash");
+      togglePassword.classList.add("fa-eye");
+    }
+  });
+</script>
+
+<script>
+  const passwordField2 = document.getElementById("password_repeat");
+  const togglePassword2 = document.querySelector(".password-toggle-icon i");
+
+  togglePassword2.addEventListener("click", function () {
+    if (passwordField2.type === "password") {
+      passwordField2.type = "text";
+      togglePassword2.classList.remove("fa-eye");
+      togglePassword2.classList.add("fa-eye-slash");
+    } else {
+      passwordField2.type = "password";
+      togglePassword2.classList.remove("fa-eye-slash");
+      togglePassword2.classList.add("fa-eye");
+    }
+  });
+</script>

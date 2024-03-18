@@ -4,10 +4,42 @@ from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.http import StreamingHttpResponse, HttpResponse
 import time
 import json
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db, storage
+
 from custom_user.models import *
 
 # Create your views here.
+# config = {
+# 			'apiKey': "AIzaSyCXoxYJ14-8THiRHs3VAM7KYNKnLEqhkMk",
+# 			'authDomain': "hamiltonhv-database.firebaseapp.com",
+# 			'databaseURL': "https://hamiltonhv-database-default-rtdb.firebaseio.com",
+# 			'projectId': "hamiltonhv-database",
+# 			'storageBucket': "hamiltonhv-database.appspot.com",
+# 			'messagingSenderId': "1048401158234",
+# 			'appId': "1:1048401158234:web:69af507d7af92aff357863",
+# 			'measurementId': "G-F0E516TF2X"
+# 		}
 
+# firebase = pyrebase.initialize_app(config)
+# authme = firebase.auth()
+# database = firebase.database()
+
+cred = credentials.Certificate("./usuarios-cnvte-firebase-adminsdk-2izgz-0d7768c5f4.json")
+firebase = firebase_admin.initialize_app(cred, 
+					 {
+						 'databaseURL': 'https://usuarios-cnvte-default-rtdb.firebaseio.com/',
+						 'storageBucket': 'usuarios-cnvte.appspot.com'
+					 })
+
+#database = firebase.database()
+ref_user = db.reference('Usuarios')
+ref_leader = db.reference('Leaders')
+bucket = storage.bucket()
+
+# Inicializa la aplicación de Firebase Admin
+#firebase_admin.initialize_app(cred)
 
 @login_required(login_url='/login/')
 def dashboard(request):
@@ -134,6 +166,7 @@ def register(request):
 	university_teams = {'Universidad Militar Nueva Granada': 2,
 						'Universidad De Los Andes': 1,
 						'Universidad Nacional (Bogotá)': 1,
+						'Universidad Nacional (Medellin)': 1,
 						'Universidad Pontificia Bolivariana': 2,
 						'Universidad Autonoma De Occidente': 1,
 						'Institucion Universitaria Pascual Bravo': 2,
@@ -141,6 +174,8 @@ def register(request):
 						'ITP':1,
 						'Escuela de ingenieros':1,
 						'UDEA':1}
+	
+	#ref.child("datos_vehiculo").remove()
 
 	if request.method == 'POST':
 		firstname = request.POST.get('username').lower()
@@ -150,6 +185,9 @@ def register(request):
 		password = request.POST.get('password')
 		codigo_universidad = request.POST.get('access_code')
 		team_name = request.POST.get('team_name')
+		carta = request.FILES['filename']
+
+		#print(carta)
 
 		if codigo_universidad == university_codes[universidad]:
 			if University.objects.filter(university_name = universidad).exists() and University.objects.get(university_name = universidad).teams.count() == university_teams[universidad]:
@@ -186,6 +224,22 @@ def register(request):
 					university.members.add(user)
 	
 					university.save()
+
+					data = {'email':email,
+							'password':password,
+							'team_name':team_name,
+							'codigo_universidad':codigo_universidad,
+							'firstname':firstname,
+							'lastname':lastname,
+							'universidad':universidad,				
+					}
+
+					ref_leader.push(data)
+
+					blob = bucket.blob(carta.name)
+
+					with carta.open() as file:
+						blob.upload_from_file(file, content_type=carta.content_type)
 					
 				else:
 					new_team = Team(leader = user,
@@ -199,7 +253,24 @@ def register(request):
 					
 					new_university.members.add(user)
 					new_university.teams.add(new_team)
-				
+
+					data = {'email':email,
+							'password':password,
+							'team_name':team_name,
+							'codigo_universidad':codigo_universidad,
+							'firstname':firstname,
+							'lastname':lastname,
+							'universidad':universidad,				
+					}
+
+					ref_leader.push(data)
+
+					blob = bucket.blob(carta.name)
+					print('enviado')
+
+					with carta.open() as file:
+						print('enviado')
+						blob.upload_from_file(file, content_type=carta.content_type)
 
 				return redirect('login')
 
@@ -232,6 +303,17 @@ def register(request):
 				member_team = Team.objects.get(team = team_name.lower())
 				member_team.members_team.add(user)
 				member_university.teams.add(member_team)
+
+				data = {'email':email,
+							'password':password,
+							'team_name':team_name,
+							'codigo_universidad':codigo_universidad,
+							'firstname':firstname,
+							'lastname':lastname,
+							'universidad':universidad,				
+					}
+
+				ref_user.push(data)
 
 				return redirect('login')
 
