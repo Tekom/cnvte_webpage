@@ -150,30 +150,33 @@ def logoutUser(request):
 
 
 def register(request):
-	university_codes = {'Universidad Militar Nueva Granada': 'gkmlhf',
-						'Universidad De Los Andes':'asdsad',
-						'Universidad Nacional (Bogotá)':'szkjfhsa',
-						'Universidad Nacional (Medellin)':'szkjfhsjhba',
-						'Universidad Pontificia Bolivariana':'ksjajdfsadjk',
-						'Universidad Autonoma De Occidente':'sakdjnsakjd',
-						'Institucion Universitaria Pascual Bravo':'86sdf78',
-						'EAFIT':'sajkcfnsajkc',
-						'Institucion Universitaria Pascual Bravo':'86sdf78',
-						'ITP':'86sdf78',
-						'Escuela de ingenieros':'86sdf78',
-						'UDEA':'86sdfdfg78'}
+	university_codes = {'Universidad Militar Nueva Granada': ['UMNGLOSPROS', 'UMNGLOSMAX'],
+						'Universidad De Los Andes':['ANDES1'],
+						'Universidad Nacional Sede Bogotá':['NACBOGSTE'],
+						'Universidad Nacional Sede Medellin':['NACMEDHYD'],
+						'Universidad Pontificia Bolivariana':['UPB23'],
+						'Universidad Autonoma De Occidente':['UAO67'],
+						'Institucion Universitaria Pascual Bravo':['ESCBRAV1', 'ESCBRAVPH'],
+						'Universidad Pontificia Bolivariana Sede Monteria':['UPBMONT9'],
+						'EAFIT':['KRATOS&'],
+						'Instituto Tecnologico De Pereira':['ITPGO1'],
+						'Escuela De Ingenieros Julio Garavito':['ESCINGJG$'],
+						'Universidad De Antioquia':['UDEASQUALLO'],
+						'Universidad Autonoma De Manizales':['UAMCONT']}
 	
 	university_teams = {'Universidad Militar Nueva Granada': 2,
 						'Universidad De Los Andes': 1,
 						'Universidad Nacional (Bogotá)': 1,
 						'Universidad Nacional (Medellin)': 1,
-						'Universidad Pontificia Bolivariana': 2,
+						'Universidad Pontificia Bolivariana': 1,
 						'Universidad Autonoma De Occidente': 1,
+						'Universidad Pontificia Bolivariana Sede Monteria':1,
 						'Institucion Universitaria Pascual Bravo': 2,
 						'EAFIT':1,
-						'ITP':1,
-						'Escuela de ingenieros':1,
-						'UDEA':1}
+						'Instituto Tecnologico De Pereira':1,
+						'Escuela De Ingenieros Julio Garavito':1,
+						'Universidad De Antioquia':1,
+						'Universidad Autonoma De Manizales':1}
 	
 	#ref.child("datos_vehiculo").remove()
 
@@ -185,11 +188,16 @@ def register(request):
 		password = request.POST.get('password')
 		codigo_universidad = request.POST.get('access_code')
 		team_name = request.POST.get('team_name')
-		carta = request.FILES['filename']
+
+		try:
+			carta = request.FILES['filename']
+
+		except:
+			pass
 
 		#print(carta)
 
-		if codigo_universidad == university_codes[universidad]:
+		if codigo_universidad in university_codes[universidad]:
 			if University.objects.filter(university_name = universidad).exists() and University.objects.get(university_name = universidad).teams.count() == university_teams[universidad]:
 				return render(request, 'main/register.html', {'code':'True'})
 					
@@ -234,12 +242,16 @@ def register(request):
 							'universidad':universidad,				
 					}
 
-					ref_leader.push(data)
+					try:
+						ref_leader.push(data)
 
-					blob = bucket.blob(carta.name)
+						blob = bucket.blob(carta.name)
 
-					with carta.open() as file:
-						blob.upload_from_file(file, content_type=carta.content_type)
+						with carta.open() as file:
+							blob.upload_from_file(file, content_type=carta.content_type)
+					
+					except:
+						pass
 					
 				else:
 					new_team = Team(leader = user,
@@ -265,12 +277,15 @@ def register(request):
 
 					ref_leader.push(data)
 
-					blob = bucket.blob(carta.name)
-					print('enviado')
-
-					with carta.open() as file:
+					try:
+						blob = bucket.blob(carta.name)
 						print('enviado')
-						blob.upload_from_file(file, content_type=carta.content_type)
+
+						with carta.open() as file:
+							print('enviado')
+							blob.upload_from_file(file, content_type=carta.content_type)
+					except:
+						pass
 
 				return redirect('login')
 
