@@ -177,8 +177,6 @@ def register(request):
 						'Escuela De Ingenieros Julio Garavito':1,
 						'Universidad De Antioquia':1,
 						'Universidad Autonoma De Manizales':1}
-	
-	#ref.child("datos_vehiculo").remove()
 
 	if request.method == 'POST':
 		firstname = request.POST.get('username').lower()
@@ -290,11 +288,22 @@ def register(request):
 				return redirect('login')
 
 		else:
+			try:
+				Team.objects.get(team = team_name.lower)
+
+			except:
+				return render(request, 'main/register.html', {'code':'3'})
+			
 			if not University.objects.filter(university_name = universidad).exists():
 				return render(request, 'main/register.html', {'code':'False'})
-				
+			
+			elif Team.objects.get(team = team_name.lower).members_team.count() == 15:
+				return render(request, 'main/register.html', {'code':'2'})
+			
+			elif Team.objects.get(team = team_name.lower).members_team.count() == 15:
+				return render(request, 'main/register.html', {'code':'2'})
+			
 			else:
-
 				#Create member instance
 				User = get_user_model()
 				user = User.objects.create_user(email=email,

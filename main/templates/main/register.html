@@ -86,6 +86,14 @@
                 <script>
                   window.alert('SU universidad ya tiene un lider, por favor haga el registro sin ingresar el codigo de lider.')
                 </script>
+              {% elif code == '2' %}
+                <script>
+                  window.alert('La cantidad maxima de miembros por equipo excede el limite')
+                </script>
+              {% elif code == '3' %}
+              <script>
+                window.alert('No existe ningun equipo registrado con este nombre')
+              </script>
               {% endif %}
               <!-- <div class="input_field checkbox_option">
                   <input type="checkbox" id="cb2">
