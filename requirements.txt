@@ -2,3 +2,4 @@ django
 django-use-email-as-username
 setuptools
 pyrebase4
+firebase-admin

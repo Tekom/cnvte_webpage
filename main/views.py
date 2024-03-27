@@ -136,7 +136,7 @@ def loginPage(request):
 
 		if user is not None:
 			login(request, user)
-			return redirect('dashboard')
+			return redirect('team_page')
 
 		else:
 			pass
@@ -159,10 +159,11 @@ def register(request):
 						'Institucion Universitaria Pascual Bravo':['ESCBRAV1', 'ESCBRAVPH'],
 						'Universidad Pontificia Bolivariana Sede Monteria':['UPBMONT9'],
 						'EAFIT':['KRATOS&'],
-						'Instituto Tecnologico De Pereira':['ITPGO1'],
+						'Universidad Tecnologica De Pereira':['ITPGO1'],
 						'Escuela De Ingenieros Julio Garavito':['ESCINGJG$'],
 						'Universidad De Antioquia':['UDEASQUALLO'],
-						'Universidad Autonoma De Manizales':['UAMCONT']}
+						'Universidad Autonoma De Manizales':['UAMCONT'],
+						'Universidad Tecnológica De Bolívar':['UTBESH42', 'UTBTHU$@']}
 	
 	university_teams = {'Universidad Militar Nueva Granada': 2,
 						'Universidad De Los Andes': 1,
@@ -173,10 +174,11 @@ def register(request):
 						'Universidad Pontificia Bolivariana Sede Monteria':1,
 						'Institucion Universitaria Pascual Bravo': 2,
 						'EAFIT':1,
-						'Instituto Tecnologico De Pereira':1,
+						'Universidad Tecnologica De Pereira':1,
 						'Escuela De Ingenieros Julio Garavito':1,
 						'Universidad De Antioquia':1,
-						'Universidad Autonoma De Manizales':1}
+						'Universidad Autonoma De Manizales':1,
+						'Universidad Tecnológica De Bolívar':2}
 
 	if request.method == 'POST':
 		firstname = request.POST.get('username').lower()
