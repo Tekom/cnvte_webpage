@@ -38,7 +38,7 @@ class userData(models.Model):
     email = models.EmailField()
 
     def __str__(self):
-        return self.user_firstname.capitalize() + ' ' + self.user_lastname.capitalize()
+        return self.user_firstname.title() + ' ' + self.user_lastname.title()
     
     def Serialize(self):
         return {'member_name':self.user_firstname.capitalize() + ' ' + self.user_lastname.capitalize()}

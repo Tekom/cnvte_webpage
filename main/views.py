@@ -291,18 +291,20 @@ def register(request):
 
 		else:
 			try:
-				Team.objects.get(team = team_name.lower)
+				#print(Team.objects.all())
+				#print(str(team_name.lower))
+				Team.objects.get(team = team_name.lower())
 
-			except:
+			except Exception as e:
 				return render(request, 'main/register.html', {'code':'3'})
 			
 			if not University.objects.filter(university_name = universidad).exists():
 				return render(request, 'main/register.html', {'code':'False'})
 			
-			elif Team.objects.get(team = team_name.lower).members_team.count() == 15:
+			elif Team.objects.get(team = team_name.lower()).members_team.count() == 15:
 				return render(request, 'main/register.html', {'code':'2'})
 			
-			elif Team.objects.get(team = team_name.lower).members_team.count() == 15:
+			elif Team.objects.get(team = team_name.lower()).members_team.count() == 15:
 				return render(request, 'main/register.html', {'code':'2'})
 			
 			else:
