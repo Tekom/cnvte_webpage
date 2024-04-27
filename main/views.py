@@ -7,6 +7,7 @@ import json
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db, storage
+from django.views.decorators.csrf import csrf_exempt
 
 from custom_user.models import *
 
@@ -148,7 +149,7 @@ def logoutUser(request):
 	logout(request)
 	return redirect('login')
 
-
+@csrf_exempt
 def register(request):
 	university_codes = {'Universidad Militar Nueva Granada': ['UMNGLOSPROS', 'UMNGLOSMAX'],
 						'Universidad De Los Andes':['ANDES1'],

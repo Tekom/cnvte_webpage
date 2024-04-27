@@ -1,5 +1,6 @@
 django
 django-use-email-as-username
+dj_database_url
 setuptools
 pyrebase4
 firebase-admin
