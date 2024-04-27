@@ -36,6 +36,8 @@ firebase = firebase_admin.initialize_app(cred,
 
 #database = firebase.database()
 ref_user = db.reference('Usuarios')
+ref_universidades = db.reference('Universidades')
+ref_universidades_max_teams = db.reference('Equipos Totales')
 ref_leader = db.reference('Leaders')
 bucket = storage.bucket()
 
@@ -149,37 +151,20 @@ def logoutUser(request):
 	logout(request)
 	return redirect('login')
 
-@csrf_exempt
-def register(request):
-	university_codes = {'Universidad Militar Nueva Granada': ['UMNGLOSPROS', 'UMNGLOSMAX'],
-						'Universidad De Los Andes':['ANDES1'],
-						'Universidad Nacional Sede Bogotá':['NACBOGSTE'],
-						'Universidad Nacional Sede Medellin':['NACMEDHYD'],
-						'Universidad Pontificia Bolivariana':['UPB23'],
-						'Universidad Autonoma De Occidente':['UAO67'],
-						'Institucion Universitaria Pascual Bravo':['ESCBRAV1', 'ESCBRAVPH'],
-						'Universidad Pontificia Bolivariana Sede Monteria':['UPBMONT9'],
-						'EAFIT':['KRATOS&'],
-						'Universidad Tecnologica De Pereira':['ITPGO1'],
-						'Escuela De Ingenieros Julio Garavito':['ESCINGJG$'],
-						'Universidad De Antioquia':['UDEASQUALLO'],
-						'Universidad Autonoma De Manizales':['UAMCONT'],
-						'Universidad Tecnológica De Bolívar':['UTBESH42', 'UTBTHU$@']}
+def getData(firebase_data):
+	universitys = list(firebase_data.keys())
+	codes = []
+
+	for university in universitys:
+		codes.append(list(firebase_data[university].values()))
+
+	valores_totales = dict(zip(universitys, codes))
 	
-	university_teams = {'Universidad Militar Nueva Granada': 2,
-						'Universidad De Los Andes': 1,
-						'Universidad Nacional (Bogotá)': 1,
-						'Universidad Nacional (Medellin)': 1,
-						'Universidad Pontificia Bolivariana': 1,
-						'Universidad Autonoma De Occidente': 1,
-						'Universidad Pontificia Bolivariana Sede Monteria':1,
-						'Institucion Universitaria Pascual Bravo': 2,
-						'EAFIT':1,
-						'Universidad Tecnologica De Pereira':1,
-						'Escuela De Ingenieros Julio Garavito':1,
-						'Universidad De Antioquia':1,
-						'Universidad Autonoma De Manizales':1,
-						'Universidad Tecnológica De Bolívar':2}
+	return (valores_totales, universitys)
+
+def register(request):
+	university_codes, universidades = getData(ref_universidades.get()[list(ref_universidades.get().keys())[0]])
+	university_teams = ref_universidades_max_teams.get()[list(ref_universidades_max_teams.get().keys())[0]]
 
 	if request.method == 'POST':
 		firstname = request.POST.get('username').lower()
@@ -346,4 +331,4 @@ def register(request):
 
 				return redirect('login')
 
-	return render(request, 'main/register.html')
+	return render(request, 'main/register.html', context={'universidades':universidades})

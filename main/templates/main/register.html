@@ -51,20 +51,9 @@
                 <div class="input_field select_option">
                   <select name = 'universidades'>
                     <option>Seleccione una universidad</option>
-                    <option>Universidad Militar Nueva Granada</option>
-                    <option>Universidad De Los Andes</option>
-                    <option>Universidad Nacional Sede Bogotá</option>
-                    <option>Universidad Nacional Sede Medellin</option>
-                    <option>Universidad Pontificia Bolivariana</option>
-                    <option>Universidad Autonoma De Occidente</option>
-                    <option>Institucion Universitaria Pascual Bravo</option>
-                    <option>Universidad Pontificia Bolivariana Sede Monteria</option>
-                    <option>EAFIT</option>
-                    <option>Universidad Tecnologica De Pereira</option>
-                    <option>Escuela De Ingenieros Julio Garavito</option>
-                    <option>Universidad De Antioquia</option>
-                    <option>Universidad Autonoma De Manizales</option>
-                    <option>Universidad Tecnológica De Bolívar</option>
+                    {% for universidad in universidades %}
+                      <option>{{universidad}}</option>
+                    {% endfor %}
                   </select>
                   <div class="select_arrow"></div>
                 </div>
