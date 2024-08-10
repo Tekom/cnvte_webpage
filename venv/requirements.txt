@@ -1,0 +1,10 @@
+django
+django-use-email-as-username
+dj_database_url
+django_cockroachdb
+psycopg2-binary
+setuptools
+pyrebase4
+firebase-admin
+apache-airflow
+kafka-python
