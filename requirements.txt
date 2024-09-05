@@ -1,1 +1,5 @@
 kafka-python
+django
+dj-database-url
+django-use-email-as-username
+firebase_admin

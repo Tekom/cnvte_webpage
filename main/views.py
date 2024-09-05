@@ -8,6 +8,14 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db, storage
 from django.views.decorators.csrf import csrf_exempt
+from kafka_installation.producer import Process
+import json
+from datetime import datetime
+from time import sleep
+from random import choice
+from kafka import KafkaProducer, KafkaAdminClient
+from kafka.admin import NewTopic
+import logging
 
 from custom_user.models import *
 
@@ -46,6 +54,8 @@ bucket = storage.bucket()
 
 @login_required(login_url='/login/')
 def dashboard(request):
+	Process(university_team = 'Test')
+
 	context = {}
 
 	user_logged = userData.objects.get(user = request.user)

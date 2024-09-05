@@ -34,7 +34,7 @@
       #map {position: realite;
             width: 100%;
             height: 600px;
-            border: 10px solid red;
+            border: 2px solid black;
     }
     </style>
 
@@ -1698,6 +1698,7 @@
                                                 </div>
                                             </div>
                                             
+                                            <h1>Mapa</h1>
                                             <div id="map">
                                                 <a href="https://www.maptiler.com" style="position:absolute;left:10px;bottom:10px"><img src="https://api.maptiler.com/resources/logo.svg" alt="MapTiler logo"></a>
                                             </div>
@@ -1705,23 +1706,28 @@
                                             <p><a href="https://www.maptiler.com/copyright/" target="_blank" rel="noopener">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">&copy; OpenStreetMap contributors</a></p>
                                             <script>
                                             // const key = 'YOUR_MAPTILER_API_KEY_HERE';
-                                                const map = L.map('map').setView([4.664539, -74.083349], 14); //starting position
+
+                                            
+                                                var x = 4.943271
+                                                var y = -74.014112
+                                                const map = L.map('map').setView([4.942646139951253, -74.0126042413143], 17); //starting position
                                                 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                                                             maxZoom: 19,
                                                             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                                                         }).addTo(map);
 
-                                                var marker = L.marker([4.664539, -74.083349]).addTo(map);
+                                                var marker = L.marker([x, y]).addTo(map);
+                                                marker.bindPopup('<b>Hamilton').openPopup();
                                                 // let contador = 0
-                                                var add = 0.001
+                                                var add = 0.00001
 
                                                 var route = [
-                                                        [4.664539, -74.083349 + add],
-                                                        [4.664539, -74.083349 + add*2],
-                                                        [4.664539, -74.083349 + add*3],
-                                                        [4.664539, -74.083349 + add*4],
-                                                        [4.664539, -74.083349 + add*5],
-                                                        [4.664539, -74.083349 + add*6]
+                                                        [x, y + add],
+                                                        [x, y + add*2],
+                                                        [x, y + add*3],
+                                                        [x, y + add*4],
+                                                        [x, y + add*5],
+                                                        [x, y + add*6]
                                                     ];
                                                     
                                                 var currentIndex = 0;
@@ -1735,7 +1741,7 @@
                                                     marker.setLatLng(route[currentIndex]);
 
                                                     // Ajustar la vista del mapa para centrar en el marcador
-                                                    map.panTo(route[currentIndex]);
+                                                    // map.panTo(route[currentIndex]);
 
                                                     // Incrementar el índice para pasar al siguiente punto de la ruta
                                                     currentIndex++;

@@ -172,7 +172,7 @@ code {
     right: 10px;
     top: 13px;
     display: inline-block;
-    float: right;
+    /* float: right; */
     padding: 7px 0;
     position: absolute
 }
