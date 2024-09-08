@@ -8,7 +8,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db, storage
 from django.views.decorators.csrf import csrf_exempt
-from kafka_installation.producer import Process
+from kafka_installation.producer import Process, stopProcess
 import json
 from datetime import datetime
 from time import sleep
@@ -34,6 +34,7 @@ from custom_user.models import *
 # firebase = pyrebase.initialize_app(config)
 # authme = firebase.auth()
 # database = firebase.database()
+# createKafkaTopic(teams_topics = list(Team.objects.all()))
 
 cred = credentials.Certificate("./usuarios-cnvte-firebase-adminsdk-2izgz-0d7768c5f4.json")
 firebase = firebase_admin.initialize_app(cred, 
@@ -49,17 +50,27 @@ ref_universidades_max_teams = db.reference('Equipos Totales')
 ref_leader = db.reference('Leaders')
 bucket = storage.bucket()
 
+# db_started = False
+# # createKafkaTopic(teams_topic = list(Team.objects.all()))
+# while not db_started:
+# 	if firebase_admin._apps:
+# 		createKafkaTopic(teams_topic = list(Team.objects.all()))
+# 		db_started = True
+
 # Inicializa la aplicación de Firebase Admin
 #firebase_admin.initialize_app(cred)
 
 @login_required(login_url='/login/')
 def dashboard(request):
-	Process(university_team = 'Test')
+	
 
 	context = {}
 
 	user_logged = userData.objects.get(user = request.user)
 	context = user_logged.Serialize()
+
+	# print(user_logged.team)
+	Process(university_team = user_logged.team)
 
 	return render(request, 'main/dashboard.html', context)
 
@@ -72,19 +83,17 @@ def dashboard(request):
 # 			last_car_data = last_db_item[list(last_db_item.keys())[0]]
 		   
 # 			#Generar datos para enviar al cliente
-# 			data = {'engine_velocity':last_car_data['engine_velocity']['value_x'],
-# 					'car_velocity':last_car_data['car_velocity']['value_x'],
-# 					'voltage':last_car_data['voltage']['value_x'],
-# 					'current':last_car_data['current']['value_x'],
-# 					'pwm':last_car_data['pwm']['value_x'],
-# 					'imu':{
-# 							'x':last_car_data['imu']['x']['value_x'],
-# 							'y':last_car_data['imu']['y']['value_x'],
-# 							'z':last_car_data['imu']['z']['value_x']
-# 					},
-# 					'tiempo':last_car_data['tiempo']
-# 			}
-			
+			# data = {'engine_velocity':'test',
+			# 		'car_velocity':'test',
+			# 		'voltage':'test',
+			# 		'current':'test',
+			# 		'pwm':'test',
+			# 		'imu_x':'asd',
+			# 		'imu_y':'asd',
+			# 		'imu_z':'asd',
+			# 		'tiempo':'test'
+			# 	}
+						
 # 			#Formato SSE: envía un evento "message" con los datos
 # 			event = f"data:{json.dumps(data)}\n\n"
 			
@@ -117,6 +126,9 @@ def teamPage(request):
 		context['is_leader'] = False
 
 	#------------------
+	user_logged = userData.objects.get(user = request.user)
+	stopProcess(topic = user_logged.team)
+
 	return render(request, 'main/dashboard-crm.html', context)
 
 def Scoreboard(request):
