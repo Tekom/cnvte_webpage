@@ -1,5 +1,6 @@
 from kafka import KafkaProducer, KafkaAdminClient
 from kafka.admin import NewTopic
+from cassandra.cluster import Cluster
 import logging
 
 topics = ['raptorrobotics',
@@ -65,14 +66,47 @@ try:
     )
 
     for topic_name in topic_2:
-        topic = NewTopic(
-                    name = topic_name,
-                    num_partitions = 5,  # Número de particiones
-                    replication_factor = 1  # Factor de replicación
-                )
+        try:
+            topic = NewTopic(
+                        name = topic_name,
+                        num_partitions = 5,  # Número de particiones
+                        replication_factor = 1  # Factor de replicación
+                    )
+            
+            admin_client.create_topics(new_topics=[topic], validate_only=False)
+            get_module_logger(__name__).info(f'Topic {topic_name} created succesfully')
+
+        except:
+            get_module_logger(__name__).info(f'Topic {topic_name} alredy exist')
+    
+    try:
+        cluster = Cluster(['cassandra_db'])
+        session = cluster.connect()
+
+        session.execute("""
+                        CREATE KEYSPACE IF NOT EXISTS spark_streaming
+                        WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'};
+        """)
+
+        get_module_logger(__name__).info(f'Keyspace spark_streaming created succesfully')
+
+    except Exception as e:
+        get_module_logger(__name__).error(f'Failed to create keyspace spark_streaming due to error {e}')
+
+    try:
+        session.execute("""
+                        CREATE TABLE IF NOT EXISTS spark_streaming.vehicules_data (
+                            id TEXT PRIMARY KEY,
+                            team_name TEXT,
+                            car_velocity TEXT,
+                            car_current TEXT,
+                            gps TEXT);
+                """)
         
-        admin_client.create_topics(new_topics=[topic], validate_only=False)
-        get_module_logger(__name__).info(f'Topic {topic_name} created succesfully')
+        get_module_logger(__name__).info(f'Table created successfully')
+
+    except Exception as e:
+        get_module_logger(__name__).error(f'Failed creating Table due to error {e}')
 
 except Exception as e:
     get_module_logger(__name__).error(f'Something went wrong while creating Kafka Admin due to {e}')

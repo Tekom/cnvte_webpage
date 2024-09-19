@@ -4,6 +4,7 @@ from time import sleep
 from random import choice
 from kafka import KafkaProducer, KafkaAdminClient
 from kafka.admin import NewTopic
+from datetime import datetime
 import threading
 import logging
 from typing import List
@@ -16,21 +17,18 @@ def sendDataToTopic(topic):
 
     while topic_state[topic]:
                 cont += 1
-                data = {"eventId": f"{topic}", 
-                        "eventOffset": 10045, 
-                        "eventPublisher": "device", 
-                        "customerId": "CI00103", 
-                        "data": {
-                            "devices": [
-                                {"deviceId": "D003", 
-                                "temperature": 20, 
-                                "measure": "C", 
-                                "status": "SUCCESS"}
-                                ]
-                            }, 
-                        "eventTime": "2023-01-05 11:13:53.650313"}
+                date = "_" + str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+
+                data = {"id": f"{topic + date}",
+                        "team_name": f"{topic}", 
+                        "car_velocity": "10045", 
+                        "car_current": "device",
+                        "gps": "CI00103"
+                    }
                 
+                get_module_logger(__name__).info(f"Data sended: {data}")
                 get_module_logger(__name__).info(f'Data #{cont} Was Sent Succesfully')
+
                 producer.send(topic_name_global, data)
                 producer.flush()
                 sleep(3)

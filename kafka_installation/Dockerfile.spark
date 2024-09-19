@@ -1,0 +1,19 @@
+FROM python:3.7
+
+# Instalar Java
+RUN apt-get update && apt-get install -y openjdk-11-jdk
+
+# Establecer la variable JAVA_HOME
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ENV PATH=$JAVA_HOME/bin:$PATH
+
+# Instalar PySpark
+RUN pip install pyspark
+
+# Crear directorio para la app
+WORKDIR /app
+
+# Copiar el script de PySpark al contenedor
+COPY ./kafka_installation/spark.py /app/
+# Comando por defecto para ejecutar el script
+CMD ["python", "/app/spark.py"]
