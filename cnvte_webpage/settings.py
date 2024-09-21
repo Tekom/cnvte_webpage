@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_use_email_as_username.apps.DjangoUseEmailAsUsernameConfig',
+    'channels',
     'main',
     'custom_user',
 ]
@@ -78,6 +79,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'cnvte_webpage.wsgi.application'
+ASGI_APPLICATION = 'cnvte_webpage.asgi.application'
 
 
 # Database
@@ -92,7 +94,14 @@ DATABASES = {
     #                              engine='django_cockroachdb')
 }                                  
 
-
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND':'channels_redis.core.RedisChannelLayer',
+        'CONFIG':{
+            'hosts' : [('redis', 6379)]
+        }
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

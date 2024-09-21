@@ -95,7 +95,7 @@ services:
       - DEBUG=1  # Habilita el modo de depuración si estás en desarrollo
       - DJANGO_SETTINGS_MODULE=cnvte_webpage.settings
     depends_on:
-      - kafka-topics
+      - redis #kafka-topics
     # networks:
     #   - kafka-net
 
@@ -123,6 +123,31 @@ services:
       - HEAP_NEWSIZE=100M
       - CASSANDRA_USERNAME=cassandra
       - CASSANDRA_PASSWORD=cassandra
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: unless-stopped  # Opción para reiniciar Redis si falla o se detiene
+    ports:
+      - "6379:6379"
+
+  worker_channels:
+    build: .
+    command: python manage.py runworker datos_vehiculo
+    volumes:
+      - .:/cnvte_webpage
+
+  channels:
+    build: .
+    command: daphne -b 0.0.0.0 -p 8001 cnvte_webpage.asgi:application
+    environment:
+      - DJANGO_SETTINGS_MODULE=cnvte_webpage.settings
+    volumes:
+      - .:/cnvte_webpage
+    ports:
+      - "8001:8001"
+    depends_on:
+      - django-app
 
 networks:
   kafka-net:

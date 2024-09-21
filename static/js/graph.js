@@ -45,10 +45,10 @@ var opciones_copia = {};
 var graph_data = {
     type: 'line',
     data: {
-      labels: [0, 0 , 0, 0, 0],
+      labels: [0, 0, 0, 0, 0],
       datasets: [{
         label: '',
-        data: [0, 0 , 0, 0, 0],
+        data: [0, 0, 0, 0, 0],
       }]
     },
     options: opciones
@@ -88,6 +88,28 @@ var current_chart = new Chart(current, graph_data_current);
 var imu_chart = new Chart(imu, graph_data_imu);
 var pwm_chart = new Chart(pwm, graph_data_pwm);
 
+var socket = new WebSocket('ws://' + '127.0.0.1:8001' + '/ws/live_data/')
+
+socket.onmessage = function (e) {
+  var djangoData = JSON.parse(e.data)
+  console.log(djangoData)
+
+  var newData = graph_data_engine.data.datasets[0].data;
+  newData.shift();
+  newData.push(djangoData.value)
+
+  graph_data_engine.data.datasets[0].data = newData
+
+  var newDataY = graph_data_engine.data.labels;
+  newDataY.shift();
+  newDataY.push(djangoData.y)
+
+  graph_data_engine.data.labels = newDataY
+
+  engine_chart.update();
+  
+  // document.querySelector('#app').innerText = djangoData.value;
+}
 // const cloud_data = {'engine_velocity':{
 //   'title': 'Velocidad motor [rad/s]',
 //   'y_label': 'RPM [rad]',

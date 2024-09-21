@@ -1,5 +1,9 @@
 kafka-python
 django
+channels
+channels-redis
 dj-database-url
+daphne
 django-use-email-as-username
 firebase_admin
+asgi-redis

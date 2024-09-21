@@ -6,6 +6,7 @@ COPY  requirements.txt .
 RUN pip install -r requirements.txt
 COPY . .
 ENV PORT 8080
+
 # CMD python manage.py runserver 0.0.0.0:8080
 
 #FROM apache/airflow:2.8.1

@@ -100,7 +100,8 @@ try:
                             team_name TEXT,
                             car_velocity TEXT,
                             car_current TEXT,
-                            gps TEXT);
+                            gps TEXT
+                            timestamp TIMESTAMP);
                 """)
         
         get_module_logger(__name__).info(f'Table created successfully')

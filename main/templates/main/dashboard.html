@@ -1461,28 +1461,73 @@
 
 
                                             <div class="col-md-12 col-xl-4">
-                                                <div class="card card-blue text-white">
+                                                <!-- <canvas id="myBarChart" width="400" height="200"></canvas> -->
+
+                                                <h1 id = 'app'>asd</h1>
+                                                <!-- <div class="card card-blue text-white">
                                                     <div class="card-block p-b-0">
                                                         <div class="row m-b-50">
                                                             <div class="col">
                                                                 <h6 class="m-b-5">Average Data</h6>
-                                                                <!-- <h5 class="m-b-0 f-w-700">$2665.00</h5> -->
+
                                                             </div>
-                                                            <!-- <div class="col-auto text-center">
-                                                                <p class="m-b-5">Direct Sale</p>
-                                                                <h6 class="m-b-0">$1768</h6>
-                                                            </div>
-                                                            <div class="col-auto text-center">
-                                                                <p class="m-b-5">Referal</p>
-                                                                <h6 class="m-b-0">$897</h6>
-                                                            </div> -->
+                    
                                                         </div>
                                                         <div id="sec-ecommerce-chart-line" class style="height:60px">
                                                         </div>
                                                         <div id="sec-ecommerce-chart-bar" style="height:195px"></div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
+                                            
+                                            <script src="{% static 'js/test.js' %}"></script>
+
+                                            <script>
+                                                // Espera a que el DOM esté completamente cargado
+                                                document.addEventListener('DOMContentLoaded', function () {
+                                                    // Obtén el contexto del canvas
+                                                    var ctx = document.getElementById('myBarChart').getContext('2d');
+                                        
+                                                    // Crea el gráfico de barras
+                                                    var myBarChart = new Chart(ctx, {
+                                                        type: 'bar', // Tipo de gráfico
+                                                        data: {
+                                                            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'], // Etiquetas en el eje X
+                                                            datasets: [{
+                                                                label: 'Sales', // Etiqueta del conjunto de datos
+                                                                data: [65, 59, 80, 81, 56, 55, 40], // Datos para el gráfico de barras
+                                                                backgroundColor: [ // Color de fondo para cada barra
+                                                                    'rgba(255, 99, 132, 0.2)',
+                                                                    'rgba(54, 162, 235, 0.2)',
+                                                                    'rgba(255, 206, 86, 0.2)',
+                                                                    'rgba(75, 192, 192, 0.2)',
+                                                                    'rgba(153, 102, 255, 0.2)',
+                                                                    'rgba(255, 159, 64, 0.2)',
+                                                                    'rgba(255, 99, 132, 0.2)'
+                                                                ],
+                                                                borderColor: [ // Color del borde para cada barra
+                                                                    'rgba(255, 99, 132, 1)',
+                                                                    'rgba(54, 162, 235, 1)',
+                                                                    'rgba(255, 206, 86, 1)',
+                                                                    'rgba(75, 192, 192, 1)',
+                                                                    'rgba(153, 102, 255, 1)',
+                                                                    'rgba(255, 159, 64, 1)',
+                                                                    'rgba(255, 99, 132, 1)'
+                                                                ],
+                                                                borderWidth: 1 // Ancho del borde de las barras
+                                                            }]
+                                                        },
+                                                        options: {
+                                                            scales: {
+                                                                y: {
+                                                                    beginAtZero: true // Comenzar el eje y desde cero
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                            
                                             <div class="col-xl-4 col-md-6">
                                                 <div class="card latest-update-card">
                                                     <div class="card-header">
