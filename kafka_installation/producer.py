@@ -18,12 +18,14 @@ def sendDataToTopic(topic):
     while topic_state[topic]:
                 cont += 1
                 date = "_" + str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                timestamp = datetime.now()
 
                 data = {"id": f"{topic + date}",
                         "team_name": f"{topic}", 
-                        "car_velocity": "10045", 
+                        "car_velocity": f"{cont}", 
                         "car_current": "device",
-                        "gps": "CI00103"
+                        "gps": "CI00103",
+                        "timestamp": timestamp.strftime('%Y-%m-%d %H:%M:%S')
                     }
                 
                 get_module_logger(__name__).info(f"Data sended: {data}")

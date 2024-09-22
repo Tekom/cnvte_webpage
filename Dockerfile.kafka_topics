@@ -1,0 +1,13 @@
+# Usa una imagen base de Python
+FROM python:3.7
+
+# Establece el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copia el archivo create_topics.py al contenedor
+COPY ./kafka_installation/create_topics.py /app/create_topics.py
+
+# Actualiza e instala las dependencias necesarias
+RUN apt-get update && \
+    apt-get install -y python3-pip && \
+    pip3 install kafka-python cassandra-driver

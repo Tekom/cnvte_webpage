@@ -65,17 +65,27 @@ services:
     #   - kafka-net
   
   kafka-topics:
-    image: python:3.7  # Usa una imagen de Python
+    # image: python:3.7  # Usa una imagen de Python
+    # container_name: kafka-create-topics
+    # volumes:
+    #   - ./kafka_installation/create_topics.py:/app/create_topics.py  # Monta el archivo producer.py
+    # working_dir: /app  # Directorio de trabajo dentro del contenedor
+    # command: >
+    #   /bin/bash -c "
+    #   apt-get update && 
+    #   apt-get install -y python3-pip && 
+    #   pip3 install kafka-python &&
+    #   pip3 install cassandra-driver &&
+    #   python3 create_topics.py"
+    # depends_on:
+    #   - ed-kafka
+    build: 
+      context: .
+      dockerfile: Dockerfile.kafka_topics  # Asegúrate de que este Dockerfile esté en el mismo directorio
     container_name: kafka-create-topics
-    volumes:
-      - ./kafka_installation/create_topics.py:/app/create_topics.py  # Monta el archivo producer.py
-    working_dir: /app  # Directorio de trabajo dentro del contenedor
+    restart: on-failure
     command: >
       /bin/bash -c "
-      apt-get update && 
-      apt-get install -y python3-pip && 
-      pip3 install kafka-python &&
-      pip3 install cassandra-driver &&
       python3 create_topics.py"
     depends_on:
       - ed-kafka
@@ -84,6 +94,7 @@ services:
     build:
       context: .  # Ruta al directorio con el Dockerfile de tu aplicación
       dockerfile: Dockerfile  # Nombre del Dockerfile si es diferente
+    restart: on-failure
     volumes:
       - .:/cnvte_webpage
     ports:
@@ -103,6 +114,7 @@ services:
     image: bitnami/spark:3.3.0
     container_name: pyspark-app
     command: bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.0,com.datastax.spark:spark-cassandra-connector_2.12:3.3.0 --master spark://spark-master:7077 /app/spark.py
+    restart: on-failure
     volumes:
       - ./kafka_installation/spark.py:/app/spark.py
     depends_on:

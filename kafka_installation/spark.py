@@ -1,7 +1,7 @@
 # Create the Spark Session
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import udf
-from pyspark.sql.types import StringType
+from pyspark.sql.types import StringType, TimestampType
 from pyspark.sql.functions import to_timestamp
 import uuid
 import logging
@@ -52,6 +52,7 @@ json_schema = (
             StructField('car_velocity', StringType(), True), 
             StructField('car_current', StringType(), True), 
             StructField('gps', StringType(), True), 
+            StructField('timestamp', TimestampType(), True)
         ]
     )
 )
@@ -60,7 +61,7 @@ json_schema = (
 from pyspark.sql.functions import from_json,col
 
 streaming_df = kafka_json_df.withColumn("values_json", from_json(col("value"), json_schema)).selectExpr("values_json.*")
-final_df = streaming_df.select("id", "team_name", "car_velocity", "car_current", "gps")
+final_df = streaming_df.select("id", "team_name", "car_velocity", "car_current", "gps", "timestamp")
 
 # Write the output to console sink to check the output
 def get_module_logger(mod_name):

@@ -96,7 +96,7 @@ socket.onmessage = function (e) {
 
   var newData = graph_data_engine.data.datasets[0].data;
   newData.shift();
-  newData.push(djangoData.value)
+  newData.push(djangoData.car_velocity)
 
   graph_data_engine.data.datasets[0].data = newData
 

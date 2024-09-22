@@ -7,3 +7,4 @@ daphne
 django-use-email-as-username
 firebase_admin
 asgi-redis
+cassandra-driver

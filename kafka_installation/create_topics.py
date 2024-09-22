@@ -2,6 +2,7 @@ from kafka import KafkaProducer, KafkaAdminClient
 from kafka.admin import NewTopic
 from cassandra.cluster import Cluster
 import logging
+import time
 
 topics = ['raptorrobotics',
           'squalo martello',
@@ -61,9 +62,17 @@ def get_module_logger(mod_name):
     return logger
 
 try:
-    admin_client = KafkaAdminClient(
-        bootstrap_servers="ed-kafka:29092"
-    )
+    while True:
+        try:
+            admin_client = KafkaAdminClient(
+                bootstrap_servers="ed-kafka:29092"
+            )
+
+            break
+
+        except:
+            time.sleep(2)
+            get_module_logger(__name__).info(f'Trying reconect to kafka cluster')
 
     for topic_name in topic_2:
         try:
@@ -80,8 +89,16 @@ try:
             get_module_logger(__name__).info(f'Topic {topic_name} alredy exist')
     
     try:
-        cluster = Cluster(['cassandra_db'])
-        session = cluster.connect()
+        while True:
+            try:
+                cluster = Cluster(['cassandra_db'])
+                session = cluster.connect()
+
+                break
+
+            except:
+                time.sleep(2)
+                get_module_logger(__name__).info(f'Trying reconect to cassandra cluster')
 
         session.execute("""
                         CREATE KEYSPACE IF NOT EXISTS spark_streaming
@@ -96,12 +113,13 @@ try:
     try:
         session.execute("""
                         CREATE TABLE IF NOT EXISTS spark_streaming.vehicules_data (
-                            id TEXT PRIMARY KEY,
+                            id TEXT,
                             team_name TEXT,
                             car_velocity TEXT,
                             car_current TEXT,
-                            gps TEXT
-                            timestamp TIMESTAMP);
+                            gps TEXT,
+                            timestamp TIMESTAMP,
+                            PRIMARY KEY (team_name, timestamp));
                 """)
         
         get_module_logger(__name__).info(f'Table created successfully')
@@ -111,4 +129,4 @@ try:
 
 except Exception as e:
     get_module_logger(__name__).error(f'Something went wrong while creating Kafka Admin due to {e}')
-
+    raise

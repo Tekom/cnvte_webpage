@@ -8,10 +8,24 @@ from channels.db import database_sync_to_async
 from asgiref.sync import sync_to_async
 from cassandra.cluster import Cluster
 from cassandra.query import SimpleStatement
+import logging 
+
+def get_module_logger(mod_name):
+    """
+    To use this, do logger = get_module_logger(__name__)
+    """
+    logger = logging.getLogger(mod_name)
+    handler = logging.StreamHandler()
+    formatter = logging.Formatter(
+        '%(asctime)s [%(name)-12s] %(levelname)-8s %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.setLevel(logging.DEBUG)
+    return logger
 
 class GraphConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.cluster = Cluster(['casandra_db'])
+        self.cluster = Cluster(['cassandra_db'])
         self.session = self.cluster.connect('spark_streaming')
 
         await self.accept()
@@ -22,31 +36,37 @@ class GraphConsumer(AsyncWebsocketConsumer):
         user_data = await sync_to_async(userData.objects.get)(user = user)
         user_team = user_data.team
 
-        
-
         for i in range(1000):
             data = await self.get_data_from_cassandra(user_team)
 
-            await self.send(json.dumps(data))
+            if data is not None:
+                data['y'] = cont
+
+                await self.send(json.dumps(data))
+                
+                cont += 1
+                await sleep(1)
             
-            cont += 1
-            await sleep(1)
+            else:
+                await sleep(1)
 
     async def get_data_from_cassandra(self, team):
-        query = SimpleStatement(f"SELECT * FROM spark_streaming.vehicules_data WHERE team_name = %s ORDER BY time_stamp DESC LIMIT 1 ALLOW FILT")  # Ajusta la consulta
+        query = SimpleStatement(f"SELECT * FROM spark_streaming.vehicules_data WHERE team_name = %s ORDER BY timestamp DESC LIMIT 1")  # Ajusta la consulta
         # Ejecutar la consulta de forma asíncrona
         result = await sync_to_async(self.session.execute)(query, (team,))
         
         # Procesar los resultados
         latest_record = result.one()
+        get_module_logger(__name__).info(f'Data: {latest_record}')
 
         if latest_record:
             return {
                     'id': latest_record.id,
                     'team_name': latest_record.team_name,
-                    'car_velocity': latest_record.team_velocity,
+                    'car_velocity': int(latest_record.car_velocity),
                     'car_current': latest_record.car_current,
-                    'gps': latest_record.gps
+                    'gps': latest_record.gps,
+                    'timestamp': latest_record.timestamp.strftime('%Y-%m-%d %H:%M:%S')
             }
         
         else:
