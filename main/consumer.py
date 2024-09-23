@@ -32,7 +32,7 @@ class GraphConsumer(AsyncWebsocketConsumer):
 
         user = self.scope["user"]
         cont = 0
-        
+                
         user_data = await sync_to_async(userData.objects.get)(user = user)
         user_team = user_data.team
 
@@ -52,11 +52,21 @@ class GraphConsumer(AsyncWebsocketConsumer):
 
     async def get_data_from_cassandra(self, team):
         query = SimpleStatement(f"SELECT * FROM spark_streaming.vehicules_data WHERE team_name = %s ORDER BY timestamp DESC LIMIT 1")  # Ajusta la consulta
+
+        averages = SimpleStatement(f"""
+            SELECT AVG(car_velocity) as average_velocity, AVG(car_voltage) as average_voltage, AVG(car_current) as average_current
+            FROM spark_streaming.vehicules_data
+            WHERE team_name = %s
+        """)
+
         # Ejecutar la consulta de forma asíncrona
         result = await sync_to_async(self.session.execute)(query, (team,))
-        
+        avg_query_result = await sync_to_async(self.session.execute)(averages, (team,))
+
         # Procesar los resultados
         latest_record = result.one()
+        average_data = avg_query_result.one()
+
         get_module_logger(__name__).info(f'Data: {latest_record}')
 
         if latest_record:
@@ -64,9 +74,14 @@ class GraphConsumer(AsyncWebsocketConsumer):
                     'id': latest_record.id,
                     'team_name': latest_record.team_name,
                     'car_velocity': int(latest_record.car_velocity),
-                    'car_current': latest_record.car_current,
-                    'gps': latest_record.gps,
-                    'timestamp': latest_record.timestamp.strftime('%Y-%m-%d %H:%M:%S')
+                    'car_voltage': int(latest_record.car_voltage),
+                    'car_current': int(latest_record.car_current),
+                    'gps_1': float(latest_record.gps_1),
+                    'gps_2': float(latest_record.gps_2),
+                    'timestamp': latest_record.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+                    'average_velocity': round(float(average_data.average_velocity), 2),
+                    'average_voltage': round(float(average_data.average_voltage), 2),
+                    'average_current': round(float(average_data.average_current), 2),
             }
         
         else:

@@ -8,6 +8,7 @@ from datetime import datetime
 import threading
 import logging
 from typing import List
+from random import randint, uniform
 
 def sendDataToTopic(topic):
     cont = 0
@@ -22,9 +23,11 @@ def sendDataToTopic(topic):
 
                 data = {"id": f"{topic + date}",
                         "team_name": f"{topic}", 
-                        "car_velocity": f"{cont}", 
-                        "car_current": "device",
-                        "gps": "CI00103",
+                        "car_velocity": uniform(10.0, 40.0),
+                        "car_voltage": uniform(10.0, 40.0), 
+                        "car_current": uniform(10.0, 15.0),
+                        "gps_1": uniform(1.0, 1.001),
+                        "gps_2": uniform(1.0, 1.001), 
                         "timestamp": timestamp.strftime('%Y-%m-%d %H:%M:%S')
                     }
                 
@@ -66,6 +69,7 @@ thread_state = [False] * len(topic_2)
 # topics_threads = dict(zip(topic_2, threads))
 topics_threads = dict()
 topic_state = dict(zip(topic_2, thread_state))
+team_members = dict()
 
 def get_module_logger(mod_name):
     """
@@ -112,22 +116,41 @@ def createAdminKafka():
     
         return None
     
-def Process(university_team: str = None):
-    global producer, topic_name_global, topic_state
+def Process(university_team: str = None, 
+            team_member: str = None):
+    
+    global producer, topic_name_global, topic_state, team_members
 
     producer = createKafkaProducer()
     topic_name_global = university_team
+    
+    if university_team not in list(team_members.keys()):
+         team_members[university_team] = []
+
+    team_members[university_team].append(team_member)
 
     if producer is not None:
         # create_topic = createKafkaTopic(topic_name = university_team)
-        
-        topic_state[university_team] = True
 
-        topics_threads[university_team] = threading.Thread(target = sendDataToTopic, args = (university_team,))
-        topics_threads[university_team].start()
+        if not topic_state[university_team]:      
+            topic_state[university_team] = True
+
+            topics_threads[university_team] = threading.Thread(target = sendDataToTopic, args = (university_team,))
+            topics_threads[university_team].start()
+
+        else: return
             
-def stopProcess(topic: str = None):
-    topic_state[topic] = False
+def stopProcess(topic: str = None,
+                team_member: str = None):
+    
+    team_members[topic].remove(team_member)
+    get_module_logger(__name__).info(f"Amount of member remaining {team_members} from {topic}")
+
+    if team_members[topic]:
+         return
+    
+    else:
+        topic_state[topic] = False
 
 
 # admin_client = KafkaAdminClient(

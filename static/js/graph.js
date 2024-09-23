@@ -26,6 +26,8 @@ var opciones = {
       }
     },
     y: {
+      min: 0,    // Valor mínimo del eje y
+      max: 50,
       grid: {
         display: true
       },
@@ -49,6 +51,7 @@ var graph_data = {
       datasets: [{
         label: '',
         data: [0, 0, 0, 0, 0],
+        tension: 0.4
       }]
     },
     options: opciones
@@ -90,25 +93,53 @@ var pwm_chart = new Chart(pwm, graph_data_pwm);
 
 var socket = new WebSocket('ws://' + '127.0.0.1:8001' + '/ws/live_data/')
 
+var graphs_data = [
+  graph_data_engine,
+  graph_data_velocity,
+  graph_data_voltage,
+  graph_data_current,
+  graph_data_pwm
+]
+
+var charts = [
+  engine_chart,
+  velocity_chart,
+  voltage_chart,
+  current_chart,
+  pwm_chart
+]
+
 socket.onmessage = function (e) {
   var djangoData = JSON.parse(e.data)
+  var car_data = [
+    djangoData.car_velocity,
+    djangoData.car_velocity,
+    djangoData.car_voltage,
+    djangoData.car_current,
+    djangoData.gps_1
+  ]
+
   console.log(djangoData)
 
-  var newData = graph_data_engine.data.datasets[0].data;
-  newData.shift();
-  newData.push(djangoData.car_velocity)
+  for (let i = 0; i < graphs_data.length; i++) {
+    var newData = graphs_data[i].data.datasets[0].data;
+    newData.shift();
+    newData.push(car_data[i])
 
-  graph_data_engine.data.datasets[0].data = newData
+    graphs_data[i].data.datasets[0].data = newData
 
-  var newDataY = graph_data_engine.data.labels;
-  newDataY.shift();
-  newDataY.push(djangoData.y)
+    var newDataY = graphs_data[i].data.labels;
+    newDataY.shift();
+    newDataY.push(djangoData.y)
 
-  graph_data_engine.data.labels = newDataY
+    graphs_data[i].data.labels = newDataY
 
-  engine_chart.update();
-  
-  // document.querySelector('#app').innerText = djangoData.value;
+    charts[i].update();
+  }
+
+  document.getElementById('velocidad').textContent = djangoData.average_velocity;
+  document.getElementById('voltaje').textContent = djangoData.average_voltage;
+  document.getElementById('corriente').textContent = djangoData.average_current;
 }
 // const cloud_data = {'engine_velocity':{
 //   'title': 'Velocidad motor [rad/s]',

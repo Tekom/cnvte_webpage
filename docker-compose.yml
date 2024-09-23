@@ -105,6 +105,7 @@ services:
     environment:
       - DEBUG=1  # Habilita el modo de depuración si estás en desarrollo
       - DJANGO_SETTINGS_MODULE=cnvte_webpage.settings
+      - GOOGLE_APPLICATION_CREDENTIALS=./usuarios-cnvte-firebase-adminsdk-2izgz-338c2bdd79.json
     depends_on:
       - redis #kafka-topics
     # networks:

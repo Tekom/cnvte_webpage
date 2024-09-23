@@ -115,9 +115,11 @@ try:
                         CREATE TABLE IF NOT EXISTS spark_streaming.vehicules_data (
                             id TEXT,
                             team_name TEXT,
-                            car_velocity TEXT,
-                            car_current TEXT,
-                            gps TEXT,
+                            car_velocity FLOAT,
+                            car_voltage FLOAT,
+                            car_current FLOAT,
+                            gps_1 FLOAT,
+                            gps_2 FLOAT,
                             timestamp TIMESTAMP,
                             PRIMARY KEY (team_name, timestamp));
                 """)

@@ -36,7 +36,7 @@ from custom_user.models import *
 # database = firebase.database()
 # createKafkaTopic(teams_topics = list(Team.objects.all()))
 
-cred = credentials.Certificate("./usuarios-cnvte-firebase-adminsdk-2izgz-0d7768c5f4.json")
+cred = credentials.Certificate("./usuarios-cnvte-firebase-adminsdk-2izgz-338c2bdd79.json")
 firebase = firebase_admin.initialize_app(cred, 
 					 {
 						 'databaseURL': 'https://usuarios-cnvte-default-rtdb.firebaseio.com/',
@@ -70,8 +70,9 @@ def dashboard(request):
 	context = user_logged.Serialize()
 
 	# print(user_logged.team)
-	Process(university_team = user_logged.team)
-
+	Process(university_team = user_logged.team,
+	 		team_member = user_logged.Serialize()['member_name'])
+	
 	return render(request, 'main/dashboard.html', context)
 
 # @login_required
@@ -127,7 +128,12 @@ def teamPage(request):
 
 	#------------------
 	user_logged = userData.objects.get(user = request.user)
-	stopProcess(topic = user_logged.team)
+
+	try:
+		stopProcess(topic = user_logged.team,
+					team_member=user_logged.Serialize()['member_name'])
+	except:
+		pass
 
 	return render(request, 'main/dashboard-crm.html', context)
 
@@ -170,6 +176,15 @@ def loginPage(request):
 
 
 def logoutUser(request):
+	user_logged = userData.objects.get(user = request.user)
+
+	try:
+		stopProcess(topic = user_logged.team,
+					team_member = user_logged.Serialize()['member_name'])
+		
+	except:
+		pass
+	
 	logout(request)
 	return redirect('login')
 
