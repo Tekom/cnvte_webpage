@@ -43,4 +43,20 @@ class userData(models.Model):
     def Serialize(self):
         return {'member_name':self.user_firstname.capitalize() + ' ' + self.user_lastname.capitalize()}
     
+class Timestamps(models.Model):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, default=None)
+    time_stamp_1_hability = models.CharField(max_length=200, blank=True)
+    time_stamp_2_hability = models.CharField(max_length=200, blank=True)
 
+    time_stamp_1_acceleration = models.CharField(max_length=200, blank=True)
+    time_stamp_2_acceleration = models.CharField(max_length=200, blank=True)
+
+    time_stamp_1_gp = models.CharField(max_length=200, blank=True)
+    time_stamp_2_gp = models.CharField(max_length=200, blank=True)
+
+    total_time_hability = models.IntegerField(blank=True)
+    total_penalization_hability = models.CharField(max_length=200, blank=True)
+    total_position_hability = models.CharField(max_length=200, blank=True)
+
+    def __str__(self):
+        return self.team.team.title() + " " + "Timestamps"

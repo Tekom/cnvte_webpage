@@ -36,19 +36,22 @@ from custom_user.models import *
 # database = firebase.database()
 # createKafkaTopic(teams_topics = list(Team.objects.all()))
 
-cred = credentials.Certificate("./usuarios-cnvte-firebase-adminsdk-2izgz-338c2bdd79.json")
-firebase = firebase_admin.initialize_app(cred, 
-					 {
-						 'databaseURL': 'https://usuarios-cnvte-default-rtdb.firebaseio.com/',
-						 'storageBucket': 'usuarios-cnvte.appspot.com'
-					 })
+try:
+	cred = credentials.Certificate("./usuarios-cnvte-firebase-adminsdk-2izgz-338c2bdd79.json")
+	firebase = firebase_admin.initialize_app(cred, 
+						{
+							'databaseURL': 'https://usuarios-cnvte-default-rtdb.firebaseio.com/',
+							'storageBucket': 'usuarios-cnvte.appspot.com'
+						})
 
-#database = firebase.database()
-ref_user = db.reference('Usuarios')
-ref_universidades = db.reference('Universidades')
-ref_universidades_max_teams = db.reference('Equipos Totales')
-ref_leader = db.reference('Leaders')
-bucket = storage.bucket()
+	#database = firebase.database()
+	ref_user = db.reference('Usuarios')
+	ref_universidades = db.reference('Universidades')
+	ref_universidades_max_teams = db.reference('Equipos Totales')
+	ref_leader = db.reference('Leaders')
+	bucket = storage.bucket()
+except ValueError:
+	pass
 
 # db_started = False
 # # createKafkaTopic(teams_topic = list(Team.objects.all()))
@@ -60,6 +63,19 @@ bucket = storage.bucket()
 # Inicializa la aplicación de Firebase Admin
 #firebase_admin.initialize_app(cred)
 
+def get_module_logger(mod_name):
+    """
+    To use this, do logger = get_module_logger(__name__)
+    """
+    logger = logging.getLogger(mod_name)
+    handler = logging.StreamHandler()
+    formatter = logging.Formatter(
+        '%(asctime)s [%(name)-12s] %(levelname)-8s %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.setLevel(logging.DEBUG)
+    return logger
+
 @login_required(login_url='/login/')
 def dashboard(request):
 	
@@ -67,7 +83,12 @@ def dashboard(request):
 	context = {}
 
 	user_logged = userData.objects.get(user = request.user)
+	all_teams = Team.objects.values_list('team', flat=True).distinct()
+	team = user_logged.team
 	context = user_logged.Serialize()
+
+	context['all_teams'] = all_teams
+	context['user_team'] = team
 
 	# print(user_logged.team)
 	Process(university_team = user_logged.team,
@@ -369,3 +390,23 @@ def register(request):
 				return redirect('login')
 
 	return render(request, 'main/register.html', context={'universidades':universidades})
+
+def updatePos(request):
+	all_teams_hability = Timestamps.objects.all().order_by('total_time_hability')
+
+	resultados_con_puntajes = []
+
+# Asignar puntajes según la posición
+	for i, team_actual in enumerate(all_teams_hability):
+		puntaje = 160 - (10 * (i + 1))  # +1 porque enumerate empieza en 0
+
+		resultados_con_puntajes.append({
+			'team': team_actual.team.team,
+			'puntaje': puntaje,
+    	})
+
+		team_actual.total_position_hability = str(puntaje)
+		team_actual.save()
+	# test = Timestamps.objects.all().order_by('total_time_hability')[0].team.team
+	
+	return HttpResponse(f'{resultados_con_puntajes}')

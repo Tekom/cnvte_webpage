@@ -3,7 +3,6 @@ const car_velocity = document.getElementById('velocity');
 const voltage = document.getElementById('voltage');
 const current = document.getElementById('current');
 const imu = document.getElementById('imu');
-const pwm = document.getElementById('pwm');
 
 
 var opciones = {
@@ -82,23 +81,26 @@ var graph_data_velocity = JSON.parse(JSON.stringify(graph_data));;
 var graph_data_voltage = JSON.parse(JSON.stringify(graph_data));;
 var graph_data_current = JSON.parse(JSON.stringify(graph_data));;
 var graph_data_imu = JSON.parse(JSON.stringify(graph_imu));;
-var graph_data_pwm = JSON.parse(JSON.stringify(graph_data));;
 
 var engine_chart = new Chart(engine_velocity, graph_data_engine);
 var velocity_chart = new Chart(car_velocity, graph_data_velocity);
 var voltage_chart = new Chart(voltage, graph_data_voltage);
 var current_chart = new Chart(current, graph_data_current);
 var imu_chart = new Chart(imu, graph_data_imu);
-var pwm_chart = new Chart(pwm, graph_data_pwm);
 
 var socket = new WebSocket('ws://' + '127.0.0.1:8001' + '/ws/live_data/')
+
+// graph_data_engine.data.datasets[0].label = 'Velocidad [Km / h]'
+// graph_data_velocity.data.datasets[0].label = 'Velocidad GPS [Km / h]'
+// graph_data_voltage.data.datasets[0].label = 'Voltaje [V]'
+// graph_data_current.data.datasets[0].label = 'Corriente [A]'
+// graph_data_engine.data.datasets[0].label = 'Test'
 
 var graphs_data = [
   graph_data_engine,
   graph_data_velocity,
   graph_data_voltage,
   graph_data_current,
-  graph_data_pwm
 ]
 
 var charts = [
@@ -106,17 +108,17 @@ var charts = [
   velocity_chart,
   voltage_chart,
   current_chart,
-  pwm_chart
 ]
 
 socket.onmessage = function (e) {
   var djangoData = JSON.parse(e.data)
+  
   var car_data = [
-    djangoData.car_velocity,
-    djangoData.car_velocity,
-    djangoData.car_voltage,
-    djangoData.car_current,
-    djangoData.gps_1
+    djangoData.team_data.car_velocity,
+    djangoData.team_data.car_velocity,
+    djangoData.team_data.car_voltage,
+    djangoData.team_data.car_current,
+    djangoData.team_data.gps_1
   ]
 
   console.log(djangoData)
@@ -137,9 +139,24 @@ socket.onmessage = function (e) {
     charts[i].update();
   }
 
-  document.getElementById('velocidad').textContent = djangoData.average_velocity;
-  document.getElementById('voltaje').textContent = djangoData.average_voltage;
-  document.getElementById('corriente').textContent = djangoData.average_current;
+  let cont = 1;
+
+  Object.keys(djangoData.teams_data).forEach(teamKey => {
+    let teamValue = djangoData.teams_data[teamKey];
+    
+    // if (teamKey == 'kratos') {
+    //   teamValue = teamValue + 100;
+    // }
+      
+    document.getElementById(cont.toString()).textContent = teamKey + ": " + teamValue.toString();
+    cont = cont + 1;
+  });
+
+  document.getElementById('velocidad').textContent = djangoData.team_data.average_velocity;
+  document.getElementById('voltaje').textContent = djangoData.team_data.average_voltage;
+  document.getElementById('corriente').textContent = djangoData.team_data.average_current;
+
+  console.log('asdasds')
 }
 // const cloud_data = {'engine_velocity':{
 //   'title': 'Velocidad motor [rad/s]',

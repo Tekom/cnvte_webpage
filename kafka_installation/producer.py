@@ -9,31 +9,72 @@ import threading
 import logging
 from typing import List
 from random import randint, uniform
+from firebase_admin import credentials
+from firebase_admin import db, storage
+from random import randint, uniform
+from datetime import datetime
+import firebase_admin
+
+certificates_path = {
+    'hamiltonev': {
+        'folder_name': 'hamilton',
+        'certificate': 'hamiltondata-89832-firebase-adminsdk-ldp0m-ac90ac11da.json',
+        'database':    'https://hamiltondata-89832-default-rtdb.firebaseio.com/'
+    },
+    'kratos': {
+        'folder_name': 'kratos',
+        'certificate': 'kratosdata-e957c-firebase-adminsdk-mdsa8-8e2c15c975.json',
+        'database':    'https://kratosdata-e957c-default-rtdb.firebaseio.com/' 
+    },
+    'miliracing': {
+        'folder_name': 'miliracing',
+        'certificate': 'miliracingdata-firebase-adminsdk-6kc8c-9b0c461fc7.json',
+        'database':    'https://miliracingdata-default-rtdb.firebaseio.com/'
+    }
+}
+
+firebase_apps = dict()
 
 def sendDataToTopic(topic):
+    certificate_data = certificates_path[topic]
+
+    if topic not in firebase_apps:
+        try:
+            cred = credentials.Certificate(f"./certificates/{certificate_data['folder_name']}/{certificate_data['certificate']}")
+            firebase_apps[topic] =  firebase_admin.initialize_app(cred, 
+                                                {
+                                                    'databaseURL': certificate_data['database'],
+                                                },
+                                                name = topic)
+        except ValueError:
+            pass
+    
+    ref_user = db.reference('Data', firebase_apps[topic])
     cont = 0
 
     get_module_logger(__name__).error(f'Started Thread for topic {topic}')
     get_module_logger(__name__).error(f'State for topic {topic}:{topic_state[topic]}')
 
     while topic_state[topic]:
-                cont += 1
-                date = "_" + str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-                timestamp = datetime.now()
+                # cont += 1
+                # date = "_" + str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                # timestamp = datetime.now()
 
-                data = {"id": f"{topic + date}",
-                        "team_name": f"{topic}", 
-                        "car_velocity": uniform(10.0, 40.0),
-                        "car_voltage": uniform(10.0, 40.0), 
-                        "car_current": uniform(10.0, 15.0),
-                        "gps_1": uniform(1.0, 1.001),
-                        "gps_2": uniform(1.0, 1.001), 
-                        "timestamp": timestamp.strftime('%Y-%m-%d %H:%M:%S')
-                    }
+                # data = {"id": f"{topic + date}",
+                #         "team_name": f"{topic}", 
+                #         "car_velocity": uniform(10.0, 40.0),
+                #         "car_voltage": uniform(10.0, 40.0), 
+                #         "car_current": uniform(10.0, 15.0),
+                #         "gps_1": uniform(1.0, 1.001),
+                #         "gps_2": uniform(1.0, 1.001), 
+                #         "timestamp": timestamp.strftime('%Y-%m-%d %H:%M:%S')
+                #     }
                 
-                get_module_logger(__name__).info(f"Data sended: {data}")
-                get_module_logger(__name__).info(f'Data #{cont} Was Sent Succesfully')
+                # get_module_logger(__name__).info(f"Data sended: {data}")
+                # get_module_logger(__name__).info(f'Data #{cont} Was Sent Succesfully')
 
+                data = list(ref_user.order_by_key().limit_to_last(1).get().values())[0]
+                get_module_logger(__name__).error(f'Firebasedata {data}')
                 producer.send(topic_name_global, data)
                 producer.flush()
                 sleep(3)
@@ -84,7 +125,8 @@ def get_module_logger(mod_name):
     logger.setLevel(logging.DEBUG)
     return logger
 
-get_module_logger(__name__).info(f'Threads {topics_threads}')
+# get_module_logger(__name__).info(f'Threads {topics_threads}')
+
 def createKafkaProducer(): 
     """
     Kafka Producer for send vehicule's data to Spark Streaming

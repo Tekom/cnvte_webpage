@@ -24,6 +24,22 @@ def get_module_logger(mod_name):
     return logger
 
 class GraphConsumer(AsyncWebsocketConsumer):
+    @sync_to_async
+    def update_timestamp_record(self, timestamp, penalizacion):
+        timestamp.total_penalization_hability = str(int(penalizacion))
+        timestamp.save()
+
+    @database_sync_to_async
+    def get_sorted_teams_with_scores(self):
+        # Obtenemos todos los registros del modelo `Timestamps`, ordenados por `total_time_hability`
+        all_timestamps = Timestamps.objects.all().order_by('total_position_hability')
+        valores = dict()
+
+        for value in all_timestamps:
+            valores[value.team.team] = int(value.total_position_hability) - int(value.total_penalization_hability)
+
+        return valores
+
     async def connect(self):
         self.cluster = Cluster(['cassandra_db'])
         self.session = self.cluster.connect('spark_streaming')
@@ -36,7 +52,12 @@ class GraphConsumer(AsyncWebsocketConsumer):
         user_data = await sync_to_async(userData.objects.get)(user = user)
         user_team = user_data.team
 
-        for i in range(1000):
+        # team_object = await sync_to_async(Team.objects.get)(team = user_data.team)
+        # team = await sync_to_async(Timestamps.objects.get)(team =  team_object)
+
+        # get_module_logger(__name__).info(f'Team TS: {team}')
+
+        while True:
             data = await self.get_data_from_cassandra(user_team)
 
             if data is not None:
@@ -62,27 +83,97 @@ class GraphConsumer(AsyncWebsocketConsumer):
         # Ejecutar la consulta de forma asíncrona
         result = await sync_to_async(self.session.execute)(query, (team,))
         avg_query_result = await sync_to_async(self.session.execute)(averages, (team,))
+        
 
         # Procesar los resultados
         latest_record = result.one()
         average_data = avg_query_result.one()
 
-        get_module_logger(__name__).info(f'Data: {latest_record}')
+        # get_module_logger(__name__).info(f'Data: {latest_record}')
+
+        teams_results = dict()
+        teams = await sync_to_async(list)(Team.objects.all())
+
+        for team_data in teams:
+            team_name = team_data.team
+            team_timestamps = await sync_to_async(Timestamps.objects.get)(team = team_data)
+
+            team_h_t1 = team_timestamps.time_stamp_1_hability
+            team_h_t2 = team_timestamps.time_stamp_2_hability
+
+            team_a_t1 = team_timestamps.time_stamp_1_acceleration
+            team_a_t2 = team_timestamps.time_stamp_2_acceleration
+
+            team_gp_t1 = team_timestamps.time_stamp_1_gp
+            team_gp_t2 = team_timestamps.time_stamp_2_gp
+
+            test_data = SimpleStatement(f"""
+                SELECT car_voltage, car_current
+                FROM spark_streaming.vehicules_data
+                WHERE team_name = %s
+                AND timestamp >= %s
+                AND timestamp <= %s
+            """)
+
+            get_module_logger(__name__).info(f'Data: {team_h_t1} - {team_h_t2}')
+
+            hability_result = await sync_to_async(self.session.execute)(test_data, (team_name, team_h_t1, team_h_t2))
+            acceleration_result = await sync_to_async(self.session.execute)(test_data, (team_name, team_a_t1, team_a_t2))
+            grand_prix_result = await sync_to_async(self.session.execute)(test_data, (team_name, team_gp_t1, team_gp_t2))
+
+            power = [(row.car_current * row.car_voltage)**2  for row in hability_result]
+            power_gp = [(row.car_current * row.car_voltage)**2  for row in hability_result]
+
+            filtered_powers = [num for num in power if (num ** 0.5) > 500]
+
+            if len(filtered_powers) == 0:
+                power = 0
+                threshold = 0
+            else:
+                threshold = (len(filtered_powers) * 100) / (len(power))
+                power = (sum(filtered_powers) / len(filtered_powers)) ** (0.5)
+
+            if len(power_gp) == 0:
+                power_gp = 0
+                consumo = 0
+                efi=0
+            else:
+                power_gp = (sum(power_gp) / len(power)) ** (0.5)
+                consumo = power_gp / (14 * 60)
+                efi = 1/consumo
+
+            if threshold > 10:
+                penalizacion = power - 500
+                await self.update_timestamp_record(team_timestamps, penalizacion)
+
+            else:
+                await self.update_timestamp_record(team_timestamps, 0)
+                
+            # teams_results[team_name] = power
+
+        results = await self.get_sorted_teams_with_scores()
+        sorted_results = dict(sorted(results.items(), key=lambda item: item[1], reverse=True))
+        get_module_logger(__name__).info(f'Data: {sorted_results}')
 
         if latest_record:
             return {
-                    'id': latest_record.id,
-                    'team_name': latest_record.team_name,
-                    'car_velocity': int(latest_record.car_velocity),
-                    'car_voltage': int(latest_record.car_voltage),
-                    'car_current': int(latest_record.car_current),
-                    'gps_1': float(latest_record.gps_1),
-                    'gps_2': float(latest_record.gps_2),
-                    'timestamp': latest_record.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
-                    'average_velocity': round(float(average_data.average_velocity), 2),
-                    'average_voltage': round(float(average_data.average_voltage), 2),
-                    'average_current': round(float(average_data.average_current), 2),
+                'team_data': {
+                                'id': latest_record.id,
+                                'team_name': latest_record.team_name,
+                                'car_velocity': int(latest_record.car_velocity),
+                                'car_voltage': int(latest_record.car_voltage),
+                                'car_current': int(latest_record.car_current),
+                                'gps_1': float(latest_record.gps_1),
+                                'gps_2': float(latest_record.gps_2),
+                                'timestamp': latest_record.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+                                'average_velocity': round(float(average_data.average_velocity), 2),
+                                'average_voltage': round(float(average_data.average_voltage), 2),
+                                'average_current': round(float(average_data.average_current), 2),
+                        }, 
+                'teams_data': sorted_results  
             }
         
         else:
             return None
+        
+    
