@@ -50,10 +50,15 @@ json_schema = (
             StructField('id', StringType(), True),
             StructField('team_name', StringType(), True), 
             StructField('car_velocity', StringType(), True),
+            StructField('car_velocity_gps', StringType(), True),
             StructField('car_voltage', StringType(), True), 
-            StructField('car_current', StringType(), True), 
+            StructField('car_current', StringType(), True),
+            StructField('power', StringType(), True), 
             StructField('gps_1', StringType(), True), 
-            StructField('gps_2', StringType(), True), 
+            StructField('gps_2', StringType(), True),
+            StructField('imu_x', StringType(), True),
+            StructField('imu_y', StringType(), True),
+            StructField('imu_z', StringType(), True), 
             StructField('timestamp', TimestampType(), True)
         ]
     )
@@ -63,7 +68,9 @@ json_schema = (
 from pyspark.sql.functions import from_json,col
 
 streaming_df = kafka_json_df.withColumn("values_json", from_json(col("value"), json_schema)).selectExpr("values_json.*")
-final_df = streaming_df.select("id", "team_name", "car_velocity", "car_voltage", "car_current", "gps_1", "gps_2", "timestamp")
+
+final_df = streaming_df.select("id", "team_name", "car_velocity", "car_velocity_gps", "car_voltage", "car_current", 
+                               "power", "gps_1", "gps_2", "imu_x", "imu_y", "imu_z", "timestamp")
 
 # Write the output to console sink to check the output
 def get_module_logger(mod_name):

@@ -37,7 +37,6 @@ firebase_apps = dict()
 
 def sendDataToTopic(topic):
     certificate_data = certificates_path[topic]
-
     if topic not in firebase_apps:
         try:
             cred = credentials.Certificate(f"./certificates/{certificate_data['folder_name']}/{certificate_data['certificate']}")
@@ -52,8 +51,8 @@ def sendDataToTopic(topic):
     ref_user = db.reference('Data', firebase_apps[topic])
     cont = 0
 
-    get_module_logger(__name__).error(f'Started Thread for topic {topic}')
-    get_module_logger(__name__).error(f'State for topic {topic}:{topic_state[topic]}')
+    get_module_logger(__name__).info(f'Started Thread for topic {topic}')
+    get_module_logger(__name__).info(f'State for topic {topic}:{topic_state[topic]}')
 
     while topic_state[topic]:
                 # cont += 1
@@ -74,7 +73,7 @@ def sendDataToTopic(topic):
                 # get_module_logger(__name__).info(f'Data #{cont} Was Sent Succesfully')
 
                 data = list(ref_user.order_by_key().limit_to_last(1).get().values())[0]
-                get_module_logger(__name__).error(f'Firebasedata {data}')
+                # get_module_logger(__name__).error(f'Firebasedata {data}')
                 producer.send(topic_name_global, data)
                 producer.flush()
                 sleep(3)
@@ -169,7 +168,8 @@ def Process(university_team: str = None,
     if university_team not in list(team_members.keys()):
          team_members[university_team] = []
 
-    team_members[university_team].append(team_member)
+    if team_member not in team_members[university_team]:
+        team_members[university_team].append(team_member)
 
     if producer is not None:
         # create_topic = createKafkaTopic(topic_name = university_team)

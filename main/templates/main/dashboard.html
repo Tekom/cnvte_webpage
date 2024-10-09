@@ -1383,38 +1383,45 @@
                                                     <div>
                                                         <div style="width: 50%; float:left">
                                                             <div>
-                                                                <canvas id="myChart" height="500"></canvas>
+                                                                <canvas id="velocidad" height="500"></canvas>
                                                             </div>
     
                                                             <div>
-                                                                <canvas id="velocity" height="500"></canvas>
+                                                                <canvas id="velocidad_gps" height="500"></canvas>
+                                                            </div>
+                                                            
+                                                            <div>
+                                                                <canvas id="voltaje" height="500"></canvas>
+                                                            </div>
+                                                            
+                                                        </div>
+    
+                                                        <div style="width: 50%; float:right">
+                                                            <div>
+                                                                <canvas id="corriente" height="500" width="500"></canvas>
+                                                            </div>
+    
+                                                            <div>
+                                                                <canvas id="potencia" height="500"></canvas>
                                                             </div>
                                                             
                                                             {% if user_team == 'hamiltonev' or user_team == 'miliracing' %}
                                                                 <div>
                                                                     <canvas id="imu" height="500"></canvas>
                                                                 </div>
+                                                                
+                                                            {% else %}
+                                                                <div style="display: none;">
+                                                                    <canvas id="imu" height="500"></canvas>
+                                                                </div>
                                                             {% endif %}
-                                                        </div>
-    
-                                                        <div style="width: 50%; float:right">
-                                                            <div>
-                                                                <canvas id="current" height="500" width="500"></canvas>
-                                                            </div>
-    
-                                                            <div>
-                                                                <canvas id="voltage" height="500"></canvas>
-                                                            </div>
-    
-                                                            <!-- <div>
-                                                                <canvas id="pwm" height="500"></canvas>
-                                                            </div> -->
+                                                                
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <script src="{% static 'js/graph.js' %}"></script>
+                                            <!-- <script src="{% static 'js/graph.js' %}"></script> -->
 
                                             <div class="col-xl-12">
                                                 <div class="card proj-progress-card">
@@ -1472,7 +1479,7 @@
                                                 <div class="loader">
                                                     <div class="song">
                                                     <p class="name">Velocidad [Km / h]</p>
-                                                    <p class="artist" id = "velocidad"></p>
+                                                    <p class="artist" id = "velocidad_average"></p>
                                                     </div>
                                                     <!-- <div class="albumcover" id = "velocidad_imagen"></div> -->
                                                     <img src="{% static 'images/velocimetro.png' %}" height="30px", width="30px" style="position: relative; top: 18px; left: -5px; transform: rotate(180deg);">
@@ -1486,7 +1493,7 @@
                                                 <div class="loader">
                                                     <div class="song">
                                                         <p class="name">Voltaje [V]</p>
-                                                        <p class="artist" id = "voltaje"></p>
+                                                        <p class="artist" id = "voltaje_average"></p>
                                                     </div>
                                                         <!-- <div class="albumcover"></div> -->
                                                         <img src="{% static 'images/alto-voltaje.png' %}" height="30px", width="30px" style="position: relative; top: 18px; left: -5px; transform: rotate(180deg);">
@@ -1500,7 +1507,7 @@
                                                 <div class="loader">
                                                     <div class="song">
                                                     <p class="name">Corriente [A]</p>
-                                                    <p class="artist" id = "corriente"></p>
+                                                    <p class="artist" id = "corriente_average"></p>
                                                     </div>
                                                     <!-- <div class="albumcover"></div> -->
                                                     <img src="{% static 'images/alimentacion-de-ca.png' %}" height="30px", width="30px" style="position: relative; top: 18px; left: -5px; transform: rotate(180deg);">
@@ -1598,64 +1605,127 @@
                                             
                                             <div class="col-xl-4 col-md-6">
                                                 <div class="card latest-update-card">
+                                                    <!-- Botones de radio para seleccionar el tipo de Scoreboard -->
                                                     <div class="radio-inputs" style="position: relative; left: 10px; top: 15px;">
                                                         <label class="radio">
-                                                          <input type="radio" name="radio" checked="">
-                                                          <span class="name">Habilidad</span>
+                                                            <input type="radio" name="radio" value="habilidad" checked="">
+                                                            <span class="name">Habilidad</span>
                                                         </label>
+                                                        
                                                         <label class="radio">
-                                                          <input type="radio" name="radio">
-                                                          <span class="name">Aceleracion</span>
+                                                            <input type="radio" name="radio" value="aceleracion">
+                                                            <span class="name">Aceleración</span>
                                                         </label>
-                                                            
+                                                        
                                                         <label class="radio">
-                                                          <input type="radio" name="radio">
-                                                          <span class="name">Grand Prix</span>
+                                                            <input type="radio" name="radio" value="grand_prix">
+                                                            <span class="name">Grand Prix</span>
                                                         </label>
-                                                      </div>
+                                                    </div>
+                                            
+                                                    <!-- Header del Scoreboard -->
                                                     <div class="card-header">
                                                         <h5>Scoreboard</h5>
-                                            
                                                         <div class="card-header-right">
                                                             <ul class="list-unstyled card-option">
-                                                                <li class="first-opt"><i
-                                                                        class="feather icon-chevron-left open-card-option"></i>
-                                                                </li>
+                                                                <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li>
                                                                 <li><i class="feather icon-maximize full-card"></i></li>
-                                                                <li><i class="feather icon-minus minimize-card"></i>
-                                                                </li>
-                                                                <li><i class="feather icon-refresh-cw reload-card"></i>
-                                                                </li>
+                                                                <li><i class="feather icon-minus minimize-card"></i></li>
+                                                                <li><i class="feather icon-refresh-cw reload-card"></i></li>
                                                                 <li><i class="feather icon-trash close-card"></i></li>
-                                                                <li><i
-                                                                        class="feather icon-chevron-left open-card-option"></i>
-                                                                </li>
+                                                                <li><i class="feather icon-chevron-left open-card-option"></i></li>
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="card-block">
-                                                        <div class="scroll-widget">
-                                                            <div class="latest-update-box">
-                                                                {% for team in all_teams %}
-                                                                    <div class="row p-t-20 p-b-30">
-                                                                        <div class="col-auto text-right update-meta p-r-0">
-                                                                            <i class="b-primary update-icon ring"></i>
-                                                                        </div>
-                                                                        <div class="col p-l-5">
-                                                                            <a href="#!">
-                                                                                <h6 id = '{{ forloop.counter }}''>{{team.title}}</h6>
-                                                                            </a>
-                                                                            <!-- <p class="text-muted m-b-0">Lorem ipsum dolor -->
-                                                                                <!-- sit amet, <a href="#!" class="text-c-blue"> -->
-                                                                                    <!-- More</a></p> -->
-                                                                        </div>
+                                            
+                                                    <!-- Scoreboards dinámicos -->
+                                                    <div class="card-body">
+                                                        <!-- Scoreboard Habilidad -->
+                                                        <div id="habilidad" class="scoreboard-content">
+                                                            <div class="card-block">
+                                                                <div class="scroll-widget">
+                                                                    <div class="latest-update-box">
+                                                                        {% for team in all_teams %}
+                                                                            <div class="row p-t-20 p-b-30">
+                                                                                <div class="col-auto text-right update-meta p-r-0">
+                                                                                    <i class="b-primary update-icon ring"></i>
+                                                                                </div>
+                                                                                <div class="col p-l-5">
+                                                                                    <a href="#!">
+                                                                                        <h6 id="habilidad_{{ forloop.counter }}">{{ team.title }} f</h6>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        {% endfor %}
                                                                     </div>
-                                                                {% endfor %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                            
+                                                        <!-- Scoreboard Aceleración (oculto por defecto) -->
+                                                        <div id="aceleracion" class="scoreboard-content" style="display:none;">
+                                                            <div class="card-block">
+                                                                <div class="scroll-widget">
+                                                                    <div class="latest-update-box">
+                                                                        {% for team in all_teams %}
+                                                                            <div class="row p-t-20 p-b-30">
+                                                                                <div class="col-auto text-right update-meta p-r-0">
+                                                                                    <i class="b-primary update-icon ring"></i>
+                                                                                </div>
+                                                                                <div class="col p-l-5">
+                                                                                    <a href="#!">
+                                                                                        <h6 id="aceleracion_{{ forloop.counter }}">{{ team.title }} j</h6>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                            
+                                                        <!-- Scoreboard Grand Prix (oculto por defecto) -->
+                                                        <div id="grand_prix" class="scoreboard-content" style="display:none;">
+                                                            <div class="card-block">
+                                                                <div class="scroll-widget">
+                                                                    <div class="latest-update-box">
+                                                                        {% for team in all_teams %}
+                                                                            <div class="row p-t-20 p-b-30">
+                                                                                <div class="col-auto text-right update-meta p-r-0">
+                                                                                    <i class="b-primary update-icon ring"></i>
+                                                                                </div>
+                                                                                <div class="col p-l-5">
+                                                                                    <a href="#!">
+                                                                                        <h6 id="grand_prix_{{ forloop.counter }}">{{ team.title }} l</h6>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <script>
+                                                // Seleccionar todos los inputs de tipo radio
+                                                const radioButtons = document.querySelectorAll('input[name="radio"]');
+                                                const scoreboards = document.querySelectorAll('.scoreboard-content');
+                                            
+                                                radioButtons.forEach(button => {
+                                                    button.addEventListener('change', function() {
+                                                        // Esconder todos los divs de scoreboard
+                                                        scoreboards.forEach(board => board.style.display = 'none');
+                                                        
+                                                        // Mostrar el div del scoreboard correspondiente al radio seleccionado
+                                                        const selectedScoreboard = document.getElementById(this.value);
+                                                        selectedScoreboard.style.display = 'block';
+                                                    });
+                                                });
+                                            </script>
+
                                             <div class="col-xl-4 col-md-6">
                                                 <div class="card latest-update-card">
                                                     <div class="card-header">
@@ -1770,7 +1840,8 @@
                                             </div>
                                               
                                             <p><a href="https://www.maptiler.com/copyright/" target="_blank" rel="noopener">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">&copy; OpenStreetMap contributors</a></p>
-                                            <script>
+                                            <script src="{% static 'js/graph.js' %}"></script>
+                                            <!-- <script>
                                             // const key = 'YOUR_MAPTILER_API_KEY_HERE';
 
                                             
@@ -1812,7 +1883,7 @@
                                                     // Incrementar el índice para pasar al siguiente punto de la ruta
                                                     currentIndex++;
                                                 }, 500);
-                                            </script>
+                                            </script> -->
                                             <!-- <div id="map"></div>
 
                                             <script>

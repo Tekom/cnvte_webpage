@@ -1,9 +1,9 @@
-const engine_velocity = document.getElementById('myChart');
-const car_velocity = document.getElementById('velocity');
-const voltage = document.getElementById('voltage');
-const current = document.getElementById('current');
+const velocidad = document.getElementById('velocidad');
+const velocidad_gps = document.getElementById('velocidad_gps');
+const voltaje = document.getElementById('voltaje');
+const corriente = document.getElementById('corriente');
+const potencia = document.getElementById('potencia');
 const imu = document.getElementById('imu');
-
 
 var opciones = {
   responsive: true,
@@ -76,18 +76,31 @@ var graph_imu = {
   options: opciones
 };
 
-var graph_data_engine = JSON.parse(JSON.stringify(graph_data));;
-var graph_data_velocity = JSON.parse(JSON.stringify(graph_data));;
-var graph_data_voltage = JSON.parse(JSON.stringify(graph_data));;
-var graph_data_current = JSON.parse(JSON.stringify(graph_data));;
-var graph_data_imu = JSON.parse(JSON.stringify(graph_imu));;
+var velocidad_data = JSON.parse(JSON.stringify(graph_data));
+var velocidad_gps_data = JSON.parse(JSON.stringify(graph_data));
+var voltaje_data = JSON.parse(JSON.stringify(graph_data));
+var corriente_data = JSON.parse(JSON.stringify(graph_data));
+var potencia_data = JSON.parse(JSON.stringify(graph_data));
+var imu_data = JSON.parse(JSON.stringify(graph_imu));
 
-var engine_chart = new Chart(engine_velocity, graph_data_engine);
-var velocity_chart = new Chart(car_velocity, graph_data_velocity);
-var voltage_chart = new Chart(voltage, graph_data_voltage);
-var current_chart = new Chart(current, graph_data_current);
-var imu_chart = new Chart(imu, graph_data_imu);
+var velocidad_chart = new Chart(velocidad, velocidad_data);
+var velocidad_gps_chart = new Chart(velocidad_gps, velocidad_gps_data);
+var voltaje_chart = new Chart(voltaje, voltaje_data);
+var corriente_chart = new Chart(corriente, corriente_data);
+var potencia_chart = new Chart(potencia, potencia_data);
+var imu_chart = new Chart(imu, imu_data);
 
+var x = 4.943271
+var y = -74.014112
+
+const map = L.map('map').setView([4.942646139951253, -74.0126042413143], 17); //starting position
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+var marker = L.marker([x, y]).addTo(map);
+marker.bindPopup('<b>Hamilton').openPopup();
+  
 var socket = new WebSocket('ws://' + '127.0.0.1:8001' + '/ws/live_data/')
 
 // graph_data_engine.data.datasets[0].label = 'Velocidad [Km / h]'
@@ -97,31 +110,55 @@ var socket = new WebSocket('ws://' + '127.0.0.1:8001' + '/ws/live_data/')
 // graph_data_engine.data.datasets[0].label = 'Test'
 
 var graphs_data = [
-  graph_data_engine,
-  graph_data_velocity,
-  graph_data_voltage,
-  graph_data_current,
+  velocidad_data,
+  velocidad_gps_data,
+  voltaje_data,
+  corriente_data,
+  potencia_data,
 ]
 
 var charts = [
-  engine_chart,
-  velocity_chart,
-  voltage_chart,
-  current_chart,
+  velocidad_chart,
+  velocidad_gps_chart,
+  voltaje_chart,
+  corriente_chart,
+  potencia_chart,
 ]
+
+// socket.onerror = function(error) {
+//   console.error('WebSocket Error: ', error);
+//   // Aquí puedes agregar cualquier acción adicional para manejar el error
+// };
+socket.onopen = function() {
+  console.log('Conexión WebSocket abierta');
+};
 
 socket.onmessage = function (e) {
   var djangoData = JSON.parse(e.data)
-  
   var car_data = [
     djangoData.team_data.car_velocity,
-    djangoData.team_data.car_velocity,
+    djangoData.team_data.car_velocity_gps,
     djangoData.team_data.car_voltage,
     djangoData.team_data.car_current,
-    djangoData.team_data.gps_1
+    djangoData.team_data.power,
+  ]
+
+  var car_data_imu = [
+    djangoData.team_data.imu_x,
+    djangoData.team_data.imu_y,
+    djangoData.team_data.imu_z,
   ]
 
   console.log(djangoData)
+
+  var newLat = parseFloat(djangoData.team_data.gps_1);
+  var newLng = parseFloat(djangoData.team_data.gps_2);
+
+  // Actualizar la posición del marcador en el mapa
+  marker.setLatLng([newLat, newLng]);
+
+  // Opcional: si quieres reabrir el popup en la nueva posición
+  marker.bindPopup('<b>Hamilton</b>').openPopup();
 
   for (let i = 0; i < graphs_data.length; i++) {
     var newData = graphs_data[i].data.datasets[0].data;
@@ -139,6 +176,23 @@ socket.onmessage = function (e) {
     charts[i].update();
   }
 
+  document.getElementById('velocidad_average').textContent = djangoData.team_data.average_velocity;
+  document.getElementById('voltaje_average').textContent = djangoData.team_data.average_voltage;
+  document.getElementById('corriente_average').textContent = djangoData.team_data.average_current;
+
+  for (let i = 0; i < car_data_imu.length; i++) {
+    var newDataImu = imu_data.data.datasets[i].data;
+    newDataImu.shift();
+    newDataImu.push(car_data_imu[i])
+
+    var newDataYimu = imu_data.data.labels;
+    newDataYimu.shift();
+    newDataYimu.push(djangoData.y)
+
+    imu_data.data.labels = newDataY
+    imu_chart.update();
+  }
+
   let cont = 1;
 
   Object.keys(djangoData.teams_data).forEach(teamKey => {
@@ -148,141 +202,52 @@ socket.onmessage = function (e) {
     //   teamValue = teamValue + 100;
     // }
       
-    document.getElementById(cont.toString()).textContent = teamKey + ": " + teamValue.toString();
+    document.getElementById("habilidad_"+cont.toString()).textContent = teamKey + ": " + teamValue.toString();
     cont = cont + 1;
   });
-
-  document.getElementById('velocidad').textContent = djangoData.team_data.average_velocity;
-  document.getElementById('voltaje').textContent = djangoData.team_data.average_voltage;
-  document.getElementById('corriente').textContent = djangoData.team_data.average_current;
-
-  console.log('asdasds')
 }
-// const cloud_data = {'engine_velocity':{
-//   'title': 'Velocidad motor [rad/s]',
-//   'y_label': 'RPM [rad]',
-//   'variable': graph_data_engine,
-// },
-// 'car_velocity':{
-//   'title': 'Velocidad automovil [km/h]',
-//   'y_label': 'Velocidad [km]',
-//   'variable': graph_data_velocity,
-// },
-// 'voltage':{
-//   'title': 'Voltaje motor [V]',
-//   'y_label': 'Voltaje [V]',
-//   'variable': graph_data_voltage,
-// },
-// 'current':{
-//   'title': 'Corriente motor [A]',
-//   'y_label': 'Corriente [A]',
-//   'variable': graph_data_current,
-// },
-// 'imu':{
-//   'title': 'IMU',
-//   'y_label': 'Grados [°]',
-//   'variable': graph_data_imu,
-// },
 
-// 'pwm':{
-//   'title': 'PWM',
-//   'y_label': 'Amplitud [V]',
-//   'variable': graph_data_pwm,
-// }}
+socket.onerror = function(error) {
+  console.error('Error en WebSocket: ', error);
+};
 
-// function start(opcion) {
 
-//   if (opcion == 'iniciar'){
-//   window.sse_client = new EventSource('/sse/');
-//   sse_client.onopen  = function(message_event) {
-//     console.log('opened')
-//   }
-//   //console.log(sse_client)
+// const map = L.map('map').setView([4.942646139951253, -74.0126042413143], 17); //starting position
+// L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//             maxZoom: 19,
+//             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+//         }).addTo(map);
 
-//   sse_client.onmessage =  (e) => {
-//     var djangoData = JSON.parse(e.data);
-//     var keys = Object.keys(djangoData);
+// var marker = L.marker([x, y]).addTo(map);
+// marker.bindPopup('<b>Hamilton').openPopup();
+// let contador = 0
+// var add = 0.00001
+
+// var route = [
+//         [x, y + add],
+//         [x, y + add*2],
+//         [x, y + add*3],
+//         [x, y + add*4],
+//         [x, y + add*5],
+//         [x, y + add*6]
+//     ];
     
-
-//     for (let i = 0; i < keys.length; i++) {
-
-//       if(keys[i] != 'tiempo'){
-//         if(keys[i] != 'imu'){
-//           var new_graph_data = cloud_data[keys[i]].variable.data.datasets[0].data;
-//           var tiempo = cloud_data[keys[i]].variable.data.labels
-
-//           new_graph_data.shift();
-//           tiempo.shift();
-//           new_graph_data.push(djangoData[keys[i]]);
-//           tiempo.push(djangoData.tiempo);       
-      
-//           cloud_data[keys[i]].variable.data.datasets[0].data = new_graph_data;
-//           cloud_data[keys[i]].variable.options.scales.y.title.text = cloud_data[keys[i]].y_label;
-//           cloud_data[keys[i]].variable.data.datasets[0].label = cloud_data[keys[i]].title;
-//         }
-  
-//         else{
-//           var new_graph_data = cloud_data[keys[i]].variable.data.datasets[0].data;
-//           var new_graph_data2 = cloud_data[keys[i]].variable.data.datasets[1].data;
-//           var new_graph_data3 = cloud_data[keys[i]].variable.data.datasets[2].data;
-//           var tiempo = cloud_data[keys[i]].variable.data.labels
-  
-//           x_imu_val = djangoData[keys[i]].x
-//           y_imu_val = djangoData[keys[i]].y
-//           z_imu_val = djangoData[keys[i]].z
-  
-//           new_graph_data.shift();
-//           new_graph_data.push(x_imu_val);
-  
-//           new_graph_data2.shift();
-//           new_graph_data2.push(y_imu_val);
-  
-//           new_graph_data3.shift();
-//           new_graph_data3.push(z_imu_val);
-          
-//           tiempo.shift();
-//           tiempo.push(djangoData.tiempo);
-//           imu_chart.update();
-//         }
-//       }
+// var currentIndex = 0;
+// var interval = setInterval(() => {
+//     if (currentIndex >= route.length) {
+//         clearInterval(interval); // Detener la animación cuando se alcancen todos los puntos
+//         return;
 //     }
 
-//     engine_chart.update();
-//     velocity_chart.update();
-//     voltage_chart.update();
-//     current_chart.update();
-//     pwm_chart.update();
+//     // Actualizar la posición del marcador
+//     marker.setLatLng(route[currentIndex]);
 
-//     window.postMessage({'message': 'Hello, world!'});
-//   }
-//  }
+//     // Ajustar la vista del mapa para centrar en el marcador
+//     // map.panTo(route[currentIndex]);
 
-//  else if (opcion == 'cerrar'){
-//     window.sse_client.close();
-//     cloud_data['engine_velocity'].variable.data.datasets[0].data = [0, 0, 0, 0, 0];
-//     cloud_data['engine_velocity'].variable.data.labels = [0, 0, 0, 0, 0];
-
-//     cloud_data['car_velocity'].variable.data.datasets[0].data = [0, 0, 0, 0, 0];
-//     cloud_data['car_velocity'].variable.data.labels = [0, 0, 0, 0, 0];
-
-//     cloud_data['voltage'].variable.data.datasets[0].data = [0, 0, 0, 0, 0];
-//     cloud_data['voltage'].variable.data.labels = [0, 0, 0, 0, 0];
-
-//     cloud_data['current'].variable.data.datasets[0].data = [0, 0, 0, 0, 0];
-//     cloud_data['current'].variable.data.labels = [0, 0, 0, 0, 0];
-
-//     cloud_data['imu'].variable.data.datasets[0].data = [0, 0, 0, 0, 0];
-//     cloud_data['imu'].variable.data.datasets[1].data = [0, 0, 0, 0, 0];
-//     cloud_data['imu'].variable.data.datasets[2].data = [0, 0, 0, 0, 0];
-//     cloud_data['imu'].variable.data.labels = [0, 0, 0, 0, 0];
-
-//     cloud_data['pwm'].variable.data.datasets[0].data = [0, 0, 0, 0, 0];
-//     cloud_data['pwm'].variable.data.labels = [0, 0, 0, 0, 0];
-
-//  }
-// }
-
-//document.getElementById("startButton").addEventListener("click", start);
+//     // Incrementar el índice para pasar al siguiente punto de la ruta
+//     currentIndex++;
+// }, 500);
 
 
 

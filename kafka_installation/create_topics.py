@@ -116,10 +116,15 @@ try:
                             id TEXT,
                             team_name TEXT,
                             car_velocity FLOAT,
+                            car_velocity_gps FLOAT,
                             car_voltage FLOAT,
                             car_current FLOAT,
+                            power FLOAT,
                             gps_1 FLOAT,
                             gps_2 FLOAT,
+                            imu_x FLOAT,
+                            imu_y FLOAT,
+                            imu_z FLOAT,
                             timestamp TIMESTAMP,
                             PRIMARY KEY (team_name, timestamp));
                 """)

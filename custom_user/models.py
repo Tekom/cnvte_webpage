@@ -58,5 +58,7 @@ class Timestamps(models.Model):
     total_penalization_hability = models.CharField(max_length=200, blank=True)
     total_position_hability = models.CharField(max_length=200, blank=True)
 
+    eff_gp =  models.FloatField(blank=True, default=0.0) 
+
     def __str__(self):
         return self.team.team.title() + " " + "Timestamps"

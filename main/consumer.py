@@ -29,6 +29,11 @@ class GraphConsumer(AsyncWebsocketConsumer):
         timestamp.total_penalization_hability = str(int(penalizacion))
         timestamp.save()
 
+    @sync_to_async
+    def update_eff(self, timestamp, efi):
+        timestamp.eff_gp = str(float(efi))
+        timestamp.save()
+
     @database_sync_to_async
     def get_sorted_teams_with_scores(self):
         # Obtenemos todos los registros del modelo `Timestamps`, ordenados por `total_time_hability`
@@ -59,6 +64,7 @@ class GraphConsumer(AsyncWebsocketConsumer):
 
         while True:
             data = await self.get_data_from_cassandra(user_team)
+            get_module_logger(__name__).info(f'Data WS: {data}')
 
             if data is not None:
                 data['y'] = cont
@@ -115,7 +121,7 @@ class GraphConsumer(AsyncWebsocketConsumer):
                 AND timestamp <= %s
             """)
 
-            get_module_logger(__name__).info(f'Data: {team_h_t1} - {team_h_t2}')
+            # get_module_logger(__name__).info(f'Data: {team_h_t1} - {team_h_t2}')
 
             hability_result = await sync_to_async(self.session.execute)(test_data, (team_name, team_h_t1, team_h_t2))
             acceleration_result = await sync_to_async(self.session.execute)(test_data, (team_name, team_a_t1, team_a_t2))
@@ -133,14 +139,19 @@ class GraphConsumer(AsyncWebsocketConsumer):
                 threshold = (len(filtered_powers) * 100) / (len(power))
                 power = (sum(filtered_powers) / len(filtered_powers)) ** (0.5)
 
+                # get_module_logger(__name__).info(f'Potencia RMS: {power}; Umbral: {threshold}')
+                
             if len(power_gp) == 0:
                 power_gp = 0
                 consumo = 0
                 efi=0
+                
             else:
                 power_gp = (sum(power_gp) / len(power)) ** (0.5)
                 consumo = power_gp / (14 * 60)
                 efi = 1/consumo
+
+                await self.update_eff(team_timestamps, efi)
 
             if threshold > 10:
                 penalizacion = power - 500
@@ -153,7 +164,7 @@ class GraphConsumer(AsyncWebsocketConsumer):
 
         results = await self.get_sorted_teams_with_scores()
         sorted_results = dict(sorted(results.items(), key=lambda item: item[1], reverse=True))
-        get_module_logger(__name__).info(f'Data: {sorted_results}')
+        # get_module_logger(__name__).info(f'Data: {sorted_results}')
 
         if latest_record:
             return {
@@ -161,10 +172,15 @@ class GraphConsumer(AsyncWebsocketConsumer):
                                 'id': latest_record.id,
                                 'team_name': latest_record.team_name,
                                 'car_velocity': int(latest_record.car_velocity),
+                                'car_velocity_gps': int(latest_record.car_velocity_gps),
                                 'car_voltage': int(latest_record.car_voltage),
                                 'car_current': int(latest_record.car_current),
+                                'power': int(latest_record.power),
                                 'gps_1': float(latest_record.gps_1),
                                 'gps_2': float(latest_record.gps_2),
+                                'imu_x': float(latest_record.imu_x),
+                                'imu_y': float(latest_record.imu_y),
+                                'imu_z': float(latest_record.imu_z),
                                 'timestamp': latest_record.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
                                 'average_velocity': round(float(average_data.average_velocity), 2),
                                 'average_voltage': round(float(average_data.average_voltage), 2),
