@@ -55,8 +55,18 @@ class Timestamps(models.Model):
     time_stamp_2_gp = models.CharField(max_length=200, blank=True)
 
     total_time_hability = models.IntegerField(blank=True)
+    total_time_hability_2 = models.IntegerField(blank=True, default = 0)
+
+    total_time_aceleration = models.IntegerField(blank=True, default = 0)
+    total_time_aceleration_2 = models.IntegerField(blank=True, default = 0)
+
     total_penalization_hability = models.CharField(max_length=200, blank=True)
+    total_penalization_acel = models.CharField(max_length=200, blank=True)
+
     total_position_hability = models.CharField(max_length=200, blank=True)
+    total_position_acel = models.CharField(max_length=200, blank=True)
+
+    global_score = models.IntegerField(default=0, blank=True)
 
     eff_gp =  models.FloatField(blank=True, default=0.0) 
 

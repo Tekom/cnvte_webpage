@@ -44,6 +44,28 @@ class GraphConsumer(AsyncWebsocketConsumer):
             valores[value.team.team] = int(value.total_position_hability) - int(value.total_penalization_hability)
 
         return valores
+    
+    @database_sync_to_async
+    def get_sorted_teams_with_scores_acel(self):
+        # Obtenemos todos los registros del modelo `Timestamps`, ordenados por `total_time_hability`
+        all_timestamps = Timestamps.objects.all().order_by('total_position_acel')
+        valores = dict()
+
+        for value in all_timestamps:
+            valores[value.team.team] = int(value.total_position_acel) - int(value.total_penalization_acel)
+
+        return valores
+    
+    @database_sync_to_async
+    def get_sorted_teams_with_global_scores(self):
+        # Obtenemos todos los registros del modelo `Timestamps`, ordenados por `total_time_hability`
+        all_timestamps = Timestamps.objects.all().order_by('global_score')
+        valores = dict()
+
+        for value in all_timestamps:
+            valores[value.team.team] = value.global_score 
+
+        return valores
 
     async def connect(self):
         self.cluster = Cluster(['cassandra_db'])
@@ -163,7 +185,13 @@ class GraphConsumer(AsyncWebsocketConsumer):
             # teams_results[team_name] = power
 
         results = await self.get_sorted_teams_with_scores()
+        results_acel = await self.get_sorted_teams_with_scores_acel()
+        global_results = await self.get_sorted_teams_with_global_scores()
+
         sorted_results = dict(sorted(results.items(), key=lambda item: item[1], reverse=True))
+        sorted_results_acel = dict(sorted(results_acel.items(), key=lambda item: item[1], reverse=True))
+        sorted_global_results = dict(sorted(global_results.items(), key=lambda item: item[1], reverse=True))
+
         # get_module_logger(__name__).info(f'Data: {sorted_results}')
 
         if latest_record:
@@ -186,7 +214,9 @@ class GraphConsumer(AsyncWebsocketConsumer):
                                 'average_voltage': round(float(average_data.average_voltage), 2),
                                 'average_current': round(float(average_data.average_current), 2),
                         }, 
-                'teams_data': sorted_results  
+                'teams_data': sorted_results,
+                'teams_data_acel':sorted_results_acel,
+                'global_scores': sorted_global_results 
             }
         
         else:

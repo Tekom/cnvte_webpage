@@ -37,6 +37,7 @@ firebase_apps = dict()
 
 def sendDataToTopic(topic):
     certificate_data = certificates_path[topic]
+    
     if topic not in firebase_apps:
         try:
             cred = credentials.Certificate(f"./certificates/{certificate_data['folder_name']}/{certificate_data['certificate']}")

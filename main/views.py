@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model, authenticate, login, logout
-from django.http import StreamingHttpResponse, HttpResponse
+from django.http import StreamingHttpResponse, HttpResponse, JsonResponse
 import time
 import json
 import firebase_admin
@@ -391,22 +391,56 @@ def register(request):
 
 	return render(request, 'main/register.html', context={'universidades':universidades})
 
-def updatePos(request):
-	all_teams_hability = Timestamps.objects.all().order_by('total_time_hability')
-
+def getPosTeams(data, prueba:str):
 	resultados_con_puntajes = []
 
-# Asignar puntajes según la posición
-	for i, team_actual in enumerate(all_teams_hability):
+	for i, team_actual in enumerate(data):
+		# team_actual.global_score = 0
+
 		puntaje = 160 - (10 * (i + 1))  # +1 porque enumerate empieza en 0
 
 		resultados_con_puntajes.append({
 			'team': team_actual.team.team,
-			'puntaje': puntaje,
+			'puntaje': puntaje
     	})
 
-		team_actual.total_position_hability = str(puntaje)
+		if prueba == 'habilidad':
+			team_actual.total_position_hability = str(puntaje) 
+
+		if prueba == 'aceleracion':
+			team_actual.total_position_acel = str(puntaje)
+
+		# team_actual.global_score += (puntaje - int(team_actual.total_penalization_hability)) 
 		team_actual.save()
+
+	return resultados_con_puntajes
+
+def addGlobalScores():
+	scores = Timestamps.objects.all()
+
+	for team in scores:
+		team.global_score = int(team.total_position_hability) + int(team.total_position_acel) - int(team.total_penalization_hability) - int(team.total_penalization_acel)
+
+		get_module_logger(__name__).info(f'Data WSf: {team.global_score}')
+		team.save()
+
+	return Timestamps.objects.all().order_by('global_score')
+
+def updatePos(request):
+	all_teams_hability = Timestamps.objects.all().order_by('total_time_hability')
+	all_teams_accel = Timestamps.objects.all().order_by('total_time_aceleration')
+
+	habilidad = getPosTeams(all_teams_hability, prueba = 'habilidad')
+	aceleracion = getPosTeams(all_teams_accel, prueba = 'aceleracion')
+
+	global_score = addGlobalScores()
+
+	datos_completos = {
+		'Habilidad': habilidad,
+		'Aceleracion': aceleracion
+	}
+# Asignar puntajes según la posición
+	
 	# test = Timestamps.objects.all().order_by('total_time_hability')[0].team.team
 	
-	return HttpResponse(f'{resultados_con_puntajes}')
+	return JsonResponse(datos_completos, json_dumps_params={'indent': 4})

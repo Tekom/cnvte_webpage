@@ -46,10 +46,10 @@ var opciones_copia = {};
 var graph_data = {
     type: 'line',
     data: {
-      labels: [0, 0, 0, 0, 0],
+      labels: [0, 0, 0, 0, 0, 0, 0, 0, 0 ,0],
       datasets: [{
         label: '',
-        data: [0, 0, 0, 0, 0],
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         tension: 0.4
       }]
     },
@@ -59,18 +59,21 @@ var graph_data = {
 var graph_imu = {
   type: 'line',
   data: {
-    labels: [0, 0 , 0, 0, 0],
+    labels: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     datasets: [{
       label: 'X',
-      data: [0, 0 , 0, 0, 0],
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      tension: 0.4
     },
     {
       label: 'Y',
-      data: [0, 0 , 0, 0, 0],
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      tension: 0.4
     },
     { 
       label: 'Z',
-      data: [0, 0 , 0, 0, 0],
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      tension: 0.4
     }]
   },
   options: opciones
@@ -99,15 +102,13 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 var marker = L.marker([x, y]).addTo(map);
-marker.bindPopup('<b>Hamilton').openPopup();
-  
 var socket = new WebSocket('ws://' + '127.0.0.1:8001' + '/ws/live_data/')
 
-// graph_data_engine.data.datasets[0].label = 'Velocidad [Km / h]'
-// graph_data_velocity.data.datasets[0].label = 'Velocidad GPS [Km / h]'
-// graph_data_voltage.data.datasets[0].label = 'Voltaje [V]'
-// graph_data_current.data.datasets[0].label = 'Corriente [A]'
-// graph_data_engine.data.datasets[0].label = 'Test'
+velocidad_data.data.datasets[0].label = 'Velocidad [Km / h]'
+velocidad_gps_data.data.datasets[0].label = 'Velocidad GPS [Km / h]'
+voltaje_data.data.datasets[0].label = 'Voltaje [V]'
+corriente_data.data.datasets[0].label = 'Corriente [A]'
+potencia_data.data.datasets[0].label = 'Potencia [W]'
 
 var graphs_data = [
   velocidad_data,
@@ -135,6 +136,7 @@ socket.onopen = function() {
 
 socket.onmessage = function (e) {
   var djangoData = JSON.parse(e.data)
+  
   var car_data = [
     djangoData.team_data.car_velocity,
     djangoData.team_data.car_velocity_gps,
@@ -158,7 +160,7 @@ socket.onmessage = function (e) {
   marker.setLatLng([newLat, newLng]);
 
   // Opcional: si quieres reabrir el popup en la nueva posición
-  marker.bindPopup('<b>Hamilton</b>').openPopup();
+  marker.bindPopup('<b>' + djangoData.team_data.team_name.toUpperCase() + '</b>').openPopup();
 
   for (let i = 0; i < graphs_data.length; i++) {
     var newData = graphs_data[i].data.datasets[0].data;
@@ -184,15 +186,15 @@ socket.onmessage = function (e) {
     var newDataImu = imu_data.data.datasets[i].data;
     newDataImu.shift();
     newDataImu.push(car_data_imu[i])
-
-    var newDataYimu = imu_data.data.labels;
-    newDataYimu.shift();
-    newDataYimu.push(djangoData.y)
-
-    imu_data.data.labels = newDataY
-    imu_chart.update();
   }
 
+  var newDataYimu = imu_data.data.labels;
+  newDataYimu.shift();
+  newDataYimu.push(djangoData.y)
+
+  imu_data.data.labels = newDataYimu
+  imu_chart.update();
+  
   let cont = 1;
 
   Object.keys(djangoData.teams_data).forEach(teamKey => {
@@ -202,8 +204,33 @@ socket.onmessage = function (e) {
     //   teamValue = teamValue + 100;
     // }
       
-    document.getElementById("habilidad_"+cont.toString()).textContent = teamKey + ": " + teamValue.toString();
+    document.getElementById("habilidad_"+cont.toString()).textContent = cont.toString() + " " + "-" + " " + teamKey + ": " + teamValue.toString();
     cont = cont + 1;
+  });
+
+  let cont_acel = 1;
+  Object.keys(djangoData.teams_data_acel).forEach(teamKey => {
+    let teamValue = djangoData.teams_data_acel[teamKey];
+    
+    // if (teamKey == 'kratos') {
+    //   teamValue = teamValue + 100;
+    // }
+      
+    document.getElementById("aceleracion_"+cont_acel.toString()).textContent = cont_acel.toString() + " " + "-" + " " + teamKey + ": " + teamValue.toString();
+    cont_acel = cont_acel + 1;
+  });
+
+  let cont_global = 1;
+
+  Object.keys(djangoData.global_scores).forEach(teamKey => {
+    let teamValue = djangoData.global_scores[teamKey];
+    
+    // if (teamKey == 'kratos') {
+    //   teamValue = teamValue + 100;
+    // }
+      
+    document.getElementById("global_"+cont_global.toString()).textContent = cont_global.toString() + " " + "-" + " " + teamKey + ": " + teamValue.toString();
+    cont_global = cont_global + 1;
   });
 }
 
