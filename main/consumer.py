@@ -124,7 +124,12 @@ class GraphConsumer(AsyncWebsocketConsumer):
 
         for team_data in teams:
             team_name = team_data.team
-            team_timestamps = await sync_to_async(Timestamps.objects.get)(team = team_data)
+
+            try:
+                team_timestamps = await sync_to_async(Timestamps.objects.get)(team = team_data)
+
+            except:
+                continue
 
             team_h_t1 = team_timestamps.time_stamp_1_hability
             team_h_t2 = team_timestamps.time_stamp_2_hability

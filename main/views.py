@@ -16,7 +16,8 @@ from random import choice
 from kafka import KafkaProducer, KafkaAdminClient
 from kafka.admin import NewTopic
 import logging
-
+from cassandra.cluster import Cluster
+from cassandra.query import SimpleStatement
 from custom_user.models import *
 
 # Create your views here.
@@ -444,3 +445,55 @@ def updatePos(request):
 	# test = Timestamps.objects.all().order_by('total_time_hability')[0].team.team
 	
 	return JsonResponse(datos_completos, json_dumps_params={'indent': 4})
+
+def showAnalitycs(request):
+	cluster = Cluster(['cassandra_db'])
+	session = cluster.connect('spark_streaming')
+	
+	query = """
+			SELECT car_velocity, car_velocity_gps, car_voltage, car_current, power
+			FROM spark_streaming.vehicules_data
+			WHERE team_name = %s
+			ORDER BY timestamp ASC
+	"""
+
+	user_logged = userData.objects.get(user = request.user)
+	context = user_logged.Serialize()
+
+	team = user_logged.team
+	context['user_team'] = team
+
+	rows = session.execute(query, [team])
+
+	y = []
+	car_velocity = []
+	car_velocity_gps = []
+	car_voltage = []
+	car_current = []
+	power = []
+
+	for index, row in enumerate(rows):
+		y.append(index)
+		car_velocity.append(row.car_velocity)
+		car_velocity_gps.append(row.car_velocity_gps)
+		car_voltage.append(row.car_voltage)
+		car_current.append(row.car_current)
+		power.append(row.power)
+
+	context['y'] = y
+	context['car_velocity'] = car_velocity
+	context['car_velocity_gps'] = car_velocity_gps
+	context['car_voltage'] = car_voltage
+	context['car_current'] = car_current
+	context['power'] = power
+
+	user_logged = userData.objects.get(user = request.user)
+
+	try:
+		stopProcess(topic = user_logged.team,
+					team_member=user_logged.Serialize()['member_name'])
+	except:
+		pass
+	
+	get_module_logger(__name__).info(f'Cassandra Data: {context}')
+	return render(request, 'main/analitycs.html', context)

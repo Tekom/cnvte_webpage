@@ -65,20 +65,6 @@ services:
     #   - kafka-net
   
   kafka-topics:
-    # image: python:3.7  # Usa una imagen de Python
-    # container_name: kafka-create-topics
-    # volumes:
-    #   - ./kafka_installation/create_topics.py:/app/create_topics.py  # Monta el archivo producer.py
-    # working_dir: /app  # Directorio de trabajo dentro del contenedor
-    # command: >
-    #   /bin/bash -c "
-    #   apt-get update && 
-    #   apt-get install -y python3-pip && 
-    #   pip3 install kafka-python &&
-    #   pip3 install cassandra-driver &&
-    #   python3 create_topics.py"
-    # depends_on:
-    #   - ed-kafka
     build: 
       context: .
       dockerfile: Dockerfile.kafka_topics  # Asegúrate de que este Dockerfile esté en el mismo directorio
