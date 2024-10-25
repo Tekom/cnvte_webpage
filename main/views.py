@@ -454,6 +454,8 @@ def showAnalitycs(request):
 			SELECT car_velocity, car_velocity_gps, car_voltage, car_current, power
 			FROM spark_streaming.vehicules_data
 			WHERE team_name = %s
+			AND timestamp >= %s
+			AND timestamp <= %s
 			ORDER BY timestamp ASC
 	"""
 
@@ -463,7 +465,20 @@ def showAnalitycs(request):
 	team = user_logged.team
 	context['user_team'] = team
 
-	rows = session.execute(query, [team])
+	timestamps = Timestamps.objects.get(team = Team.objects.get(team = team))
+
+	timestamps_habilidad_1 = timestamps.time_stamp_1_hability
+	timestamps_habilidad_2 = timestamps.time_stamp_2_hability
+
+	timestamps_aceleracion_1 = timestamps.time_stamp_1_acceleration
+	timestamps_aceleracion_2 = timestamps.time_stamp_2_acceleration
+
+	timestamps_gp_1 = timestamps.time_stamp_1_gp
+	timestamps_gp_2 = timestamps.time_stamp_2_gp
+
+	rows = session.execute(query, [team, timestamps_habilidad_1, timestamps_habilidad_2])
+	rows_aceleracion = session.execute(query, [team, timestamps_aceleracion_1, timestamps_aceleracion_2])
+	rows_gp = session.execute(query, [team, timestamps_gp_1, timestamps_gp_2])
 
 	y = []
 	car_velocity = []
@@ -480,12 +495,56 @@ def showAnalitycs(request):
 		car_current.append(row.car_current)
 		power.append(row.power)
 
+	y_aceleracion = []
+	car_velocity_aceleracion = []
+	car_velocity_gps_aceleracion = []
+	car_voltage_aceleracion = []
+	car_current_aceleracion = []
+	power_aceleracion = []
+
+	for index, row in enumerate(rows_aceleracion):
+		y_aceleracion.append(index)
+		car_velocity_aceleracion.append(row.car_velocity)
+		car_velocity_gps_aceleracion.append(row.car_velocity_gps)
+		car_voltage_aceleracion.append(row.car_voltage)
+		car_current_aceleracion.append(row.car_current)
+		power_aceleracion.append(row.power)
+
+	y_gp = []
+	car_velocity_gp = []
+	car_velocity_gps_gp = []
+	car_voltage_gp = []
+	car_current_gp = []
+	power_gp = []
+
+	for index, row in enumerate(rows_gp):
+		y_gp.append(index)
+		car_velocity_gp.append(row.car_velocity)
+		car_velocity_gps_gp.append(row.car_velocity_gps)
+		car_voltage_gp.append(row.car_voltage)
+		car_current_gp.append(row.car_current)
+		power_gp.append(row.power)
+
 	context['y'] = y
 	context['car_velocity'] = car_velocity
 	context['car_velocity_gps'] = car_velocity_gps
 	context['car_voltage'] = car_voltage
 	context['car_current'] = car_current
 	context['power'] = power
+
+	context['y_aceleracion'] = y_aceleracion
+	context['car_velocity_aceleracion'] = car_velocity_aceleracion
+	context['car_velocity_gps_aceleracion'] = car_velocity_gps_aceleracion
+	context['car_voltage_aceleracion'] = car_voltage_aceleracion
+	context['car_current_aceleracion'] = car_current_aceleracion
+	context['power_aceleracion'] = power_aceleracion
+
+	context['y_gp'] = y_gp
+	context['car_velocity_gp'] = car_velocity_gp
+	context['car_velocity_gps_gp'] = car_velocity_gps_gp
+	context['car_voltage_gp'] = car_voltage_gp
+	context['car_current_gp'] = car_current_gp
+	context['power_gp'] = power_gp
 
 	user_logged = userData.objects.get(user = request.user)
 
